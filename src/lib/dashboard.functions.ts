@@ -64,6 +64,6 @@ export const getDashboardStats = createServerFn({ method: "GET" })
         openRfis: rfisOpen.count ?? 0,
         pendingSubmittals: submittalsPending.count ?? 0,
       },
-      recentReports: recentReports.data ?? [],
+      recentReports: reports,
     };
   });
