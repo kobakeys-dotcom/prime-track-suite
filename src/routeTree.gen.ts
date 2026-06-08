@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/tasks'
 import { Route as AuthenticatedSubmittalsRouteImport } from './routes/_authenticated/submittals'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedRfisRouteImport } from './routes/_authenticated/rfis'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticated/projects'
@@ -47,6 +48,11 @@ const AuthenticatedTasksRoute = AuthenticatedTasksRouteImport.update({
 const AuthenticatedSubmittalsRoute = AuthenticatedSubmittalsRouteImport.update({
   id: '/submittals',
   path: '/submittals',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedRfisRoute = AuthenticatedRfisRouteImport.update({
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/projects': typeof AuthenticatedProjectsRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/rfis': typeof AuthenticatedRfisRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/submittals': typeof AuthenticatedSubmittalsRoute
   '/tasks': typeof AuthenticatedTasksRoute
 }
@@ -130,6 +137,7 @@ export interface FileRoutesByTo {
   '/projects': typeof AuthenticatedProjectsRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/rfis': typeof AuthenticatedRfisRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/submittals': typeof AuthenticatedSubmittalsRoute
   '/tasks': typeof AuthenticatedTasksRoute
 }
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/_authenticated/projects': typeof AuthenticatedProjectsRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/rfis': typeof AuthenticatedRfisRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/submittals': typeof AuthenticatedSubmittalsRoute
   '/_authenticated/tasks': typeof AuthenticatedTasksRoute
 }
@@ -166,6 +175,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/reports'
     | '/rfis'
+    | '/settings'
     | '/submittals'
     | '/tasks'
   fileRoutesByTo: FileRoutesByTo
@@ -182,6 +192,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/reports'
     | '/rfis'
+    | '/settings'
     | '/submittals'
     | '/tasks'
   id:
@@ -199,6 +210,7 @@ export interface FileRouteTypes {
     | '/_authenticated/projects'
     | '/_authenticated/reports'
     | '/_authenticated/rfis'
+    | '/_authenticated/settings'
     | '/_authenticated/submittals'
     | '/_authenticated/tasks'
   fileRoutesById: FileRoutesById
@@ -244,6 +256,13 @@ declare module '@tanstack/react-router' {
       path: '/submittals'
       fullPath: '/submittals'
       preLoaderRoute: typeof AuthenticatedSubmittalsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/rfis': {
@@ -330,6 +349,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedProjectsRoute: typeof AuthenticatedProjectsRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedRfisRoute: typeof AuthenticatedRfisRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedSubmittalsRoute: typeof AuthenticatedSubmittalsRoute
   AuthenticatedTasksRoute: typeof AuthenticatedTasksRoute
 }
@@ -345,6 +365,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedProjectsRoute: AuthenticatedProjectsRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedRfisRoute: AuthenticatedRfisRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedSubmittalsRoute: AuthenticatedSubmittalsRoute,
   AuthenticatedTasksRoute: AuthenticatedTasksRoute,
 }
