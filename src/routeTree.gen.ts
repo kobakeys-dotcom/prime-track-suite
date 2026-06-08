@@ -13,6 +13,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/tasks'
+import { Route as AuthenticatedSubmittalsRouteImport } from './routes/_authenticated/submittals'
 import { Route as AuthenticatedRfisRouteImport } from './routes/_authenticated/rfis'
 import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticated/projects'
 import { Route as AuthenticatedPlanningRouteImport } from './routes/_authenticated/planning'
@@ -37,6 +38,11 @@ const IndexRoute = IndexRouteImport.update({
 const AuthenticatedTasksRoute = AuthenticatedTasksRouteImport.update({
   id: '/tasks',
   path: '/tasks',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSubmittalsRoute = AuthenticatedSubmittalsRouteImport.update({
+  id: '/submittals',
+  path: '/submittals',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedRfisRoute = AuthenticatedRfisRouteImport.update({
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/planning': typeof AuthenticatedPlanningRoute
   '/projects': typeof AuthenticatedProjectsRoute
   '/rfis': typeof AuthenticatedRfisRoute
+  '/submittals': typeof AuthenticatedSubmittalsRoute
   '/tasks': typeof AuthenticatedTasksRoute
 }
 export interface FileRoutesByTo {
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/planning': typeof AuthenticatedPlanningRoute
   '/projects': typeof AuthenticatedProjectsRoute
   '/rfis': typeof AuthenticatedRfisRoute
+  '/submittals': typeof AuthenticatedSubmittalsRoute
   '/tasks': typeof AuthenticatedTasksRoute
 }
 export interface FileRoutesById {
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/_authenticated/planning': typeof AuthenticatedPlanningRoute
   '/_authenticated/projects': typeof AuthenticatedProjectsRoute
   '/_authenticated/rfis': typeof AuthenticatedRfisRoute
+  '/_authenticated/submittals': typeof AuthenticatedSubmittalsRoute
   '/_authenticated/tasks': typeof AuthenticatedTasksRoute
 }
 export interface FileRouteTypes {
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/planning'
     | '/projects'
     | '/rfis'
+    | '/submittals'
     | '/tasks'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/planning'
     | '/projects'
     | '/rfis'
+    | '/submittals'
     | '/tasks'
   id:
     | '__root__'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/_authenticated/planning'
     | '/_authenticated/projects'
     | '/_authenticated/rfis'
+    | '/_authenticated/submittals'
     | '/_authenticated/tasks'
   fileRoutesById: FileRoutesById
 }
@@ -177,6 +189,13 @@ declare module '@tanstack/react-router' {
       path: '/tasks'
       fullPath: '/tasks'
       preLoaderRoute: typeof AuthenticatedTasksRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/submittals': {
+      id: '/_authenticated/submittals'
+      path: '/submittals'
+      fullPath: '/submittals'
+      preLoaderRoute: typeof AuthenticatedSubmittalsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/rfis': {
@@ -231,6 +250,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPlanningRoute: typeof AuthenticatedPlanningRoute
   AuthenticatedProjectsRoute: typeof AuthenticatedProjectsRoute
   AuthenticatedRfisRoute: typeof AuthenticatedRfisRoute
+  AuthenticatedSubmittalsRoute: typeof AuthenticatedSubmittalsRoute
   AuthenticatedTasksRoute: typeof AuthenticatedTasksRoute
 }
 
@@ -241,6 +261,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPlanningRoute: AuthenticatedPlanningRoute,
   AuthenticatedProjectsRoute: AuthenticatedProjectsRoute,
   AuthenticatedRfisRoute: AuthenticatedRfisRoute,
+  AuthenticatedSubmittalsRoute: AuthenticatedSubmittalsRoute,
   AuthenticatedTasksRoute: AuthenticatedTasksRoute,
 }
 
