@@ -17,6 +17,7 @@ import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedPlanningRouteImport } from './routes/_authenticated/planning'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDailyReportsRouteImport } from './routes/_authenticated/daily-reports'
+import { Route as AuthenticatedBoqRouteImport } from './routes/_authenticated/boq'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -58,10 +59,16 @@ const AuthenticatedDailyReportsRoute =
     path: '/daily-reports',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedBoqRoute = AuthenticatedBoqRouteImport.update({
+  id: '/boq',
+  path: '/boq',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/boq': typeof AuthenticatedBoqRoute
   '/daily-reports': typeof AuthenticatedDailyReportsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/planning': typeof AuthenticatedPlanningRoute
@@ -71,6 +78,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/boq': typeof AuthenticatedBoqRoute
   '/daily-reports': typeof AuthenticatedDailyReportsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/planning': typeof AuthenticatedPlanningRoute
@@ -82,6 +90,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/boq': typeof AuthenticatedBoqRoute
   '/_authenticated/daily-reports': typeof AuthenticatedDailyReportsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/planning': typeof AuthenticatedPlanningRoute
@@ -93,6 +102,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/boq'
     | '/daily-reports'
     | '/dashboard'
     | '/planning'
@@ -102,6 +112,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/boq'
     | '/daily-reports'
     | '/dashboard'
     | '/planning'
@@ -112,6 +123,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/boq'
     | '/_authenticated/daily-reports'
     | '/_authenticated/dashboard'
     | '/_authenticated/planning'
@@ -183,10 +195,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDailyReportsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/boq': {
+      id: '/_authenticated/boq'
+      path: '/boq'
+      fullPath: '/boq'
+      preLoaderRoute: typeof AuthenticatedBoqRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBoqRoute: typeof AuthenticatedBoqRoute
   AuthenticatedDailyReportsRoute: typeof AuthenticatedDailyReportsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedPlanningRoute: typeof AuthenticatedPlanningRoute
@@ -195,6 +215,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBoqRoute: AuthenticatedBoqRoute,
   AuthenticatedDailyReportsRoute: AuthenticatedDailyReportsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedPlanningRoute: AuthenticatedPlanningRoute,
