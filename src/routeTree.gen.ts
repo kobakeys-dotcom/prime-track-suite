@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/tasks'
 import { Route as AuthenticatedSubmittalsRouteImport } from './routes/_authenticated/submittals'
 import { Route as AuthenticatedRfisRouteImport } from './routes/_authenticated/rfis'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticated/projects'
 import { Route as AuthenticatedPlanningRouteImport } from './routes/_authenticated/planning'
 import { Route as AuthenticatedDrawingsRouteImport } from './routes/_authenticated/drawings'
@@ -51,6 +52,11 @@ const AuthenticatedSubmittalsRoute = AuthenticatedSubmittalsRouteImport.update({
 const AuthenticatedRfisRoute = AuthenticatedRfisRouteImport.update({
   id: '/rfis',
   path: '/rfis',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedProjectsRoute = AuthenticatedProjectsRouteImport.update({
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/drawings': typeof AuthenticatedDrawingsRoute
   '/planning': typeof AuthenticatedPlanningRoute
   '/projects': typeof AuthenticatedProjectsRoute
+  '/reports': typeof AuthenticatedReportsRoute
   '/rfis': typeof AuthenticatedRfisRoute
   '/submittals': typeof AuthenticatedSubmittalsRoute
   '/tasks': typeof AuthenticatedTasksRoute
@@ -121,6 +128,7 @@ export interface FileRoutesByTo {
   '/drawings': typeof AuthenticatedDrawingsRoute
   '/planning': typeof AuthenticatedPlanningRoute
   '/projects': typeof AuthenticatedProjectsRoute
+  '/reports': typeof AuthenticatedReportsRoute
   '/rfis': typeof AuthenticatedRfisRoute
   '/submittals': typeof AuthenticatedSubmittalsRoute
   '/tasks': typeof AuthenticatedTasksRoute
@@ -138,6 +146,7 @@ export interface FileRoutesById {
   '/_authenticated/drawings': typeof AuthenticatedDrawingsRoute
   '/_authenticated/planning': typeof AuthenticatedPlanningRoute
   '/_authenticated/projects': typeof AuthenticatedProjectsRoute
+  '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/rfis': typeof AuthenticatedRfisRoute
   '/_authenticated/submittals': typeof AuthenticatedSubmittalsRoute
   '/_authenticated/tasks': typeof AuthenticatedTasksRoute
@@ -155,6 +164,7 @@ export interface FileRouteTypes {
     | '/drawings'
     | '/planning'
     | '/projects'
+    | '/reports'
     | '/rfis'
     | '/submittals'
     | '/tasks'
@@ -170,6 +180,7 @@ export interface FileRouteTypes {
     | '/drawings'
     | '/planning'
     | '/projects'
+    | '/reports'
     | '/rfis'
     | '/submittals'
     | '/tasks'
@@ -186,6 +197,7 @@ export interface FileRouteTypes {
     | '/_authenticated/drawings'
     | '/_authenticated/planning'
     | '/_authenticated/projects'
+    | '/_authenticated/reports'
     | '/_authenticated/rfis'
     | '/_authenticated/submittals'
     | '/_authenticated/tasks'
@@ -239,6 +251,13 @@ declare module '@tanstack/react-router' {
       path: '/rfis'
       fullPath: '/rfis'
       preLoaderRoute: typeof AuthenticatedRfisRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/projects': {
@@ -309,6 +328,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDrawingsRoute: typeof AuthenticatedDrawingsRoute
   AuthenticatedPlanningRoute: typeof AuthenticatedPlanningRoute
   AuthenticatedProjectsRoute: typeof AuthenticatedProjectsRoute
+  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedRfisRoute: typeof AuthenticatedRfisRoute
   AuthenticatedSubmittalsRoute: typeof AuthenticatedSubmittalsRoute
   AuthenticatedTasksRoute: typeof AuthenticatedTasksRoute
@@ -323,6 +343,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDrawingsRoute: AuthenticatedDrawingsRoute,
   AuthenticatedPlanningRoute: AuthenticatedPlanningRoute,
   AuthenticatedProjectsRoute: AuthenticatedProjectsRoute,
+  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedRfisRoute: AuthenticatedRfisRoute,
   AuthenticatedSubmittalsRoute: AuthenticatedSubmittalsRoute,
   AuthenticatedTasksRoute: AuthenticatedTasksRoute,
