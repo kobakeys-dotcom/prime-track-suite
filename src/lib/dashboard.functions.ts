@@ -39,10 +39,21 @@ export const getDashboardStats = createServerFn({ method: "GET" })
       supabase.from("submittals").select("id", { count: "exact", head: true }).in("status", ["submitted", "under_review"]),
       supabase
         .from("daily_reports")
-        .select("id, report_date, work_completed, status, project_id, projects(name), author:profiles!daily_reports_author_id_fkey(full_name)")
+        .select("id, report_date, work_completed, status, project_id, author_id, projects(name)")
         .order("report_date", { ascending: false })
         .limit(5),
     ]);
+
+    const authorIds = Array.from(new Set((recentReports.data ?? []).map((r: any) => r.author_id).filter(Boolean)));
+    const { data: authors } = authorIds.length
+      ? await supabase.from("profiles").select("id, full_name").in("id", authorIds)
+      : { data: [] as { id: string; full_name: string | null }[] };
+    const authorMap = new Map((authors ?? []).map((a) => [a.id, a.full_name]));
+    const reports = (recentReports.data ?? []).map((r: any) => ({
+      ...r,
+      author_name: authorMap.get(r.author_id) ?? "—",
+      project_name: r.projects?.name ?? "—",
+    }));
 
     return {
       kpis: {
