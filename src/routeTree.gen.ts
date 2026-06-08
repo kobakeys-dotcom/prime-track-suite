@@ -17,6 +17,7 @@ import { Route as AuthenticatedSubmittalsRouteImport } from './routes/_authentic
 import { Route as AuthenticatedRfisRouteImport } from './routes/_authenticated/rfis'
 import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticated/projects'
 import { Route as AuthenticatedPlanningRouteImport } from './routes/_authenticated/planning'
+import { Route as AuthenticatedDrawingsRouteImport } from './routes/_authenticated/drawings'
 import { Route as AuthenticatedDocumentsRouteImport } from './routes/_authenticated/documents'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDailyReportsRouteImport } from './routes/_authenticated/daily-reports'
@@ -61,6 +62,11 @@ const AuthenticatedPlanningRoute = AuthenticatedPlanningRouteImport.update({
   path: '/planning',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedDrawingsRoute = AuthenticatedDrawingsRouteImport.update({
+  id: '/drawings',
+  path: '/drawings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDocumentsRoute = AuthenticatedDocumentsRouteImport.update({
   id: '/documents',
   path: '/documents',
@@ -90,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/daily-reports': typeof AuthenticatedDailyReportsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/documents': typeof AuthenticatedDocumentsRoute
+  '/drawings': typeof AuthenticatedDrawingsRoute
   '/planning': typeof AuthenticatedPlanningRoute
   '/projects': typeof AuthenticatedProjectsRoute
   '/rfis': typeof AuthenticatedRfisRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/daily-reports': typeof AuthenticatedDailyReportsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/documents': typeof AuthenticatedDocumentsRoute
+  '/drawings': typeof AuthenticatedDrawingsRoute
   '/planning': typeof AuthenticatedPlanningRoute
   '/projects': typeof AuthenticatedProjectsRoute
   '/rfis': typeof AuthenticatedRfisRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/_authenticated/daily-reports': typeof AuthenticatedDailyReportsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/documents': typeof AuthenticatedDocumentsRoute
+  '/_authenticated/drawings': typeof AuthenticatedDrawingsRoute
   '/_authenticated/planning': typeof AuthenticatedPlanningRoute
   '/_authenticated/projects': typeof AuthenticatedProjectsRoute
   '/_authenticated/rfis': typeof AuthenticatedRfisRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/daily-reports'
     | '/dashboard'
     | '/documents'
+    | '/drawings'
     | '/planning'
     | '/projects'
     | '/rfis'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/daily-reports'
     | '/dashboard'
     | '/documents'
+    | '/drawings'
     | '/planning'
     | '/projects'
     | '/rfis'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/_authenticated/daily-reports'
     | '/_authenticated/dashboard'
     | '/_authenticated/documents'
+    | '/_authenticated/drawings'
     | '/_authenticated/planning'
     | '/_authenticated/projects'
     | '/_authenticated/rfis'
@@ -231,6 +243,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPlanningRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/drawings': {
+      id: '/_authenticated/drawings'
+      path: '/drawings'
+      fullPath: '/drawings'
+      preLoaderRoute: typeof AuthenticatedDrawingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/documents': {
       id: '/_authenticated/documents'
       path: '/documents'
@@ -267,6 +286,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDailyReportsRoute: typeof AuthenticatedDailyReportsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDocumentsRoute: typeof AuthenticatedDocumentsRoute
+  AuthenticatedDrawingsRoute: typeof AuthenticatedDrawingsRoute
   AuthenticatedPlanningRoute: typeof AuthenticatedPlanningRoute
   AuthenticatedProjectsRoute: typeof AuthenticatedProjectsRoute
   AuthenticatedRfisRoute: typeof AuthenticatedRfisRoute
@@ -279,6 +299,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDailyReportsRoute: AuthenticatedDailyReportsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDocumentsRoute: AuthenticatedDocumentsRoute,
+  AuthenticatedDrawingsRoute: AuthenticatedDrawingsRoute,
   AuthenticatedPlanningRoute: AuthenticatedPlanningRoute,
   AuthenticatedProjectsRoute: AuthenticatedProjectsRoute,
   AuthenticatedRfisRoute: AuthenticatedRfisRoute,
