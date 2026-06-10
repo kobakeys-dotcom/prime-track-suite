@@ -57,6 +57,7 @@ function SettingsPage() {
           <TabsTrigger value="team">Team & Roles</TabsTrigger>
           <TabsTrigger value="invites">Invitations</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
+          <TabsTrigger value="integrations">Integrations</TabsTrigger>
           <TabsTrigger value="data">Demo Data</TabsTrigger>
         </TabsList>
 
@@ -134,6 +135,12 @@ function SettingsPage() {
         <TabsContent value="notifications">
           <NotificationPreferences />
         </TabsContent>
+
+        <TabsContent value="integrations">
+          <IntegrationsPanel />
+        </TabsContent>
+
+
 
         <TabsContent value="data">
           <section className="bg-card border border-border rounded-sm p-6 mt-4">
@@ -285,3 +292,35 @@ function Row({ label, desc, children }: { label: string; desc: string; children:
     </div>
   );
 }
+
+const INTEGRATIONS = [
+  { name: "Lovable AI", desc: "AI Assistant, summaries, drafting and risk analysis.", status: "Connected", color: "emerald" },
+  { name: "Email (SMTP)", desc: "Send approval requests, reports and daily digests.", status: "Available", color: "zinc" },
+  { name: "WhatsApp", desc: "Critical alerts for site teams and approvers.", status: "Available", color: "zinc" },
+  { name: "Google Drive", desc: "Two-way sync for documents and drawings.", status: "Available", color: "zinc" },
+  { name: "Microsoft 365 / OneDrive", desc: "Documents, calendar and Teams meeting links.", status: "Available", color: "zinc" },
+  { name: "Procore / Aconex", desc: "Sync RFIs, submittals and drawings with external EDMS.", status: "Available", color: "zinc" },
+  { name: "Xero / QuickBooks", desc: "Push approved payment claims to accounting.", status: "Available", color: "zinc" },
+  { name: "Slack", desc: "Channel notifications for approvals and overdue tasks.", status: "Available", color: "zinc" },
+];
+
+function IntegrationsPanel() {
+  return (
+    <section className="bg-card border border-border rounded-sm p-6 mt-4">
+      <h2 className="font-display font-bold uppercase tracking-tight mb-1">Integrations</h2>
+      <p className="text-xs text-muted-foreground mb-5">Connect ProjectCore to the tools your team already uses.</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {INTEGRATIONS.map((i) => (
+          <div key={i.name} className="p-4 border border-border rounded-sm flex items-start justify-between gap-3">
+            <div>
+              <div className="font-medium text-sm">{i.name}</div>
+              <div className="text-xs text-muted-foreground mt-0.5">{i.desc}</div>
+            </div>
+            <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${i.color === "emerald" ? "bg-emerald-100 text-emerald-700" : "bg-zinc-100 text-zinc-600"}`}>{i.status}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+

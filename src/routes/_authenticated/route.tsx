@@ -50,6 +50,8 @@ const sections: { label: string; items: { to: string; label: string; icon: any }
     { to: "/cost-codes", label: "Cost Codes", icon: Tag },
     { to: "/variations", label: "Variations", icon: FileSignature },
     { to: "/payment-claims", label: "Payment Claims", icon: Receipt },
+    { to: "/budget", label: "Budget vs Actual", icon: BarChart3 },
+    { to: "/cash-flow", label: "Cash Flow", icon: BarChart3 },
   ]},
   { label: "Procurement", items: [
     { to: "/procurement", label: "Material Requests", icon: ShoppingCart },
@@ -75,7 +77,9 @@ const sections: { label: string; items: { to: string; label: string; icon: any }
   ]},
   { label: "Insights", items: [
     { to: "/reports", label: "Reports", icon: BarChart3 },
+    { to: "/report-builder", label: "Report Builder", icon: BarChart3 },
     { to: "/ai", label: "AI Assistant", icon: Sparkles },
+    { to: "/permissions", label: "Permissions", icon: Stamp },
     { to: "/audit", label: "Audit Log", icon: History },
   ]},
 ];
