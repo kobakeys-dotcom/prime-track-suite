@@ -162,7 +162,7 @@ export function PaymentClaimRegister({ projectId: fixedProjectId, variant = "ful
       <Card>
         <CardContent className="p-3 flex flex-wrap gap-2 items-center">
           {!fixedProjectId && (
-            <div className="min-w-[220px]"><ProjectPicker value={projectId} onChange={setProjectId} /></div>
+            <div className="min-w-[220px]"><ProjectPicker value={projectId ?? ""} onChange={setProjectId} /></div>
           )}
           <div className="relative flex-1 min-w-[200px]">
             <Search className="w-4 h-4 absolute left-2 top-2.5 text-muted-foreground" />
