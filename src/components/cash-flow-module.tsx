@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
@@ -354,14 +354,36 @@ function Th({ children, className = "" }: any) { return <th className={`px-3 py-
 function Td({ children, className = "" }: any) { return <td className={`px-3 py-2 ${className}`}>{children}</td>; }
 function Empty({ msg }: { msg: string }) { return <div className="h-full flex items-center justify-center text-sm text-muted-foreground">{msg}</div>; }
 
+function defaultPlanForm() {
+  const today = new Date();
+  const end = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
+  return {
+    plan_name: "Main Cash Flow Plan",
+    plan_type: "Monthly",
+    start_date: today.toISOString().slice(0, 10),
+    end_date: end.toISOString().slice(0, 10),
+    currency: "MVR",
+    opening_balance: 0,
+    description: "",
+    status: "Active",
+  };
+}
+
 function PlanDialog({ open, onOpenChange, projectId, onSaved, upsertFn }: any) {
-  const [f, setF] = useState<any>({ plan_name: "Main Cash Flow Plan", plan_type: "Monthly", start_date: "", end_date: "", currency: "MVR", opening_balance: 0, description: "", status: "Active" });
+  const [f, setF] = useState<any>(defaultPlanForm());
+  const [saving, setSaving] = useState(false);
+  useEffect(() => { if (open) setF(defaultPlanForm()); }, [open]);
   const save = async () => {
+    if (!f.plan_name?.trim()) return toast.error("Plan name is required");
     if (!f.start_date || !f.end_date) return toast.error("Start and end dates required");
+    if (f.end_date < f.start_date) return toast.error("End date cannot be before start date");
+    setSaving(true);
     try {
       await upsertFn({ data: { ...f, project_id: projectId, opening_balance: Number(f.opening_balance) || 0 } });
       toast.success("Plan saved"); onSaved();
-    } catch (e: any) { toast.error(e?.message ?? "Failed"); }
+    } catch (e: any) {
+      toast.error(e?.message ?? e?.toString?.() ?? "Failed to save plan");
+    } finally { setSaving(false); }
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -379,9 +401,9 @@ function PlanDialog({ open, onOpenChange, projectId, onSaved, upsertFn }: any) {
           <div><Label>Start Date</Label><Input type="date" value={f.start_date} onChange={(e) => setF({ ...f, start_date: e.target.value })} /></div>
           <div><Label>End Date</Label><Input type="date" value={f.end_date} onChange={(e) => setF({ ...f, end_date: e.target.value })} /></div>
           <div className="col-span-2"><Label>Opening Balance</Label><Input type="number" value={f.opening_balance} onChange={(e) => setF({ ...f, opening_balance: e.target.value })} /></div>
-          <div className="col-span-2"><Label>Description</Label><Textarea value={f.description} onChange={(e) => setF({ ...f, description: e.target.value })} /></div>
+          <div className="col-span-2"><Label>Description</Label><Textarea value={f.description ?? ""} onChange={(e) => setF({ ...f, description: e.target.value })} /></div>
         </div>
-        <DialogFooter><Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button><Button onClick={save}>Save</Button></DialogFooter>
+        <DialogFooter><Button variant="outline" onClick={() => onOpenChange(false)} disabled={saving}>Cancel</Button><Button onClick={save} disabled={saving}>{saving ? "Saving..." : "Save"}</Button></DialogFooter>
       </DialogContent>
     </Dialog>
   );
