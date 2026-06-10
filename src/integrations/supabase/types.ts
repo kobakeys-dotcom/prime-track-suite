@@ -5391,57 +5391,472 @@ export type Database = {
           },
         ]
       }
+      risk_actions: {
+        Row: {
+          action_description: string | null
+          action_title: string
+          action_type: string | null
+          assigned_to: string | null
+          company_id: string
+          completed_date: string | null
+          completion_notes: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          is_archived: boolean | null
+          priority: string | null
+          progress_percentage: number | null
+          project_id: string
+          risk_id: string
+          status: string | null
+          target_date: string | null
+          updated_at: string
+        }
+        Insert: {
+          action_description?: string | null
+          action_title: string
+          action_type?: string | null
+          assigned_to?: string | null
+          company_id: string
+          completed_date?: string | null
+          completion_notes?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_archived?: boolean | null
+          priority?: string | null
+          progress_percentage?: number | null
+          project_id: string
+          risk_id: string
+          status?: string | null
+          target_date?: string | null
+          updated_at?: string
+        }
+        Update: {
+          action_description?: string | null
+          action_title?: string
+          action_type?: string | null
+          assigned_to?: string | null
+          company_id?: string
+          completed_date?: string | null
+          completion_notes?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_archived?: boolean | null
+          priority?: string | null
+          progress_percentage?: number | null
+          project_id?: string
+          risk_id?: string
+          status?: string | null
+          target_date?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "risk_actions_risk_id_fkey"
+            columns: ["risk_id"]
+            isOneToOne: false
+            referencedRelation: "risks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      risk_attachments: {
+        Row: {
+          attachment_type: string | null
+          company_id: string
+          created_at: string
+          description: string | null
+          file_name: string
+          file_type: string | null
+          file_url: string
+          id: string
+          is_client_visible: boolean | null
+          project_id: string
+          risk_action_id: string | null
+          risk_id: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          attachment_type?: string | null
+          company_id: string
+          created_at?: string
+          description?: string | null
+          file_name: string
+          file_type?: string | null
+          file_url: string
+          id?: string
+          is_client_visible?: boolean | null
+          project_id: string
+          risk_action_id?: string | null
+          risk_id: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          attachment_type?: string | null
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          file_name?: string
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          is_client_visible?: boolean | null
+          project_id?: string
+          risk_action_id?: string | null
+          risk_id?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "risk_attachments_risk_id_fkey"
+            columns: ["risk_id"]
+            isOneToOne: false
+            referencedRelation: "risks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      risk_comments: {
+        Row: {
+          comment: string
+          company_id: string
+          created_at: string
+          id: string
+          project_id: string
+          risk_id: string
+          user_id: string | null
+          visibility: string | null
+        }
+        Insert: {
+          comment: string
+          company_id: string
+          created_at?: string
+          id?: string
+          project_id: string
+          risk_id: string
+          user_id?: string | null
+          visibility?: string | null
+        }
+        Update: {
+          comment?: string
+          company_id?: string
+          created_at?: string
+          id?: string
+          project_id?: string
+          risk_id?: string
+          user_id?: string | null
+          visibility?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "risk_comments_risk_id_fkey"
+            columns: ["risk_id"]
+            isOneToOne: false
+            referencedRelation: "risks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      risk_reviews: {
+        Row: {
+          company_id: string
+          created_at: string
+          id: string
+          impact: number | null
+          next_review_date: string | null
+          probability: number | null
+          project_id: string
+          review_date: string | null
+          review_notes: string | null
+          reviewed_by: string | null
+          risk_id: string
+          risk_level: string | null
+          risk_score: number | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          id?: string
+          impact?: number | null
+          next_review_date?: string | null
+          probability?: number | null
+          project_id: string
+          review_date?: string | null
+          review_notes?: string | null
+          reviewed_by?: string | null
+          risk_id: string
+          risk_level?: string | null
+          risk_score?: number | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          id?: string
+          impact?: number | null
+          next_review_date?: string | null
+          probability?: number | null
+          project_id?: string
+          review_date?: string | null
+          review_notes?: string | null
+          reviewed_by?: string | null
+          risk_id?: string
+          risk_level?: string | null
+          risk_score?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "risk_reviews_risk_id_fkey"
+            columns: ["risk_id"]
+            isOneToOne: false
+            referencedRelation: "risks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      risk_status_history: {
+        Row: {
+          changed_by: string | null
+          company_id: string
+          created_at: string
+          id: string
+          new_status: string | null
+          old_status: string | null
+          project_id: string
+          remarks: string | null
+          risk_id: string
+        }
+        Insert: {
+          changed_by?: string | null
+          company_id: string
+          created_at?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id: string
+          remarks?: string | null
+          risk_id: string
+        }
+        Update: {
+          changed_by?: string | null
+          company_id?: string
+          created_at?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id?: string
+          remarks?: string | null
+          risk_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "risk_status_history_risk_id_fkey"
+            columns: ["risk_id"]
+            isOneToOne: false
+            referencedRelation: "risks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       risks: {
         Row: {
+          actual_mitigation_date: string | null
+          assigned_to: string | null
+          boq_item_id: string | null
           category: string | null
+          client_impact: boolean | null
+          closed_at: string | null
+          company_id: string | null
+          contingency_plan: string | null
+          converted_issue_id: string | null
+          converted_to_issue: boolean | null
+          cost_impact: boolean | null
+          cost_impact_amount: number | null
           created_at: string
           created_by: string | null
           description: string | null
           due_date: string | null
+          early_warning_signs: string | null
+          escalated_at: string | null
+          escalated_to: string | null
+          escalation_reason: string | null
+          escalation_status: string | null
           id: string
+          identified_by: string | null
           impact: number | null
+          is_archived: boolean | null
+          is_client_visible: boolean | null
+          issue_id: string | null
+          location: string | null
+          milestone_id: string | null
           mitigation_action: string | null
+          mitigation_plan: string | null
+          ncr_id: string | null
           owner_id: string | null
           probability: number | null
           project_id: string
+          quality_impact: boolean | null
+          quality_inspection_id: string | null
+          remarks: string | null
+          reopened_at: string | null
+          residual_impact: number | null
+          residual_probability: number | null
+          residual_risk_level: string | null
+          residual_risk_score: number | null
+          response_strategy: string | null
+          review_date: string | null
+          risk_category: string | null
+          risk_level: string | null
+          risk_number: string | null
+          risk_owner_id: string | null
           risk_score: number | null
+          risk_source: string | null
+          risk_type: string | null
+          safety_impact: boolean | null
+          safety_inspection_id: string | null
           status: string
+          target_mitigation_date: string | null
+          task_id: string | null
+          time_impact: boolean | null
+          time_impact_days: number | null
           title: string
+          trigger_condition: string | null
           updated_at: string
+          variation_id: string | null
+          wbs_id: string | null
         }
         Insert: {
+          actual_mitigation_date?: string | null
+          assigned_to?: string | null
+          boq_item_id?: string | null
           category?: string | null
+          client_impact?: boolean | null
+          closed_at?: string | null
+          company_id?: string | null
+          contingency_plan?: string | null
+          converted_issue_id?: string | null
+          converted_to_issue?: boolean | null
+          cost_impact?: boolean | null
+          cost_impact_amount?: number | null
           created_at?: string
           created_by?: string | null
           description?: string | null
           due_date?: string | null
+          early_warning_signs?: string | null
+          escalated_at?: string | null
+          escalated_to?: string | null
+          escalation_reason?: string | null
+          escalation_status?: string | null
           id?: string
+          identified_by?: string | null
           impact?: number | null
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          issue_id?: string | null
+          location?: string | null
+          milestone_id?: string | null
           mitigation_action?: string | null
+          mitigation_plan?: string | null
+          ncr_id?: string | null
           owner_id?: string | null
           probability?: number | null
           project_id: string
+          quality_impact?: boolean | null
+          quality_inspection_id?: string | null
+          remarks?: string | null
+          reopened_at?: string | null
+          residual_impact?: number | null
+          residual_probability?: number | null
+          residual_risk_level?: string | null
+          residual_risk_score?: number | null
+          response_strategy?: string | null
+          review_date?: string | null
+          risk_category?: string | null
+          risk_level?: string | null
+          risk_number?: string | null
+          risk_owner_id?: string | null
           risk_score?: number | null
+          risk_source?: string | null
+          risk_type?: string | null
+          safety_impact?: boolean | null
+          safety_inspection_id?: string | null
           status?: string
+          target_mitigation_date?: string | null
+          task_id?: string | null
+          time_impact?: boolean | null
+          time_impact_days?: number | null
           title: string
+          trigger_condition?: string | null
           updated_at?: string
+          variation_id?: string | null
+          wbs_id?: string | null
         }
         Update: {
+          actual_mitigation_date?: string | null
+          assigned_to?: string | null
+          boq_item_id?: string | null
           category?: string | null
+          client_impact?: boolean | null
+          closed_at?: string | null
+          company_id?: string | null
+          contingency_plan?: string | null
+          converted_issue_id?: string | null
+          converted_to_issue?: boolean | null
+          cost_impact?: boolean | null
+          cost_impact_amount?: number | null
           created_at?: string
           created_by?: string | null
           description?: string | null
           due_date?: string | null
+          early_warning_signs?: string | null
+          escalated_at?: string | null
+          escalated_to?: string | null
+          escalation_reason?: string | null
+          escalation_status?: string | null
           id?: string
+          identified_by?: string | null
           impact?: number | null
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          issue_id?: string | null
+          location?: string | null
+          milestone_id?: string | null
           mitigation_action?: string | null
+          mitigation_plan?: string | null
+          ncr_id?: string | null
           owner_id?: string | null
           probability?: number | null
           project_id?: string
+          quality_impact?: boolean | null
+          quality_inspection_id?: string | null
+          remarks?: string | null
+          reopened_at?: string | null
+          residual_impact?: number | null
+          residual_probability?: number | null
+          residual_risk_level?: string | null
+          residual_risk_score?: number | null
+          response_strategy?: string | null
+          review_date?: string | null
+          risk_category?: string | null
+          risk_level?: string | null
+          risk_number?: string | null
+          risk_owner_id?: string | null
           risk_score?: number | null
+          risk_source?: string | null
+          risk_type?: string | null
+          safety_impact?: boolean | null
+          safety_inspection_id?: string | null
           status?: string
+          target_mitigation_date?: string | null
+          task_id?: string | null
+          time_impact?: boolean | null
+          time_impact_days?: number | null
           title?: string
+          trigger_condition?: string | null
           updated_at?: string
+          variation_id?: string | null
+          wbs_id?: string | null
         }
         Relationships: [
           {
