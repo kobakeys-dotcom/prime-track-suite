@@ -5029,60 +5029,491 @@ export type Database = {
           },
         ]
       }
-      safety_inspections: {
+      safety_hazards: {
         Row: {
-          checklist: Json
+          checklist_item_id: string | null
+          closed_at: string | null
+          closed_by: string | null
+          closeout_notes: string | null
+          closeout_status: string | null
+          company_id: string
           corrective_action: string | null
           created_at: string
           created_by: string | null
-          due_date: string | null
+          hazard_category: string | null
+          hazard_description: string | null
+          hazard_title: string
           id: string
-          inspection_number: string
+          is_archived: boolean | null
+          likelihood: string | null
           location: string | null
-          photos: Json
-          ppe_compliance: string | null
           project_id: string
-          responsible_person: string | null
-          status: string
-          unsafe_acts: string | null
-          unsafe_conditions: string | null
+          responsible_user_id: string | null
+          risk_level: string | null
+          safety_inspection_id: string
+          severity: string | null
+          target_closeout_date: string | null
           updated_at: string
         }
         Insert: {
-          checklist?: Json
+          checklist_item_id?: string | null
+          closed_at?: string | null
+          closed_by?: string | null
+          closeout_notes?: string | null
+          closeout_status?: string | null
+          company_id: string
           corrective_action?: string | null
           created_at?: string
           created_by?: string | null
-          due_date?: string | null
+          hazard_category?: string | null
+          hazard_description?: string | null
+          hazard_title: string
           id?: string
-          inspection_number: string
+          is_archived?: boolean | null
+          likelihood?: string | null
           location?: string | null
-          photos?: Json
-          ppe_compliance?: string | null
           project_id: string
-          responsible_person?: string | null
-          status?: string
-          unsafe_acts?: string | null
-          unsafe_conditions?: string | null
+          responsible_user_id?: string | null
+          risk_level?: string | null
+          safety_inspection_id: string
+          severity?: string | null
+          target_closeout_date?: string | null
           updated_at?: string
         }
         Update: {
-          checklist?: Json
+          checklist_item_id?: string | null
+          closed_at?: string | null
+          closed_by?: string | null
+          closeout_notes?: string | null
+          closeout_status?: string | null
+          company_id?: string
           corrective_action?: string | null
           created_at?: string
           created_by?: string | null
-          due_date?: string | null
+          hazard_category?: string | null
+          hazard_description?: string | null
+          hazard_title?: string
           id?: string
-          inspection_number?: string
+          is_archived?: boolean | null
+          likelihood?: string | null
           location?: string | null
+          project_id?: string
+          responsible_user_id?: string | null
+          risk_level?: string | null
+          safety_inspection_id?: string
+          severity?: string | null
+          target_closeout_date?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "safety_hazards_checklist_item_id_fkey"
+            columns: ["checklist_item_id"]
+            isOneToOne: false
+            referencedRelation: "safety_inspection_checklist_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "safety_hazards_safety_inspection_id_fkey"
+            columns: ["safety_inspection_id"]
+            isOneToOne: false
+            referencedRelation: "safety_inspections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      safety_inspection_attachments: {
+        Row: {
+          attachment_type: string | null
+          checklist_item_id: string | null
+          company_id: string
+          created_at: string
+          description: string | null
+          file_name: string
+          file_type: string | null
+          file_url: string
+          hazard_id: string | null
+          id: string
+          is_client_visible: boolean | null
+          project_id: string
+          safety_inspection_id: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          attachment_type?: string | null
+          checklist_item_id?: string | null
+          company_id: string
+          created_at?: string
+          description?: string | null
+          file_name: string
+          file_type?: string | null
+          file_url: string
+          hazard_id?: string | null
+          id?: string
+          is_client_visible?: boolean | null
+          project_id: string
+          safety_inspection_id: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          attachment_type?: string | null
+          checklist_item_id?: string | null
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          file_name?: string
+          file_type?: string | null
+          file_url?: string
+          hazard_id?: string | null
+          id?: string
+          is_client_visible?: boolean | null
+          project_id?: string
+          safety_inspection_id?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "safety_inspection_attachments_checklist_item_id_fkey"
+            columns: ["checklist_item_id"]
+            isOneToOne: false
+            referencedRelation: "safety_inspection_checklist_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "safety_inspection_attachments_hazard_id_fkey"
+            columns: ["hazard_id"]
+            isOneToOne: false
+            referencedRelation: "safety_hazards"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "safety_inspection_attachments_safety_inspection_id_fkey"
+            columns: ["safety_inspection_id"]
+            isOneToOne: false
+            referencedRelation: "safety_inspections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      safety_inspection_checklist_items: {
+        Row: {
+          checklist_item: string
+          closed_at: string | null
+          closed_by: string | null
+          closeout_notes: string | null
+          closeout_status: string | null
+          company_id: string
+          corrective_action: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          is_archived: boolean | null
+          item_number: string | null
+          photo_required: boolean | null
+          project_id: string
+          remarks: string | null
+          requirement: string | null
+          responsible_user_id: string | null
+          result: string | null
+          risk_level: string | null
+          safety_inspection_id: string
+          safety_standard_reference: string | null
+          sort_order: number | null
+          target_closeout_date: string | null
+          updated_at: string
+        }
+        Insert: {
+          checklist_item: string
+          closed_at?: string | null
+          closed_by?: string | null
+          closeout_notes?: string | null
+          closeout_status?: string | null
+          company_id: string
+          corrective_action?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_archived?: boolean | null
+          item_number?: string | null
+          photo_required?: boolean | null
+          project_id: string
+          remarks?: string | null
+          requirement?: string | null
+          responsible_user_id?: string | null
+          result?: string | null
+          risk_level?: string | null
+          safety_inspection_id: string
+          safety_standard_reference?: string | null
+          sort_order?: number | null
+          target_closeout_date?: string | null
+          updated_at?: string
+        }
+        Update: {
+          checklist_item?: string
+          closed_at?: string | null
+          closed_by?: string | null
+          closeout_notes?: string | null
+          closeout_status?: string | null
+          company_id?: string
+          corrective_action?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_archived?: boolean | null
+          item_number?: string | null
+          photo_required?: boolean | null
+          project_id?: string
+          remarks?: string | null
+          requirement?: string | null
+          responsible_user_id?: string | null
+          result?: string | null
+          risk_level?: string | null
+          safety_inspection_id?: string
+          safety_standard_reference?: string | null
+          sort_order?: number | null
+          target_closeout_date?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "safety_inspection_checklist_items_safety_inspection_id_fkey"
+            columns: ["safety_inspection_id"]
+            isOneToOne: false
+            referencedRelation: "safety_inspections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      safety_inspection_status_history: {
+        Row: {
+          changed_by: string | null
+          company_id: string
+          created_at: string
+          id: string
+          new_status: string | null
+          old_status: string | null
+          project_id: string
+          remarks: string | null
+          safety_inspection_id: string
+        }
+        Insert: {
+          changed_by?: string | null
+          company_id: string
+          created_at?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id: string
+          remarks?: string | null
+          safety_inspection_id: string
+        }
+        Update: {
+          changed_by?: string | null
+          company_id?: string
+          created_at?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id?: string
+          remarks?: string | null
+          safety_inspection_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "safety_inspection_status_history_safety_inspection_id_fkey"
+            columns: ["safety_inspection_id"]
+            isOneToOne: false
+            referencedRelation: "safety_inspections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      safety_inspections: {
+        Row: {
+          approval_comments: string | null
+          approved_at: string | null
+          approved_by: string | null
+          area: string | null
+          assigned_inspector_id: string | null
+          category: string | null
+          checklist: Json
+          checklist_na_count: number | null
+          checklist_safe_count: number | null
+          checklist_unsafe_count: number | null
+          closed_at: string | null
+          company_id: string | null
+          corrective_action: string | null
+          corrective_action_summary: string | null
+          corrective_actions_closed: number | null
+          corrective_actions_open: number | null
+          created_at: string
+          created_by: string | null
+          due_date: string | null
+          findings: string | null
+          floor_level: string | null
+          hazards_found: number | null
+          id: string
+          inspected_at: string | null
+          inspected_by: string | null
+          inspection_date: string | null
+          inspection_number: string
+          inspection_result: string | null
+          inspection_time: string | null
+          inspection_title: string | null
+          inspection_type: string | null
+          is_archived: boolean | null
+          is_client_visible: boolean | null
+          issue_created: boolean | null
+          issue_id: string | null
+          location: string | null
+          ncr_created: boolean | null
+          ncr_id: string | null
+          overall_risk_level: string | null
+          photos: Json
+          ppe_compliance: string | null
+          priority: string | null
+          project_id: string
+          rejected_at: string | null
+          rejection_reason: string | null
+          requested_by: string | null
+          responsible_person: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          revision_notes: string | null
+          status: string
+          subcontractor_id: string | null
+          submitted_at: string | null
+          task_id: string | null
+          total_checklist_items: number | null
+          unsafe_acts: string | null
+          unsafe_conditions: string | null
+          updated_at: string
+          wbs_id: string | null
+          work_activity: string | null
+        }
+        Insert: {
+          approval_comments?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          area?: string | null
+          assigned_inspector_id?: string | null
+          category?: string | null
+          checklist?: Json
+          checklist_na_count?: number | null
+          checklist_safe_count?: number | null
+          checklist_unsafe_count?: number | null
+          closed_at?: string | null
+          company_id?: string | null
+          corrective_action?: string | null
+          corrective_action_summary?: string | null
+          corrective_actions_closed?: number | null
+          corrective_actions_open?: number | null
+          created_at?: string
+          created_by?: string | null
+          due_date?: string | null
+          findings?: string | null
+          floor_level?: string | null
+          hazards_found?: number | null
+          id?: string
+          inspected_at?: string | null
+          inspected_by?: string | null
+          inspection_date?: string | null
+          inspection_number: string
+          inspection_result?: string | null
+          inspection_time?: string | null
+          inspection_title?: string | null
+          inspection_type?: string | null
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          issue_created?: boolean | null
+          issue_id?: string | null
+          location?: string | null
+          ncr_created?: boolean | null
+          ncr_id?: string | null
+          overall_risk_level?: string | null
           photos?: Json
           ppe_compliance?: string | null
-          project_id?: string
+          priority?: string | null
+          project_id: string
+          rejected_at?: string | null
+          rejection_reason?: string | null
+          requested_by?: string | null
           responsible_person?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
           status?: string
+          subcontractor_id?: string | null
+          submitted_at?: string | null
+          task_id?: string | null
+          total_checklist_items?: number | null
           unsafe_acts?: string | null
           unsafe_conditions?: string | null
           updated_at?: string
+          wbs_id?: string | null
+          work_activity?: string | null
+        }
+        Update: {
+          approval_comments?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          area?: string | null
+          assigned_inspector_id?: string | null
+          category?: string | null
+          checklist?: Json
+          checklist_na_count?: number | null
+          checklist_safe_count?: number | null
+          checklist_unsafe_count?: number | null
+          closed_at?: string | null
+          company_id?: string | null
+          corrective_action?: string | null
+          corrective_action_summary?: string | null
+          corrective_actions_closed?: number | null
+          corrective_actions_open?: number | null
+          created_at?: string
+          created_by?: string | null
+          due_date?: string | null
+          findings?: string | null
+          floor_level?: string | null
+          hazards_found?: number | null
+          id?: string
+          inspected_at?: string | null
+          inspected_by?: string | null
+          inspection_date?: string | null
+          inspection_number?: string
+          inspection_result?: string | null
+          inspection_time?: string | null
+          inspection_title?: string | null
+          inspection_type?: string | null
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          issue_created?: boolean | null
+          issue_id?: string | null
+          location?: string | null
+          ncr_created?: boolean | null
+          ncr_id?: string | null
+          overall_risk_level?: string | null
+          photos?: Json
+          ppe_compliance?: string | null
+          priority?: string | null
+          project_id?: string
+          rejected_at?: string | null
+          rejection_reason?: string | null
+          requested_by?: string | null
+          responsible_person?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
+          status?: string
+          subcontractor_id?: string | null
+          submitted_at?: string | null
+          task_id?: string | null
+          total_checklist_items?: number | null
+          unsafe_acts?: string | null
+          unsafe_conditions?: string | null
+          updated_at?: string
+          wbs_id?: string | null
+          work_activity?: string | null
         }
         Relationships: [
           {
