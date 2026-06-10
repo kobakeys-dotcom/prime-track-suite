@@ -387,7 +387,7 @@ export const createPoFromRfq = createServerFn({ method: "POST" })
     const totalsWithTax = { ...totals, tax_amount: Number(q?.tax_amount ?? 0), total_amount: +(totals.subtotal_amount - Number(q?.discount_amount ?? 0) + Number(q?.tax_amount ?? 0)).toFixed(2) };
     const poNumber = await nextPoNumber(sb, rfq.project_id);
     const { data: po, error } = await sb.from("purchase_orders").insert({
-      company_id: rfq.company_id, project_id: rfq.project_id,
+      company_id: rfq.company_id as string, project_id: rfq.project_id,
       po_number: poNumber, po_title: rfq.rfq_title,
       supplier_id: rfq.selected_supplier_id,
       supplier_name: sup?.name ?? null, supplier_email: sup?.email ?? null,
@@ -413,7 +413,7 @@ export const createPoFromRfq = createServerFn({ method: "POST" })
     if (error) throw error;
     if (items.length) {
       await sb.from("purchase_order_items").insert(items.map((it: any) => ({
-        company_id: rfq.company_id, project_id: rfq.project_id, purchase_order_id: po!.id,
+        company_id: rfq.company_id as string, project_id: rfq.project_id, purchase_order_id: po!.id,
         rfq_item_id: it.rfq_item_id, supplier_quotation_item_id: it.supplier_quotation_item_id,
         item_name: it.item_name, description: it.description, unit: it.unit,
         ordered_quantity: it.ordered_quantity, unit_rate: it.unit_rate,
@@ -453,7 +453,7 @@ export const createPoFromMaterialRequest = createServerFn({ method: "POST" })
     const totals = rollupTotals(items, { discount_amount: 0, tax_percentage: 0, shipping_amount: 0, other_charges: 0 });
     const poNumber = await nextPoNumber(sb, mr.project_id);
     const { data: po, error } = await sb.from("purchase_orders").insert({
-      company_id: mr.company_id, project_id: mr.project_id,
+      company_id: mr.company_id as string, project_id: mr.project_id,
       po_number: poNumber, po_title: mr.request_title,
       supplier_id: data.supplier_id ?? null,
       supplier_name: data.supplier_name ?? null,
@@ -472,7 +472,7 @@ export const createPoFromMaterialRequest = createServerFn({ method: "POST" })
     if (error) throw error;
     if (items.length) {
       await sb.from("purchase_order_items").insert(items.map((it: any) => ({
-        company_id: mr.company_id, project_id: mr.project_id, purchase_order_id: po!.id,
+        company_id: mr.company_id as string, project_id: mr.project_id, purchase_order_id: po!.id,
         material_request_item_id: it.material_request_item_id, boq_item_id: it.boq_item_id,
         cost_code_id: it.cost_code_id, wbs_id: it.wbs_id, task_id: it.task_id,
         item_name: it.item_name, description: it.description, specification: it.specification,
@@ -502,7 +502,7 @@ export const addPoAttachment = createServerFn({ method: "POST" })
     const { data: po } = await sb.from("purchase_orders").select("company_id,project_id").eq("id", data.purchase_order_id).maybeSingle();
     if (!po) throw new Error("PO not found");
     const { error } = await sb.from("purchase_order_attachments").insert({
-      company_id: po.company_id, project_id: po.project_id,
+      company_id: po.company_id as string, project_id: po.project_id,
       purchase_order_id: data.purchase_order_id,
       uploaded_by: context.userId,
       file_name: data.file_name, file_url: data.file_url,
