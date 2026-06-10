@@ -33,12 +33,12 @@ async function run() {
   if (overdueRows.length) await supabaseAdmin.from("notifications").insert(overdueRows);
   created.push({ kind: "overdue_tasks", count: overdueRows.length });
 
-  // 2) Missing daily reports — active projects with no report today → notify project manager
+  // 2) Missing daily reports — active projects with no report today → notify project creator
   const { data: projects } = await supabaseAdmin
     .from("projects")
-    .select("id, name, manager_id")
+    .select("id, name, created_by")
     .eq("status", "active")
-    .not("manager_id", "is", null);
+    .not("created_by", "is", null);
 
   const { data: reportsToday } = await supabaseAdmin
     .from("daily_reports")
@@ -48,7 +48,7 @@ async function run() {
   const missingRows = (projects ?? [])
     .filter((p) => !reported.has(p.id))
     .map((p) => ({
-      user_id: p.manager_id as string,
+      user_id: p.created_by as string,
       title: "Missing daily report",
       body: `No daily report submitted today for ${p.name}`,
       severity: "warning",
@@ -61,7 +61,7 @@ async function run() {
   const horizon = new Date(Date.now() + 14 * 86400000).toISOString().slice(0, 10);
   const { data: expiring } = await supabaseAdmin
     .from("documents")
-    .select("id, title, expires_at, uploaded_by")
+    .select("id, name, expires_at, uploaded_by")
     .gte("expires_at", today)
     .lte("expires_at", horizon)
     .not("uploaded_by", "is", null);
@@ -69,7 +69,7 @@ async function run() {
   const expiryRows = (expiring ?? []).map((d) => ({
     user_id: d.uploaded_by as string,
     title: "Document expiring soon",
-    body: `${d.title} expires on ${d.expires_at}`,
+    body: `${d.name} expires on ${d.expires_at}`,
     severity: "warning",
     link: `/documents`,
   }));
