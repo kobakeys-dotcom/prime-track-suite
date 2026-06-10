@@ -164,7 +164,7 @@ export const saveNcr = createServerFn({ method: "POST" })
       payload.due_date = data.target_closeout_date ?? null;
       const { data: row, error } = await sb.from("ncrs").insert(payload).select(NCR_COLS).single();
       if (error) throw new Error(error.message);
-      await logStatus(sb, row.id, data.project_id, companyId, null, payload.status, userId, "Created");
+      await logStatus(sb, (row as any).id, data.project_id, companyId, null, payload.status, userId ?? "", "Created");
       return row;
     } else {
       const { id, ...upd } = payload;
