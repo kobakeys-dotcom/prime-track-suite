@@ -1,22 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RegisterPage } from "@/components/register-page";
-import { REGISTERS } from "@/lib/register-configs";
-
-const cfg = REGISTERS["purchase_orders"];
+import { PurchaseOrderRegister } from "@/components/purchase-order-register";
 
 export const Route = createFileRoute("/_authenticated/purchase-orders")({
-  head: () => ({ meta: [{ title: `${cfg.title} — ProjectCore` }] }),
+  head: () => ({ meta: [{ title: "Purchase Orders — ProjectCore" }] }),
   component: () => (
-    <RegisterPage
-      table="purchase_orders"
-      title={cfg.title}
-      description={cfg.description}
-      fields={cfg.fields}
-      projectScoped={cfg.projectScoped}
-      statusField={cfg.statusField}
-      statusStyles={STATUS_STYLES_GENERIC}
-    />
+    <div className="p-4 space-y-4">
+      <div>
+        <h1 className="text-2xl font-semibold">Purchase Orders</h1>
+        <p className="text-sm text-zinc-500">Create, approve, issue, and track purchase orders for materials, equipment, and services.</p>
+      </div>
+      <PurchaseOrderRegister />
+    </div>
   ),
 });
-
-import { STATUS_STYLES_GENERIC } from "@/lib/register-configs";
