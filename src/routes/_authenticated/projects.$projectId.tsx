@@ -160,6 +160,7 @@ function ProjectDetail() {
         <TabsContent value="risks" className="pt-4"><RiskRegister projectId={projectId} /></TabsContent>
         <TabsContent value="manpower" className="pt-4"><ManpowerRegister projectId={projectId} /></TabsContent>
         <TabsContent value="equipment" className="pt-4"><EquipmentRegister projectId={projectId} /></TabsContent>
+        <TabsContent value="timesheets" className="pt-4"><TimesheetRegister projectId={projectId} /></TabsContent>
         {(["snags", "issues", "meetings"] as const).map((k) => {
           const cfg = REGISTERS[k];
           const tabValue = ({ snags: "snags", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
