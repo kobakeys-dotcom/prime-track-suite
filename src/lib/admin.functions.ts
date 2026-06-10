@@ -111,7 +111,7 @@ export const seedDemoData = createServerFn({ method: "POST" })
     if (e1) throw e1;
 
     const tasks = [
-      { title: "Site mobilization", status: "completed" as const, progress: 100, start_date: iso(addDays(-30)), due_date: iso(addDays(-20)) },
+      { title: "Site mobilization", status: "done" as const, progress: 100, start_date: iso(addDays(-30)), due_date: iso(addDays(-20)) },
       { title: "Excavation works", status: "in_progress" as const, progress: 60, start_date: iso(addDays(-20)), due_date: iso(addDays(10)) },
       { title: "Foundation rebar", status: "todo" as const, progress: 0, start_date: iso(addDays(5)), due_date: iso(addDays(25)) },
       { title: "Concrete pour - raft", status: "todo" as const, progress: 0, start_date: iso(addDays(25)), due_date: iso(addDays(40)) },
