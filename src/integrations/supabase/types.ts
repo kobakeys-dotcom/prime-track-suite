@@ -741,26 +741,41 @@ export type Database = {
         Row: {
           completed_at: string | null
           created_at: string
+          description: string | null
           due_date: string | null
           id: string
+          is_archived: boolean
           name: string
+          progress: number
           project_id: string
+          status: string
+          updated_at: string
         }
         Insert: {
           completed_at?: string | null
           created_at?: string
+          description?: string | null
           due_date?: string | null
           id?: string
+          is_archived?: boolean
           name: string
+          progress?: number
           project_id: string
+          status?: string
+          updated_at?: string
         }
         Update: {
           completed_at?: string | null
           created_at?: string
+          description?: string | null
           due_date?: string | null
           id?: string
+          is_archived?: boolean
           name?: string
+          progress?: number
           project_id?: string
+          status?: string
+          updated_at?: string
         }
         Relationships: [
           {
@@ -1850,55 +1865,79 @@ export type Database = {
       }
       tasks: {
         Row: {
+          actual_finish: string | null
+          actual_start: string | null
           assignee_id: string | null
           completed_at: string | null
           created_at: string
           created_by: string | null
           description: string | null
+          discipline: string | null
           due_date: string | null
           id: string
+          is_archived: boolean
+          location: string | null
           milestone_id: string | null
+          parent_task_id: string | null
           priority: Database["public"]["Enums"]["task_priority"]
           progress: number
           project_id: string
+          remarks: string | null
           start_date: string | null
           status: Database["public"]["Enums"]["task_status"]
           title: string
           updated_at: string
+          wbs_id: string | null
         }
         Insert: {
+          actual_finish?: string | null
+          actual_start?: string | null
           assignee_id?: string | null
           completed_at?: string | null
           created_at?: string
           created_by?: string | null
           description?: string | null
+          discipline?: string | null
           due_date?: string | null
           id?: string
+          is_archived?: boolean
+          location?: string | null
           milestone_id?: string | null
+          parent_task_id?: string | null
           priority?: Database["public"]["Enums"]["task_priority"]
           progress?: number
           project_id: string
+          remarks?: string | null
           start_date?: string | null
           status?: Database["public"]["Enums"]["task_status"]
           title: string
           updated_at?: string
+          wbs_id?: string | null
         }
         Update: {
+          actual_finish?: string | null
+          actual_start?: string | null
           assignee_id?: string | null
           completed_at?: string | null
           created_at?: string
           created_by?: string | null
           description?: string | null
+          discipline?: string | null
           due_date?: string | null
           id?: string
+          is_archived?: boolean
+          location?: string | null
           milestone_id?: string | null
+          parent_task_id?: string | null
           priority?: Database["public"]["Enums"]["task_priority"]
           progress?: number
           project_id?: string
+          remarks?: string | null
           start_date?: string | null
           status?: Database["public"]["Enums"]["task_status"]
           title?: string
           updated_at?: string
+          wbs_id?: string | null
         }
         Relationships: [
           {
@@ -1909,10 +1948,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "tasks_parent_task_id_fkey"
+            columns: ["parent_task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "tasks_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_wbs_id_fkey"
+            columns: ["wbs_id"]
+            isOneToOne: false
+            referencedRelation: "wbs_items"
             referencedColumns: ["id"]
           },
         ]
@@ -2055,6 +2108,75 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "variations_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      wbs_items: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_archived: boolean
+          parent_wbs_id: string | null
+          planned_finish: string | null
+          planned_start: string | null
+          progress: number
+          project_id: string
+          sort_order: number
+          status: string
+          title: string
+          updated_at: string
+          wbs_code: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_archived?: boolean
+          parent_wbs_id?: string | null
+          planned_finish?: string | null
+          planned_start?: string | null
+          progress?: number
+          project_id: string
+          sort_order?: number
+          status?: string
+          title: string
+          updated_at?: string
+          wbs_code?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_archived?: boolean
+          parent_wbs_id?: string | null
+          planned_finish?: string | null
+          planned_start?: string | null
+          progress?: number
+          project_id?: string
+          sort_order?: number
+          status?: string
+          title?: string
+          updated_at?: string
+          wbs_code?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wbs_items_parent_wbs_id_fkey"
+            columns: ["parent_wbs_id"]
+            isOneToOne: false
+            referencedRelation: "wbs_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "wbs_items_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"

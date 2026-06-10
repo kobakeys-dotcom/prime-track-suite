@@ -240,10 +240,38 @@ export const REGISTERS: Record<string, { title: string; description: string; pro
   },
   milestones: {
     title: "Milestones", description: "Project milestones and dates.", projectScoped: true,
+    statusField: "status",
     fields: [
       { name: "name", label: "Name", required: true },
+      { name: "description", label: "Description", type: "textarea", hideInTable: true },
       { name: "due_date", label: "Planned", type: "date" },
       { name: "completed_at", label: "Completed", type: "date" },
+      { name: "status", label: "Status", type: "select", options: [
+        { value: "not_started", label: "Not Started" },
+        { value: "in_progress", label: "In Progress" },
+        { value: "completed", label: "Completed" },
+        { value: "delayed", label: "Delayed" },
+        { value: "on_hold", label: "On Hold" },
+      ] },
+      { name: "progress", label: "Progress %", type: "number" },
+    ],
+  },
+  wbs_items: {
+    title: "WBS", description: "Work Breakdown Structure for project planning.", projectScoped: true, statusField: "status",
+    fields: [
+      { name: "wbs_code", label: "Code" },
+      { name: "title", label: "Title", required: true },
+      { name: "description", label: "Description", type: "textarea", hideInTable: true },
+      { name: "planned_start", label: "Planned Start", type: "date" },
+      { name: "planned_finish", label: "Planned Finish", type: "date" },
+      { name: "progress", label: "Progress %", type: "number" },
+      { name: "sort_order", label: "Sort", type: "number", hideInTable: true },
+      { name: "status", label: "Status", type: "select", options: [
+        { value: "not_started", label: "Not Started" },
+        { value: "in_progress", label: "In Progress" },
+        { value: "completed", label: "Completed" },
+        { value: "on_hold", label: "On Hold" },
+      ] },
     ],
   },
 };
