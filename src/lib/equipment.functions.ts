@@ -58,7 +58,7 @@ export const listEquipment = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: { projectId?: string | null }) => d)
   .handler(async ({ data, context }) => {
-    let q = context.supabase.from("equipment").select(EQ_COLS).eq("is_archived", false).order("created_at", { ascending: false });
+    let q = context.supabase.from("equipment").select("*").eq("is_archived", false).order("created_at", { ascending: false });
     if (data.projectId) q = q.or(`project_id.eq.${data.projectId},assigned_to_project_id.eq.${data.projectId}`);
     const { data: rows, error } = await q;
     if (error) throw error;
@@ -69,7 +69,7 @@ export const getEquipment = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: { id: string }) => d)
   .handler(async ({ data, context }) => {
-    const { data: eq } = await context.supabase.from("equipment").select(EQ_COLS).eq("id", data.id).maybeSingle();
+    const { data: eq } = await context.supabase.from("equipment").select("*").eq("id", data.id).maybeSingle();
     const [assignments, usage, maint, breakdowns, inspections, docs, atts, comments, hist] = await Promise.all([
       context.supabase.from("equipment_assignments").select("*").eq("equipment_id", data.id).eq("is_archived", false).order("assignment_start_date", { ascending: false }),
       context.supabase.from("equipment_usage_logs").select("*").eq("equipment_id", data.id).eq("is_archived", false).order("usage_date", { ascending: false }),
@@ -146,7 +146,7 @@ export const saveEquipment = createServerFn({ method: "POST" })
     if (id) {
       // status history
       const { data: cur } = await context.supabase.from("equipment").select("current_status, company_id, project_id").eq("id", id).maybeSingle();
-      const { data: out, error } = await context.supabase.from("equipment").update(payload).eq("id", id).select(EQ_COLS).maybeSingle();
+      const { data: out, error } = await context.supabase.from("equipment").update(payload).eq("id", id).select("*").maybeSingle();
       if (error) throw error;
       if (cur && cur.current_status !== payload.current_status) {
         await context.supabase.from("equipment_status_history").insert({
@@ -158,7 +158,7 @@ export const saveEquipment = createServerFn({ method: "POST" })
     }
     payload.company_id = companyId;
     payload.created_by = context.userId;
-    const { data: out, error } = await context.supabase.from("equipment").insert(payload).select(EQ_COLS).maybeSingle();
+    const { data: out, error } = await context.supabase.from("equipment").insert(payload).select("*").maybeSingle();
     if (error) throw error;
     return out;
   });
@@ -593,7 +593,7 @@ export const equipmentStats = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: { projectId?: string | null }) => d)
   .handler(async ({ data, context }) => {
-    let eqQ = context.supabase.from("equipment").select(EQ_COLS).eq("is_archived", false);
+    let eqQ = context.supabase.from("equipment").select("*").eq("is_archived", false);
     if (data.projectId) eqQ = eqQ.or(`project_id.eq.${data.projectId},assigned_to_project_id.eq.${data.projectId}`);
     const { data: eq } = await eqQ;
     let usageQ = context.supabase.from("equipment_usage_logs").select("*").eq("is_archived", false);
