@@ -214,7 +214,7 @@ export const saveManpowerPlan = createServerFn({ method: "POST" })
       if (error) throw error;
       return out;
     }
-    const { data: out, error } = await context.supabase.from("manpower_plans").insert({ ...rest, company_id: prof?.company_id, created_by: context.userId }).select().maybeSingle();
+    const { data: out, error } = await context.supabase.from("manpower_plans").insert({ ...rest, company_id: prof?.company_id, created_by: context.userId ?? null } as any).select().maybeSingle();
     if (error) throw error;
     return out;
   });
@@ -269,7 +269,7 @@ export const saveWorker = createServerFn({ method: "POST" })
       if (error) throw error;
       return out;
     }
-    const { data: out, error } = await context.supabase.from("manpower_workers").insert({ ...rest, company_id: prof?.company_id, created_by: context.userId }).select().maybeSingle();
+    const { data: out, error } = await context.supabase.from("manpower_workers").insert({ ...rest, company_id: prof?.company_id, created_by: context.userId ?? null } as any).select().maybeSingle();
     if (error) throw error;
     return out;
   });
