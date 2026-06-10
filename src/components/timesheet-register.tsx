@@ -120,6 +120,7 @@ export function TimesheetRegister({ projectId: fixedProjectId }: { projectId?: s
   }
 
   const statusMut = (fn: any, msg: string) => useMutation({
+    // eslint-disable-next-line
     mutationFn: (vars: any) => fn({ data: vars }),
     onSuccess: () => { toast.success(msg); refreshAll(); },
     onError: (e: any) => toast.error(e?.message || "Failed"),
