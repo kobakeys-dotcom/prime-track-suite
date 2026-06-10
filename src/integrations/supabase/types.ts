@@ -14,6 +14,91 @@ export type Database = {
   }
   public: {
     Tables: {
+      actual_cost_entries: {
+        Row: {
+          amount: number
+          budget_line_id: string | null
+          company_id: string
+          cost_code_id: string | null
+          cost_date: string
+          created_at: string
+          currency: string | null
+          description: string
+          entered_by: string | null
+          id: string
+          invoice_number: string | null
+          is_archived: boolean
+          project_id: string
+          source_module: string | null
+          source_record_id: string | null
+          status: string
+          supplier_name: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount?: number
+          budget_line_id?: string | null
+          company_id: string
+          cost_code_id?: string | null
+          cost_date?: string
+          created_at?: string
+          currency?: string | null
+          description: string
+          entered_by?: string | null
+          id?: string
+          invoice_number?: string | null
+          is_archived?: boolean
+          project_id: string
+          source_module?: string | null
+          source_record_id?: string | null
+          status?: string
+          supplier_name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          budget_line_id?: string | null
+          company_id?: string
+          cost_code_id?: string | null
+          cost_date?: string
+          created_at?: string
+          currency?: string | null
+          description?: string
+          entered_by?: string | null
+          id?: string
+          invoice_number?: string | null
+          is_archived?: boolean
+          project_id?: string
+          source_module?: string | null
+          source_record_id?: string | null
+          status?: string
+          supplier_name?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "actual_cost_entries_budget_line_id_fkey"
+            columns: ["budget_line_id"]
+            isOneToOne: false
+            referencedRelation: "budget_lines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "actual_cost_entries_cost_code_id_fkey"
+            columns: ["cost_code_id"]
+            isOneToOne: false
+            referencedRelation: "cost_codes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "actual_cost_entries_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       approvals: {
         Row: {
           approver_id: string | null
@@ -231,6 +316,229 @@ export type Database = {
           },
         ]
       }
+      budget_change_orders: {
+        Row: {
+          approved_amount: number
+          approved_at: string | null
+          approved_by: string | null
+          budget_line_id: string | null
+          change_amount: number
+          change_number: string | null
+          company_id: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_archived: boolean
+          project_budget_id: string | null
+          project_id: string
+          status: string
+          title: string
+          updated_at: string
+          variation_id: string | null
+        }
+        Insert: {
+          approved_amount?: number
+          approved_at?: string | null
+          approved_by?: string | null
+          budget_line_id?: string | null
+          change_amount?: number
+          change_number?: string | null
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_archived?: boolean
+          project_budget_id?: string | null
+          project_id: string
+          status?: string
+          title: string
+          updated_at?: string
+          variation_id?: string | null
+        }
+        Update: {
+          approved_amount?: number
+          approved_at?: string | null
+          approved_by?: string | null
+          budget_line_id?: string | null
+          change_amount?: number
+          change_number?: string | null
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_archived?: boolean
+          project_budget_id?: string | null
+          project_id?: string
+          status?: string
+          title?: string
+          updated_at?: string
+          variation_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "budget_change_orders_budget_line_id_fkey"
+            columns: ["budget_line_id"]
+            isOneToOne: false
+            referencedRelation: "budget_lines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "budget_change_orders_project_budget_id_fkey"
+            columns: ["project_budget_id"]
+            isOneToOne: false
+            referencedRelation: "project_budgets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "budget_change_orders_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "budget_change_orders_variation_id_fkey"
+            columns: ["variation_id"]
+            isOneToOne: false
+            referencedRelation: "variations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      budget_lines: {
+        Row: {
+          actual_cost: number
+          approved_changes: number
+          boq_item_id: string | null
+          budget_utilization_percentage: number
+          category: string | null
+          committed_cost: number
+          company_id: string
+          cost_at_completion: number
+          cost_code_id: string | null
+          cost_to_complete: number
+          cost_type: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          discipline: string | null
+          forecast_cost: number
+          forecast_overrun_amount: number
+          id: string
+          is_archived: boolean
+          line_code: string | null
+          line_name: string
+          original_budget: number
+          project_budget_id: string | null
+          project_id: string
+          remarks: string | null
+          revised_budget: number
+          status: string
+          trade: string | null
+          updated_at: string
+          variance_amount: number
+          variance_percentage: number
+        }
+        Insert: {
+          actual_cost?: number
+          approved_changes?: number
+          boq_item_id?: string | null
+          budget_utilization_percentage?: number
+          category?: string | null
+          committed_cost?: number
+          company_id: string
+          cost_at_completion?: number
+          cost_code_id?: string | null
+          cost_to_complete?: number
+          cost_type?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          discipline?: string | null
+          forecast_cost?: number
+          forecast_overrun_amount?: number
+          id?: string
+          is_archived?: boolean
+          line_code?: string | null
+          line_name: string
+          original_budget?: number
+          project_budget_id?: string | null
+          project_id: string
+          remarks?: string | null
+          revised_budget?: number
+          status?: string
+          trade?: string | null
+          updated_at?: string
+          variance_amount?: number
+          variance_percentage?: number
+        }
+        Update: {
+          actual_cost?: number
+          approved_changes?: number
+          boq_item_id?: string | null
+          budget_utilization_percentage?: number
+          category?: string | null
+          committed_cost?: number
+          company_id?: string
+          cost_at_completion?: number
+          cost_code_id?: string | null
+          cost_to_complete?: number
+          cost_type?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          discipline?: string | null
+          forecast_cost?: number
+          forecast_overrun_amount?: number
+          id?: string
+          is_archived?: boolean
+          line_code?: string | null
+          line_name?: string
+          original_budget?: number
+          project_budget_id?: string | null
+          project_id?: string
+          remarks?: string | null
+          revised_budget?: number
+          status?: string
+          trade?: string | null
+          updated_at?: string
+          variance_amount?: number
+          variance_percentage?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "budget_lines_boq_item_id_fkey"
+            columns: ["boq_item_id"]
+            isOneToOne: false
+            referencedRelation: "boq_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "budget_lines_cost_code_id_fkey"
+            columns: ["cost_code_id"]
+            isOneToOne: false
+            referencedRelation: "cost_codes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "budget_lines_project_budget_id_fkey"
+            columns: ["project_budget_id"]
+            isOneToOne: false
+            referencedRelation: "project_budgets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "budget_lines_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       comments: {
         Row: {
           author_id: string | null
@@ -257,6 +565,91 @@ export type Database = {
           id?: string
         }
         Relationships: []
+      }
+      committed_cost_entries: {
+        Row: {
+          amount: number
+          budget_line_id: string | null
+          commitment_date: string
+          company_id: string
+          cost_code_id: string | null
+          created_at: string
+          currency: string | null
+          description: string
+          entered_by: string | null
+          id: string
+          is_archived: boolean
+          po_number: string | null
+          project_id: string
+          source_module: string | null
+          source_record_id: string | null
+          status: string
+          supplier_name: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount?: number
+          budget_line_id?: string | null
+          commitment_date?: string
+          company_id: string
+          cost_code_id?: string | null
+          created_at?: string
+          currency?: string | null
+          description: string
+          entered_by?: string | null
+          id?: string
+          is_archived?: boolean
+          po_number?: string | null
+          project_id: string
+          source_module?: string | null
+          source_record_id?: string | null
+          status?: string
+          supplier_name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          budget_line_id?: string | null
+          commitment_date?: string
+          company_id?: string
+          cost_code_id?: string | null
+          created_at?: string
+          currency?: string | null
+          description?: string
+          entered_by?: string | null
+          id?: string
+          is_archived?: boolean
+          po_number?: string | null
+          project_id?: string
+          source_module?: string | null
+          source_record_id?: string | null
+          status?: string
+          supplier_name?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "committed_cost_entries_budget_line_id_fkey"
+            columns: ["budget_line_id"]
+            isOneToOne: false
+            referencedRelation: "budget_lines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "committed_cost_entries_cost_code_id_fkey"
+            columns: ["cost_code_id"]
+            isOneToOne: false
+            referencedRelation: "cost_codes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "committed_cost_entries_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       companies: {
         Row: {
@@ -1812,6 +2205,92 @@ export type Database = {
           },
         ]
       }
+      project_budgets: {
+        Row: {
+          actual_cost: number
+          approved_at: string | null
+          approved_by: string | null
+          approved_changes: number
+          budget_name: string
+          budget_version: string | null
+          committed_cost: number
+          company_id: string
+          cost_at_completion: number
+          cost_to_complete: number
+          created_at: string
+          created_by: string | null
+          description: string | null
+          forecast_cost: number
+          id: string
+          is_archived: boolean
+          original_budget: number
+          project_id: string
+          revised_budget: number
+          status: string
+          updated_at: string
+          variance_amount: number
+          variance_percentage: number
+        }
+        Insert: {
+          actual_cost?: number
+          approved_at?: string | null
+          approved_by?: string | null
+          approved_changes?: number
+          budget_name?: string
+          budget_version?: string | null
+          committed_cost?: number
+          company_id: string
+          cost_at_completion?: number
+          cost_to_complete?: number
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          forecast_cost?: number
+          id?: string
+          is_archived?: boolean
+          original_budget?: number
+          project_id: string
+          revised_budget?: number
+          status?: string
+          updated_at?: string
+          variance_amount?: number
+          variance_percentage?: number
+        }
+        Update: {
+          actual_cost?: number
+          approved_at?: string | null
+          approved_by?: string | null
+          approved_changes?: number
+          budget_name?: string
+          budget_version?: string | null
+          committed_cost?: number
+          company_id?: string
+          cost_at_completion?: number
+          cost_to_complete?: number
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          forecast_cost?: number
+          id?: string
+          is_archived?: boolean
+          original_budget?: number
+          project_id?: string
+          revised_budget?: number
+          status?: string
+          updated_at?: string
+          variance_amount?: number
+          variance_percentage?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_budgets_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       project_members: {
         Row: {
           created_at: string
@@ -1953,6 +2432,7 @@ export type Database = {
         Row: {
           approved_at: string | null
           approved_by: string | null
+          budget_line_id: string | null
           cost_code_id: string | null
           created_at: string
           created_by: string | null
@@ -1972,6 +2452,7 @@ export type Database = {
         Insert: {
           approved_at?: string | null
           approved_by?: string | null
+          budget_line_id?: string | null
           cost_code_id?: string | null
           created_at?: string
           created_by?: string | null
@@ -1991,6 +2472,7 @@ export type Database = {
         Update: {
           approved_at?: string | null
           approved_by?: string | null
+          budget_line_id?: string | null
           cost_code_id?: string | null
           created_at?: string
           created_by?: string | null
@@ -2008,6 +2490,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "purchase_orders_budget_line_id_fkey"
+            columns: ["budget_line_id"]
+            isOneToOne: false
+            referencedRelation: "budget_lines"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "purchase_orders_cost_code_id_fkey"
             columns: ["cost_code_id"]
