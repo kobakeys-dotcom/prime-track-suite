@@ -24,6 +24,7 @@ import { Route as AuthenticatedDocumentsRouteImport } from './routes/_authentica
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDailyReportsRouteImport } from './routes/_authenticated/daily-reports'
 import { Route as AuthenticatedBoqRouteImport } from './routes/_authenticated/boq'
+import { Route as AuthenticatedAuditRouteImport } from './routes/_authenticated/audit'
 import { Route as AuthenticatedApprovalsRouteImport } from './routes/_authenticated/approvals'
 import { Route as AuthenticatedProjectsProjectIdRouteImport } from './routes/_authenticated/projects.$projectId'
 import { Route as ApiPublicCronDailyRouteImport } from './routes/api/public/cron/daily'
@@ -103,6 +104,11 @@ const AuthenticatedBoqRoute = AuthenticatedBoqRouteImport.update({
   path: '/boq',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAuditRoute = AuthenticatedAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedApprovalsRoute = AuthenticatedApprovalsRouteImport.update({
   id: '/approvals',
   path: '/approvals',
@@ -124,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/approvals': typeof AuthenticatedApprovalsRoute
+  '/audit': typeof AuthenticatedAuditRoute
   '/boq': typeof AuthenticatedBoqRoute
   '/daily-reports': typeof AuthenticatedDailyReportsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -143,6 +150,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/approvals': typeof AuthenticatedApprovalsRoute
+  '/audit': typeof AuthenticatedAuditRoute
   '/boq': typeof AuthenticatedBoqRoute
   '/daily-reports': typeof AuthenticatedDailyReportsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -164,6 +172,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/approvals': typeof AuthenticatedApprovalsRoute
+  '/_authenticated/audit': typeof AuthenticatedAuditRoute
   '/_authenticated/boq': typeof AuthenticatedBoqRoute
   '/_authenticated/daily-reports': typeof AuthenticatedDailyReportsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -185,6 +194,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/approvals'
+    | '/audit'
     | '/boq'
     | '/daily-reports'
     | '/dashboard'
@@ -204,6 +214,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/approvals'
+    | '/audit'
     | '/boq'
     | '/daily-reports'
     | '/dashboard'
@@ -224,6 +235,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/approvals'
+    | '/_authenticated/audit'
     | '/_authenticated/boq'
     | '/_authenticated/daily-reports'
     | '/_authenticated/dashboard'
@@ -354,6 +366,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBoqRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/audit': {
+      id: '/_authenticated/audit'
+      path: '/audit'
+      fullPath: '/audit'
+      preLoaderRoute: typeof AuthenticatedAuditRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/approvals': {
       id: '/_authenticated/approvals'
       path: '/approvals'
@@ -393,6 +412,7 @@ const AuthenticatedProjectsRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedApprovalsRoute: typeof AuthenticatedApprovalsRoute
+  AuthenticatedAuditRoute: typeof AuthenticatedAuditRoute
   AuthenticatedBoqRoute: typeof AuthenticatedBoqRoute
   AuthenticatedDailyReportsRoute: typeof AuthenticatedDailyReportsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
@@ -409,6 +429,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedApprovalsRoute: AuthenticatedApprovalsRoute,
+  AuthenticatedAuditRoute: AuthenticatedAuditRoute,
   AuthenticatedBoqRoute: AuthenticatedBoqRoute,
   AuthenticatedDailyReportsRoute: AuthenticatedDailyReportsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
@@ -435,3 +456,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
