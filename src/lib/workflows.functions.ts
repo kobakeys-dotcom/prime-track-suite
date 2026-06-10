@@ -107,11 +107,26 @@ export const listApprovals = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase
       .from("approvals")
-      .select("id, title, entity_type, entity_id, status, project_id, created_at, comment, projects(name)")
+      .select("id, title, entity_type, entity_id, status, project_id, requested_by, approver_id, decided_at, created_at, updated_at, comment, projects(name)")
       .order("created_at", { ascending: false });
     if (error) throw error;
-    return (data ?? []).map((r: any) => ({ ...r, project_name: r.projects?.name ?? "—" }));
+    const rows = data ?? [];
+    const ids = Array.from(new Set(rows.flatMap((r: any) => [r.requested_by, r.approver_id]).filter(Boolean))) as string[];
+    let nameMap: Record<string, string> = {};
+    if (ids.length) {
+      const { data: profs } = await context.supabase.from("profiles").select("id, full_name, email").in("id", ids);
+      nameMap = Object.fromEntries((profs ?? []).map((p: any) => [p.id, p.full_name || p.email || ""]));
+    }
+    return rows.map((r: any) => ({
+      ...r,
+      project_name: r.projects?.name ?? "—",
+      requested_by_name: r.requested_by ? nameMap[r.requested_by] ?? null : null,
+      approver_name: r.approver_id ? nameMap[r.approver_id] ?? null : null,
+      mine: r.requested_by === context.userId,
+    }));
   });
+
+
 
 const SYNCABLE_ENTITIES = new Set(["variations", "payment_claims", "procurement_requests", "purchase_orders", "submittals", "rfis"]);
 
