@@ -87,7 +87,6 @@ function ProjectDetail() {
           <TabsTrigger value="budget">Budget vs Actual</TabsTrigger>
           <TabsTrigger value="cash-flow">Cash Flow</TabsTrigger>
           <TabsTrigger value="material-requests">Material Requests</TabsTrigger>
-          <TabsTrigger value="procurement">Procurement</TabsTrigger>
           <TabsTrigger value="quality">Quality</TabsTrigger>
           <TabsTrigger value="safety">Safety</TabsTrigger>
           <TabsTrigger value="snags">Snags</TabsTrigger>
@@ -134,9 +133,9 @@ function ProjectDetail() {
         <TabsContent value="budget" className="pt-4"><ProjectBudgetPanel projectId={projectId} /></TabsContent>
         <TabsContent value="cash-flow" className="pt-4"><CashFlowModule fixedProjectId={projectId} compact /></TabsContent>
         <TabsContent value="material-requests" className="pt-4"><ProjectMaterialRequestsPanel projectId={projectId} /></TabsContent>
-        {(["procurement_requests", "quality_inspections", "safety_inspections", "snags", "risks", "issues", "meetings"] as const).map((k) => {
+        {(["quality_inspections", "safety_inspections", "snags", "risks", "issues", "meetings"] as const).map((k) => {
           const cfg = REGISTERS[k];
-          const tabValue = ({ procurement_requests: "procurement", quality_inspections: "quality", safety_inspections: "safety", snags: "snags", risks: "risks", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
+          const tabValue = ({ quality_inspections: "quality", safety_inspections: "safety", snags: "snags", risks: "risks", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
           if (!cfg) return null;
           return (
             <TabsContent key={k} value={tabValue} className="pt-4">
