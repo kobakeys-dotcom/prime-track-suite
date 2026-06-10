@@ -25,3 +25,26 @@ export const markNotificationRead = createServerFn({ method: "POST" })
     if (error) throw error;
     return { ok: true };
   });
+
+export const getMyPreferences = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { data } = await context.supabase
+      .from("notification_preferences").select("*").eq("user_id", context.userId).maybeSingle();
+    return data ?? { user_id: context.userId, email_enabled: true, in_app_enabled: true, whatsapp_enabled: false, reminder_days: 3 };
+  });
+
+export const updateMyPreferences = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) => z.object({
+    email_enabled: z.boolean(),
+    in_app_enabled: z.boolean(),
+    whatsapp_enabled: z.boolean(),
+    reminder_days: z.number().int().min(0).max(30),
+  }).parse(d))
+  .handler(async ({ context, data }) => {
+    const { error } = await context.supabase.from("notification_preferences")
+      .upsert({ user_id: context.userId, ...data }, { onConflict: "user_id" });
+    if (error) throw error;
+    return { ok: true };
+  });
