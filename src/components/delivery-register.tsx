@@ -283,7 +283,7 @@ export function DeliveryRegister({ projectId, variant = "full" }: { projectId?: 
             <AlertDialogAction onClick={async () => {
               if (!confirmArchive) return;
               try {
-                await (useServerFn(archiveDelivery) as any)({ data: { id: confirmArchive } });
+                await (archiveFn as any)({ data: { id: confirmArchive } });
                 toast.success("Delivery archived");
                 invalidate();
               } catch (e: any) {
