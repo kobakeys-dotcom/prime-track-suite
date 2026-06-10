@@ -107,11 +107,18 @@ export const listApprovals = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase
       .from("approvals")
-      .select("id, title, entity_type, entity_id, status, project_id, created_at, comment, projects(name)")
+      .select("id, title, entity_type, entity_id, status, project_id, requested_by, approver_id, decided_at, created_at, updated_at, comment, projects(name), requester:profiles!approvals_requested_by_fkey(full_name, email), approver:profiles!approvals_approver_id_fkey(full_name, email)")
       .order("created_at", { ascending: false });
     if (error) throw error;
-    return (data ?? []).map((r: any) => ({ ...r, project_name: r.projects?.name ?? "—" }));
+    return (data ?? []).map((r: any) => ({
+      ...r,
+      project_name: r.projects?.name ?? "—",
+      requested_by_name: r.requester?.full_name ?? r.requester?.email ?? null,
+      approver_name: r.approver?.full_name ?? r.approver?.email ?? null,
+      mine: r.requested_by === context.userId,
+    }));
   });
+
 
 const SYNCABLE_ENTITIES = new Set(["variations", "payment_claims", "procurement_requests", "purchase_orders", "submittals", "rfis"]);
 
