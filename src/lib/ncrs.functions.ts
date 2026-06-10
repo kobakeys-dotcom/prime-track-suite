@@ -192,7 +192,7 @@ export const setNcrStatus = createServerFn({ method: "POST" })
     if (data.status === "Reopened") { upd.closed_at = null; upd.actual_closeout_date = null; }
     const { error } = await sb.from("ncrs").update(upd).eq("id", data.id);
     if (error) throw new Error(error.message);
-    await logStatus(sb, data.id, existing.project_id, existing.company_id, existing.status, data.status, context.userId, data.remarks ?? null);
+    await logStatus(sb, data.id, (existing as any).project_id, (existing as any).company_id, (existing as any).status, data.status, context.userId ?? "", data.remarks ?? null);
     return { ok: true };
   });
 
