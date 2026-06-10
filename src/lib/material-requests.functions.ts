@@ -325,8 +325,8 @@ export const materialRequestStats = createServerFn({ method: "GET" })
   .handler(async ({ context, data }) => {
     let q = context.supabase.from("procurement_requests").select("id,status,procurement_status,delivery_status,required_date,is_archived,priority").eq("is_archived", false);
     if (data.projectId) q = q.eq("project_id", data.projectId);
-    const { data } = await q;
-    const rows: any[] = data ?? [];
+    const { data: rowsData } = await q;
+    const rows: any[] = rowsData ?? [];
     const today = new Date().toISOString().slice(0,10);
     const by = (k: string, v: string) => rows.filter((r: any) => r[k] === v).length;
     const overdue = rows.filter((r: any) => r.required_date && r.required_date < today && !["delivered","closed","rejected","cancelled","archived"].includes(r.status)).length;
