@@ -300,7 +300,7 @@ export const setDeliveryStatus = createServerFn({ method: "POST" })
         for (const it of dItems ?? []) {
           if (Number(it.accepted_quantity ?? 0) > 0) {
             await sb.from("stock_movements").insert({
-              company_id: cur.company_id, project_id: cur.project_id, material_id: it.material_id ?? null,
+              company_id: cur.company_id!, project_id: cur.project_id, material_id: it.material_id ?? null,
               delivery_id: data.id, movement_type: "IN", quantity: Number(it.accepted_quantity),
               unit: it.unit, reference_number: it.item_code ?? null,
               remarks: `Delivery ${data.id} - ${it.item_name}`, created_by: context.userId,
