@@ -50,11 +50,10 @@ export const updateTaskStatus = createServerFn({ method: "POST" })
     z.object({ id: z.string().uuid(), status: z.enum(statuses) }).parse(d),
   )
   .handler(async ({ context, data }) => {
-    const patch: Record<string, unknown> = { status: data.status };
-    if (data.status === "done") {
-      patch.completed_at = new Date().toISOString();
-      patch.progress = 100;
-    }
+    const patch =
+      data.status === "done"
+        ? { status: data.status, completed_at: new Date().toISOString(), progress: 100 }
+        : { status: data.status };
     const { error } = await context.supabase.from("tasks").update(patch).eq("id", data.id);
     if (error) throw error;
     return { ok: true };
