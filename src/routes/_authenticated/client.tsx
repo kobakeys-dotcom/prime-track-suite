@@ -77,7 +77,7 @@ function ClientPortal() {
           <div className="bg-card border border-border rounded-sm p-6 grid grid-cols-2 md:grid-cols-4 gap-6">
             <Stat label="Contract value" value={money(Number(summary.project?.contract_value ?? 0))} />
             <Stat label="Progress" value={`${summary.project?.progress ?? 0}%`} />
-            <Stat label="Approved variations" value={money(summary.variations.filter((v: any) => v.status === "approved").reduce((s: number, v: any) => s + Number(v.amount ?? 0), 0))} />
+            <Stat label="Approved variations" value={money(summary.variations.filter((v: any) => v.status === "approved").reduce((s: number, v: any) => s + Number(v.approved_amount ?? v.cost_impact ?? 0), 0))} />
             <Stat label="Certified to date" value={money(summary.claims.filter((c: any) => ["approved","paid"].includes(c.status)).reduce((s: number, c: any) => s + Number(c.net_claim ?? 0), 0))} />
           </div>
 
@@ -137,10 +137,10 @@ function ClientPortal() {
                   {summary.variations.map((v: any) => (
                     <li key={v.id} className="py-2 flex items-center justify-between">
                       <div className="min-w-0">
-                        <div className="font-medium truncate">{v.number ? `${v.number} — ` : ""}{v.title}</div>
+                        <div className="font-medium truncate">{v.variation_number ? `${v.variation_number} — ` : ""}{v.title}</div>
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-xs font-mono">{money(Number(v.amount ?? 0))}</span>
+                        <span className="text-xs font-mono">{money(Number(v.approved_amount ?? v.cost_impact ?? 0))}</span>
                         <span className={cn("text-[10px] font-bold uppercase px-2 py-0.5 rounded", STATUS_COLORS[v.status] ?? "bg-zinc-100 text-zinc-700")}>{v.status}</span>
                       </div>
                     </li>

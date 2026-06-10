@@ -13,7 +13,7 @@ export const getClientSummary = createServerFn({ method: "GET" })
       sb.from("projects").select("id, name, code, client, location, status, progress, start_date, end_date, contract_value").eq("id", projectId).maybeSingle(),
       sb.from("milestones").select("id, title, due_date, status, completion_percentage").eq("project_id", projectId).order("due_date", { ascending: true }),
       sb.from("payment_claims").select("id, claim_number, period_end, gross_claim, net_claim, status").eq("project_id", projectId).order("period_end", { ascending: false }),
-      sb.from("variations").select("id, number, title, amount, status").eq("project_id", projectId).order("created_at", { ascending: false }),
+      sb.from("variations").select("id, variation_number, title, cost_impact, approved_amount, status").eq("project_id", projectId).order("created_at", { ascending: false }),
       sb.from("documents").select("id, name, category, created_at").eq("project_id", projectId).order("created_at", { ascending: false }).limit(20),
       sb.from("approvals").select("id, title, status, requested_at").eq("project_id", projectId).order("requested_at", { ascending: false }).limit(10),
       sb.from("snags").select("photos").eq("project_id", projectId).not("photos", "is", null).limit(40),
