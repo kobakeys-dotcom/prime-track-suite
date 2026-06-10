@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Stamp, Check, X, MessageSquare, Search } from "lucide-react";
+import { Stamp, Check, X, MessageSquare, Search, Download } from "lucide-react";
 import { toast } from "sonner";
 import { listApprovals, updateApprovalStatus } from "@/lib/workflows.functions";
 import { APPROVAL_STATUSES, APPROVAL_STATUS_STYLES, statusLabel } from "@/lib/status";
