@@ -20,63 +20,7 @@ export function ProjectRfisPanel({ projectId }: { projectId: string }) {
 }
 
 export function ProjectSubmittalsPanel({ projectId }: { projectId: string }) {
-  const fetcher = useServerFn(listSubmittals);
-  const update = useServerFn(updateSubmittalStatus);
-  const create = useServerFn(createSubmittal);
-  const qc = useQueryClient();
-  const key = ["submittals", projectId];
-  const { data: rows = [] } = useQuery({ queryKey: key, queryFn: () => fetcher({ data: { projectId } }) });
-  const mut = useMutation({ mutationFn: (v: { id: string; status: any }) => update({ data: v }), onSuccess: () => qc.invalidateQueries({ queryKey: key }) });
-  const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ number: "", title: "", spec_section: "", due_date: "" });
-  const createMut = useMutation({
-    mutationFn: () => create({ data: { project_id: projectId, title: form.title, number: form.number || null, spec_section: form.spec_section || null, due_date: form.due_date || null } }),
-    onSuccess: () => { toast.success("Submittal created"); qc.invalidateQueries({ queryKey: key }); setOpen(false); setForm({ number: "", title: "", spec_section: "", due_date: "" }); },
-    onError: (e: any) => toast.error(e?.message ?? "Failed"),
-  });
-
-  return (
-    <div className="space-y-4">
-      <div className="flex justify-end">
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button size="sm" className="bg-accent text-white hover:bg-accent/90"><Plus className="size-4" /> New Submittal</Button></DialogTrigger>
-          <DialogContent>
-            <DialogHeader><DialogTitle>New submittal</DialogTitle></DialogHeader>
-            <form className="space-y-3" onSubmit={(e) => { e.preventDefault(); if (!form.title) return; createMut.mutate(); }}>
-              <div className="grid grid-cols-2 gap-3">
-                <div><Label>#</Label><Input value={form.number} onChange={(e) => setForm({ ...form, number: e.target.value })} /></div>
-                <div><Label>Spec section</Label><Input value={form.spec_section} onChange={(e) => setForm({ ...form, spec_section: e.target.value })} /></div>
-              </div>
-              <div><Label>Title *</Label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required /></div>
-              <div><Label>Due</Label><Input type="date" value={form.due_date} onChange={(e) => setForm({ ...form, due_date: e.target.value })} /></div>
-              <DialogFooter>
-                <Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-                <Button type="submit" disabled={createMut.isPending} className="bg-accent text-white hover:bg-accent/90">{createMut.isPending ? "Creating…" : "Create"}</Button>
-              </DialogFooter>
-            </form>
-          </DialogContent>
-        </Dialog>
-      </div>
-      {rows.length === 0 ? <EmptyState label="No submittals yet" /> : (
-        <TableShell headers={["#", "Title", "Spec", "Due", "Status"]}>
-          {(rows as any[]).map((r) => (
-            <tr key={r.id} className="border-t border-border hover:bg-muted/30">
-              <td className="px-4 py-3 font-mono text-xs">{r.number ?? "—"}</td>
-              <td className="px-4 py-3 font-medium">{r.title}</td>
-              <td className="px-4 py-3 text-xs">{r.spec_section ?? "—"}</td>
-              <td className="px-4 py-3 text-xs">{r.due_date ?? "—"}</td>
-              <td className="px-4 py-3 w-44">
-                <Select value={r.status} onValueChange={(v) => mut.mutate({ id: r.id, status: v })}>
-                  <SelectTrigger className={`h-8 text-xs ${APPROVAL_STATUS_STYLES[r.status]}`}><SelectValue /></SelectTrigger>
-                  <SelectContent>{APPROVAL_STATUSES.map((s) => <SelectItem key={s} value={s}>{statusLabel(s)}</SelectItem>)}</SelectContent>
-                </Select>
-              </td>
-            </tr>
-          ))}
-        </TableShell>
-      )}
-    </div>
-  );
+  return <SubmittalRegister projectId={projectId} variant="compact" />;
 }
 
 export function ProjectDocumentsPanel({ projectId }: { projectId: string }) {
