@@ -287,33 +287,72 @@ export type Database = {
       }
       cost_codes: {
         Row: {
+          actual_amount: number
+          budget_amount: number
+          category: string
           code: string
+          committed_amount: number
           company_id: string
+          cost_type: string
           created_at: string
+          created_by: string | null
           description: string | null
+          discipline: string | null
+          forecast_amount: number
           id: string
+          is_archived: boolean
           name: string
           parent_id: string | null
+          project_id: string | null
+          sort_order: number
+          status: string
+          trade: string | null
           updated_at: string
         }
         Insert: {
+          actual_amount?: number
+          budget_amount?: number
+          category?: string
           code: string
+          committed_amount?: number
           company_id: string
+          cost_type?: string
           created_at?: string
+          created_by?: string | null
           description?: string | null
+          discipline?: string | null
+          forecast_amount?: number
           id?: string
+          is_archived?: boolean
           name: string
           parent_id?: string | null
+          project_id?: string | null
+          sort_order?: number
+          status?: string
+          trade?: string | null
           updated_at?: string
         }
         Update: {
+          actual_amount?: number
+          budget_amount?: number
+          category?: string
           code?: string
+          committed_amount?: number
           company_id?: string
+          cost_type?: string
           created_at?: string
+          created_by?: string | null
           description?: string | null
+          discipline?: string | null
+          forecast_amount?: number
           id?: string
+          is_archived?: boolean
           name?: string
           parent_id?: string | null
+          project_id?: string | null
+          sort_order?: number
+          status?: string
+          trade?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -329,6 +368,13 @@ export type Database = {
             columns: ["parent_id"]
             isOneToOne: false
             referencedRelation: "cost_codes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cost_codes_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
             referencedColumns: ["id"]
           },
         ]
@@ -1244,6 +1290,7 @@ export type Database = {
         Row: {
           approved_at: string | null
           approved_by: string | null
+          cost_code_id: string | null
           created_at: string
           id: string
           material_name: string
@@ -1262,6 +1309,7 @@ export type Database = {
         Insert: {
           approved_at?: string | null
           approved_by?: string | null
+          cost_code_id?: string | null
           created_at?: string
           id?: string
           material_name: string
@@ -1280,6 +1328,7 @@ export type Database = {
         Update: {
           approved_at?: string | null
           approved_by?: string | null
+          cost_code_id?: string | null
           created_at?: string
           id?: string
           material_name?: string
@@ -1296,6 +1345,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "procurement_requests_cost_code_id_fkey"
+            columns: ["cost_code_id"]
+            isOneToOne: false
+            referencedRelation: "cost_codes"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "procurement_requests_project_id_fkey"
             columns: ["project_id"]
@@ -1525,6 +1581,7 @@ export type Database = {
         Row: {
           approved_at: string | null
           approved_by: string | null
+          cost_code_id: string | null
           created_at: string
           created_by: string | null
           currency: string | null
@@ -1543,6 +1600,7 @@ export type Database = {
         Insert: {
           approved_at?: string | null
           approved_by?: string | null
+          cost_code_id?: string | null
           created_at?: string
           created_by?: string | null
           currency?: string | null
@@ -1561,6 +1619,7 @@ export type Database = {
         Update: {
           approved_at?: string | null
           approved_by?: string | null
+          cost_code_id?: string | null
           created_at?: string
           created_by?: string | null
           currency?: string | null
@@ -1577,6 +1636,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "purchase_orders_cost_code_id_fkey"
+            columns: ["cost_code_id"]
+            isOneToOne: false
+            referencedRelation: "cost_codes"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "purchase_orders_procurement_request_id_fkey"
             columns: ["procurement_request_id"]
