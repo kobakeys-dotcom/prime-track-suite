@@ -4,13 +4,18 @@ import { z } from "zod";
 
 export const listDocuments = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const { data, error } = await context.supabase
+  .inputValidator((d: { projectId?: string } | undefined) =>
+    z.object({ projectId: z.string().uuid().optional() }).parse(d ?? {}),
+  )
+  .handler(async ({ context, data }) => {
+    let q = context.supabase
       .from("documents")
       .select("id, name, category, expires_at, file_url, file_size, project_id, created_at, projects(name)")
       .order("created_at", { ascending: false });
+    if (data.projectId) q = q.eq("project_id", data.projectId);
+    const { data: rows, error } = await q;
     if (error) throw error;
-    return (data ?? []).map((r: any) => ({ ...r, project_name: r.projects?.name ?? "—" }));
+    return (rows ?? []).map((r: any) => ({ ...r, project_name: r.projects?.name ?? "—" }));
   });
 
 export const createDocument = createServerFn({ method: "POST" })

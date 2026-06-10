@@ -9,13 +9,18 @@ type ApprovalStatus = (typeof approvalStatuses)[number];
 
 export const listRfis = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const { data, error } = await context.supabase
+  .inputValidator((d: { projectId?: string } | undefined) =>
+    z.object({ projectId: z.string().uuid().optional() }).parse(d ?? {}),
+  )
+  .handler(async ({ context, data }) => {
+    let q = context.supabase
       .from("rfis")
       .select("id, number, subject, status, due_date, project_id, created_at, projects(name)")
       .order("created_at", { ascending: false });
+    if (data.projectId) q = q.eq("project_id", data.projectId);
+    const { data: rows, error } = await q;
     if (error) throw error;
-    return (data ?? []).map((r: any) => ({ ...r, project_name: r.projects?.name ?? "—" }));
+    return (rows ?? []).map((r: any) => ({ ...r, project_name: r.projects?.name ?? "—" }));
   });
 
 export const createRfi = createServerFn({ method: "POST" })
@@ -52,13 +57,18 @@ export const updateRfi = createServerFn({ method: "POST" })
 
 export const listSubmittals = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const { data, error } = await context.supabase
+  .inputValidator((d: { projectId?: string } | undefined) =>
+    z.object({ projectId: z.string().uuid().optional() }).parse(d ?? {}),
+  )
+  .handler(async ({ context, data }) => {
+    let q = context.supabase
       .from("submittals")
       .select("id, number, title, spec_section, status, due_date, project_id, created_at, projects(name)")
       .order("created_at", { ascending: false });
+    if (data.projectId) q = q.eq("project_id", data.projectId);
+    const { data: rows, error } = await q;
     if (error) throw error;
-    return (data ?? []).map((r: any) => ({ ...r, project_name: r.projects?.name ?? "—" }));
+    return (rows ?? []).map((r: any) => ({ ...r, project_name: r.projects?.name ?? "—" }));
   });
 
 export const createSubmittal = createServerFn({ method: "POST" })
