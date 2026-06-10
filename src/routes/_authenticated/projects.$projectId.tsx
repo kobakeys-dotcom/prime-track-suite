@@ -104,6 +104,7 @@ function ProjectDetail() {
           <TabsTrigger value="snags">Snags</TabsTrigger>
           <TabsTrigger value="ncrs">NCRs</TabsTrigger>
           <TabsTrigger value="risks">Risks</TabsTrigger>
+          <TabsTrigger value="manpower">Manpower</TabsTrigger>
           <TabsTrigger value="issues">Issues</TabsTrigger>
           <TabsTrigger value="meetings">Meetings</TabsTrigger>
           <TabsTrigger value="action-items">Action Items</TabsTrigger>
