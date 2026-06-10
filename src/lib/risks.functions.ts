@@ -270,7 +270,7 @@ export const convertRiskToIssue = createServerFn({ method: "POST" })
     if ((risk as any).converted_to_issue) throw new Error("Risk already converted");
     let issueId: string | null = null;
     try {
-      const { data: issue, error: ie } = await sb.from("issues").insert({
+      const { data: issue, error: ie } = await (sb.from("issues") as any).insert({
         project_id: (risk as any).project_id,
         company_id: (risk as any).company_id,
         title: (risk as any).title,
