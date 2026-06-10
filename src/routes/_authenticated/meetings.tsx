@@ -502,7 +502,9 @@ function MeetingDetail({ id, members, onClose }: { id: string; members: any[]; o
             {m.decisions && <Section title="Decisions"><p className="whitespace-pre-wrap text-sm">{m.decisions}</p></Section>}
             {m.summary && <Section title="Summary"><p className="whitespace-pre-wrap text-sm">{m.summary}</p></Section>}
 
-            <ActionItemsPanel meetingId={id} projectId={m.project_id} members={members} />
+            <Section title="Action Items">
+              <MeetingActionItems meetingId={id} projectId={m.project_id} variant="compact" showHeader={false} />
+            </Section>
 
             <Section title="Attachments">
               {(m.attachments ?? []).length === 0 ? <Empty>No attachments.</Empty> : (
