@@ -124,6 +124,7 @@ function ProjectDetail() {
         <TabsContent value="rfis" className="pt-4"><ProjectRfisPanel projectId={projectId} /></TabsContent>
         <TabsContent value="submittals" className="pt-4"><ProjectSubmittalsPanel projectId={projectId} /></TabsContent>
         <TabsContent value="documents" className="pt-4"><ProjectDocumentsPanel projectId={projectId} /></TabsContent>
+        <TabsContent value="action-items" className="pt-4"><MeetingActionItems projectId={projectId} variant="compact" /></TabsContent>
         {(["variations", "payment_claims", "procurement_requests", "quality_inspections", "safety_inspections", "snags", "risks", "issues", "meetings"] as const).map((k) => {
           const cfg = REGISTERS[k];
           const tabValue = ({ variations: "variations", payment_claims: "claims", procurement_requests: "procurement", quality_inspections: "quality", safety_inspections: "safety", snags: "snags", risks: "risks", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
