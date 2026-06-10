@@ -7,7 +7,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { TasksPanel } from "@/components/project/tasks-panel";
 import { GanttView } from "@/components/project/gantt-view";
 import { DailyReportsPanel } from "@/components/project/daily-reports-panel";
-import { ProjectRfisPanel, ProjectSubmittalsPanel, ProjectDocumentsPanel, ProjectBoqPanel, ProjectVariationsPanel, ProjectPaymentClaimsPanel, ProjectBudgetPanel } from "@/components/project/module-panels";
+import { ProjectRfisPanel, ProjectSubmittalsPanel, ProjectDocumentsPanel, ProjectBoqPanel, ProjectVariationsPanel, ProjectPaymentClaimsPanel, ProjectBudgetPanel, ProjectMaterialRequestsPanel } from "@/components/project/module-panels";
 import { RegisterPage } from "@/components/register-page";
 import { REGISTERS, STATUS_STYLES_GENERIC } from "@/lib/register-configs";
 import { MeetingActionItems } from "@/components/meeting-action-items";
@@ -86,6 +86,7 @@ function ProjectDetail() {
           <TabsTrigger value="claims">Payment Claims</TabsTrigger>
           <TabsTrigger value="budget">Budget vs Actual</TabsTrigger>
           <TabsTrigger value="cash-flow">Cash Flow</TabsTrigger>
+          <TabsTrigger value="material-requests">Material Requests</TabsTrigger>
           <TabsTrigger value="procurement">Procurement</TabsTrigger>
           <TabsTrigger value="quality">Quality</TabsTrigger>
           <TabsTrigger value="safety">Safety</TabsTrigger>
@@ -132,6 +133,7 @@ function ProjectDetail() {
         <TabsContent value="claims" className="pt-4"><ProjectPaymentClaimsPanel projectId={projectId} /></TabsContent>
         <TabsContent value="budget" className="pt-4"><ProjectBudgetPanel projectId={projectId} /></TabsContent>
         <TabsContent value="cash-flow" className="pt-4"><CashFlowModule fixedProjectId={projectId} compact /></TabsContent>
+        <TabsContent value="material-requests" className="pt-4"><ProjectMaterialRequestsPanel projectId={projectId} /></TabsContent>
         {(["procurement_requests", "quality_inspections", "safety_inspections", "snags", "risks", "issues", "meetings"] as const).map((k) => {
           const cfg = REGISTERS[k];
           const tabValue = ({ procurement_requests: "procurement", quality_inspections: "quality", safety_inspections: "safety", snags: "snags", risks: "risks", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
