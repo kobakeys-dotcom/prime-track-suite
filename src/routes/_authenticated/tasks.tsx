@@ -448,7 +448,7 @@ function TaskDialog({ mode, task, projectId, members, onClose, onSaved }: any) {
   const create = useServerFn(createTask);
   const update = useServerFn(updateTask);
   const mut = useMutation({
-    mutationFn: () => {
+    mutationFn: async () => {
       const payload: any = {
         title: form.title,
         description: form.description || null,
