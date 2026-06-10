@@ -235,12 +235,11 @@ export const REGISTERS: Record<string, { title: string; description: string; pro
     ],
   },
   milestones: {
-    title: "Milestones", description: "Project milestones and dates.", projectScoped: true, statusField: "status",
+    title: "Milestones", description: "Project milestones and dates.", projectScoped: true,
     fields: [
-      { name: "title", label: "Title", required: true },
+      { name: "name", label: "Name", required: true },
       { name: "due_date", label: "Planned", type: "date" },
-      { name: "status", label: "Status", type: "select", options: opt(["pending", "in_progress", "done", "delayed"]) },
-      { name: "description", label: "Description", type: "textarea", hideInTable: true },
+      { name: "completed_at", label: "Completed", type: "date" },
     ],
   },
 };
