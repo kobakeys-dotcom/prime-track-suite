@@ -13,6 +13,7 @@ import {
   listActionItems, upsertActionItem, archiveActionItem, updateActionStatus,
 } from "@/lib/meetings.functions";
 import { listMembers } from "@/lib/admin.functions";
+import { MeetingActionItems } from "@/components/meeting-action-items";
 import { ProjectPicker } from "@/components/project-picker";
 import { CommentsThread } from "@/components/comments-thread";
 import { Button } from "@/components/ui/button";
