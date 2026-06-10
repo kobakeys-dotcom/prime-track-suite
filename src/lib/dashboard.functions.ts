@@ -30,6 +30,10 @@ export const getDashboardStats = createServerFn({ method: "GET" })
       rfisOpen,
       submittalsPending,
       recentReports,
+      tasksForChart,
+      criticalRfis,
+      criticalTasks,
+      criticalDocs,
     ] = await Promise.all([
       supabase.from("projects").select("id", { count: "exact", head: true }),
       supabase.from("projects").select("id", { count: "exact", head: true }).eq("status", "active"),
@@ -42,6 +46,10 @@ export const getDashboardStats = createServerFn({ method: "GET" })
         .select("id, report_date, work_completed, status, project_id, author_id, projects(name)")
         .order("report_date", { ascending: false })
         .limit(5),
+      supabase.from("tasks").select("due_date, completed_at, status"),
+      supabase.from("rfis").select("id, subject, due_date").lt("due_date", today).in("status", ["submitted", "under_review", "revise_resubmit"]).limit(3),
+      supabase.from("tasks").select("id, title, due_date").lt("due_date", today).neq("status", "done").neq("status", "cancelled").limit(3),
+      supabase.from("documents").select("id, name, expires_at").gte("expires_at", today).lte("expires_at", new Date(Date.now() + 14 * 86400000).toISOString().slice(0, 10)).limit(3),
     ]);
 
     const authorIds = Array.from(new Set((recentReports.data ?? []).map((r: any) => r.author_id).filter(Boolean)));
@@ -55,6 +63,43 @@ export const getDashboardStats = createServerFn({ method: "GET" })
       project_name: r.projects?.name ?? "—",
     }));
 
+    // Build planned vs actual cumulative bar chart over last 6 months
+    const months: { key: string; label: string; planned: number; actual: number }[] = [];
+    const now = new Date();
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      months.push({
+        key: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`,
+        label: d.toLocaleString(undefined, { month: "short" }).toUpperCase(),
+        planned: 0,
+        actual: 0,
+      });
+    }
+    const findMonth = (iso?: string | null) => {
+      if (!iso) return null;
+      const k = iso.slice(0, 7);
+      return months.find((m) => m.key === k);
+    };
+    (tasksForChart.data ?? []).forEach((t: any) => {
+      const p = findMonth(t.due_date);
+      if (p) p.planned += 1;
+      if (t.status === "done") {
+        const a = findMonth(t.completed_at);
+        if (a) a.actual += 1;
+      }
+    });
+
+    const alerts: { kind: "task" | "rfi" | "doc"; title: string; body: string; date: string }[] = [];
+    (criticalTasks.data ?? []).forEach((t: any) =>
+      alerts.push({ kind: "task", title: "Task overdue", body: t.title, date: t.due_date }),
+    );
+    (criticalRfis.data ?? []).forEach((r: any) =>
+      alerts.push({ kind: "rfi", title: "RFI overdue", body: r.subject, date: r.due_date }),
+    );
+    (criticalDocs.data ?? []).forEach((d: any) =>
+      alerts.push({ kind: "doc", title: "Document expiring", body: d.name, date: d.expires_at }),
+    );
+
     return {
       kpis: {
         totalProjects: projectsAll.count ?? 0,
@@ -65,5 +110,7 @@ export const getDashboardStats = createServerFn({ method: "GET" })
         pendingSubmittals: submittalsPending.count ?? 0,
       },
       recentReports: reports,
+      planVsActual: months.map(({ label, planned, actual }) => ({ month: label, planned, actual })),
+      alerts: alerts.slice(0, 6),
     };
   });

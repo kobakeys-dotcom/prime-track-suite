@@ -9,14 +9,6 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
   component: Dashboard,
 });
 
-const planVsActual = [
-  { month: "MAY", planned: 20, actual: 18 },
-  { month: "JUN", planned: 38, actual: 35 },
-  { month: "JUL", planned: 55, actual: 52 },
-  { month: "AUG", planned: 72, actual: 70 },
-  { month: "SEP", planned: 88, actual: 0 },
-];
-
 function Dashboard() {
   const fetchStats = useServerFn(getDashboardStats);
   const { data } = useQuery({ queryKey: ["dashboard-stats"], queryFn: () => fetchStats() });
@@ -55,7 +47,7 @@ function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <section className="lg:col-span-8 bg-card border border-border rounded-sm p-6">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="font-display font-bold text-lg uppercase tracking-tight">Planned vs. Actual Progress</h3>
+            <h3 className="font-display font-bold text-lg uppercase tracking-tight">Planned vs. Actual Tasks</h3>
             <div className="flex gap-4 text-xs">
               <div className="flex items-center gap-1.5"><div className="size-2 rounded-full bg-primary" /> Planned</div>
               <div className="flex items-center gap-1.5"><div className="size-2 rounded-full bg-accent" /> Actual</div>
@@ -63,10 +55,10 @@ function Dashboard() {
           </div>
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={planVsActual}>
+              <BarChart data={data?.planVsActual ?? []}>
                 <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="hsl(var(--border))" />
                 <XAxis dataKey="month" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 10 }} axisLine={false} tickLine={false} allowDecimals={false} />
                 <Tooltip cursor={{ fill: "rgba(0,0,0,0.04)" }} />
                 <Legend wrapperStyle={{ display: "none" }} />
                 <Bar dataKey="planned" fill="oklch(0.18 0.02 260)" radius={[2, 2, 0, 0]} />
@@ -79,9 +71,11 @@ function Dashboard() {
         <section className="lg:col-span-4 space-y-4">
           <h3 className="font-display font-bold text-lg uppercase tracking-tight">Critical Alerts</h3>
           <div className="space-y-3">
-            <AlertCard tone="red" title="Safety Violation" time="14:20" body="Unauthorized entry in Zone B excavation area reported." />
-            <AlertCard tone="orange" title="Material Delay" time="11:05" body="Reinforced steel delivery delayed by 48 hours." />
-            <AlertCard tone="blue" title="RFI Overdue" time="09:45" body="Structural calc RFI #104 has exceeded response timeframe." />
+            {(data?.alerts ?? []).length === 0 ? (
+              <div className="p-6 border border-border rounded-sm text-sm text-muted-foreground text-center">No critical alerts.</div>
+            ) : (data?.alerts ?? []).map((a, i) => (
+              <AlertCard key={i} tone={a.kind === "task" ? "red" : a.kind === "rfi" ? "blue" : "orange"} title={a.title} time={a.date} body={a.body} />
+            ))}
           </div>
         </section>
       </div>

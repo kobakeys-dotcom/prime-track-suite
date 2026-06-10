@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   LayoutDashboard, FolderKanban, CalendarRange, ListChecks, FileText, Calculator,
-  HelpCircle, FileCheck2, Files, PencilRuler, Stamp, BarChart3, Settings, LogOut, Search,
+  HelpCircle, FileCheck2, Files, PencilRuler, Stamp, BarChart3, Settings, LogOut, Search, History,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getCurrentContext } from "@/lib/dashboard.functions";
 import { useServerFn } from "@tanstack/react-start";
+import { NotificationsBell } from "@/components/notifications-bell";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated")({
@@ -33,6 +34,7 @@ const nav = [
   { to: "/drawings", label: "Drawing Register", icon: PencilRuler },
   { to: "/approvals", label: "Approvals", icon: Stamp },
   { to: "/reports", label: "Reports", icon: BarChart3 },
+  { to: "/audit", label: "Audit Log", icon: History },
 ] as const;
 
 function AuthedLayout() {
@@ -123,6 +125,7 @@ function Header({ userName }: { userName?: string | null }) {
             className="bg-muted text-sm rounded-md pl-9 pr-4 py-1.5 w-64 outline-none focus:ring-2 focus:ring-accent/40"
           />
         </div>
+        <NotificationsBell />
         <div className="flex items-center gap-2">
           <div className="text-right hidden sm:block">
             <div className="text-sm font-medium leading-tight">{userName ?? "—"}</div>
