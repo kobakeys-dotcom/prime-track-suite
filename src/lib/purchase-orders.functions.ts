@@ -278,7 +278,7 @@ export const setPurchaseOrderStatus = createServerFn({ method: "POST" })
     const { error } = await sb.from("purchase_orders").update(patch).eq("id", data.id);
     if (error) throw error;
     await sb.from("purchase_order_status_history").insert({
-      company_id: cur.company_id, project_id: cur.project_id, purchase_order_id: data.id,
+      company_id: cur.company_id as string, project_id: cur.project_id, purchase_order_id: data.id,
       old_status: cur.status, new_status: data.status, changed_by: context.userId, remarks: data.remarks ?? null,
     });
     return { ok: true };
