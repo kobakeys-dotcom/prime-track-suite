@@ -9,6 +9,7 @@ import { GanttView } from "@/components/project/gantt-view";
 import { DailyReportsPanel } from "@/components/project/daily-reports-panel";
 import { ProjectRfisPanel, ProjectSubmittalsPanel, ProjectDocumentsPanel, ProjectBoqPanel, ProjectVariationsPanel, ProjectPaymentClaimsPanel, ProjectBudgetPanel, ProjectMaterialRequestsPanel } from "@/components/project/module-panels";
 import { RfqRegister } from "@/components/rfq-register";
+import { PurchaseOrderRegister } from "@/components/purchase-order-register";
 import { RegisterPage } from "@/components/register-page";
 import { REGISTERS, STATUS_STYLES_GENERIC } from "@/lib/register-configs";
 import { MeetingActionItems } from "@/components/meeting-action-items";
