@@ -283,9 +283,9 @@ export function ManpowerRegister({ projectId: fixedProjectId }: { projectId?: st
         </TabsContent>
       </Tabs>
 
-      <RecordForm open={openForm} onClose={() => { setOpenForm(false); setEditing(null); }} initial={editing} projectId={projectId} onSave={(d) => saveMut.mutate(d)} saving={saveMut.isPending} />
-      <PlanForm open={openPlanForm} onClose={() => { setOpenPlanForm(false); setEditPlan(null); }} initial={editPlan} projectId={projectId} onSave={(d) => savePlanMut.mutate(d)} saving={savePlanMut.isPending} />
-      <WorkerForm open={openWorkerForm} onClose={() => { setOpenWorkerForm(false); setEditWorker(null); }} initial={editWorker} projectId={projectId} onSave={(d) => saveWorkerMut.mutate(d)} saving={saveWorkerMut.isPending} />
+      <RecordForm open={openForm} onClose={() => { setOpenForm(false); setEditing(null); }} initial={editing} projectId={projectId} onSave={(d: any) => saveMut.mutate(d)} saving={saveMut.isPending} />
+      <PlanForm open={openPlanForm} onClose={() => { setOpenPlanForm(false); setEditPlan(null); }} initial={editPlan} projectId={projectId} onSave={(d: any) => savePlanMut.mutate(d)} saving={savePlanMut.isPending} />
+      <WorkerForm open={openWorkerForm} onClose={() => { setOpenWorkerForm(false); setEditWorker(null); }} initial={editWorker} projectId={projectId} onSave={(d: any) => saveWorkerMut.mutate(d)} saving={saveWorkerMut.isPending} />
       {openDetail && <DetailSheet id={openDetail} onClose={() => setOpenDetail(null)} onStatus={(status) => statusMut.mutate({ id: openDetail, status })} />}
     </div>
   );
@@ -460,7 +460,7 @@ function DetailSheet({ id, onClose, onStatus }: { id: string; onClose: () => voi
   const comFn = useServerFn(addManpowerComment);
 
   const q = useQuery({ queryKey: ["manpower-detail", id], queryFn: () => getFn({ data: { id } }) });
-  const rec = q.data?.record;
+  const rec: any = q.data?.record;
   const inv = () => { qc.invalidateQueries({ queryKey: ["manpower-detail", id] }); qc.invalidateQueries({ queryKey: ["manpower"] }); };
 
   const [attF, setAttF] = useState<any>({});
