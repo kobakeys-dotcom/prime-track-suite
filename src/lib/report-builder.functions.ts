@@ -28,12 +28,12 @@ export const buildReportData = createServerFn({ method: "POST" })
       const [{ data: boq }, { data: vars }, { data: claims }] = await Promise.all([
         filt(sb.from("boq_items").select("quantity, completed_qty, unit_rate")),
         filt(sb.from("variations").select("amount, status")),
-        filt(sb.from("payment_claims").select("net_amount, status, claim_date")),
+        filt(sb.from("payment_claims").select("net_claim, status, period_end")),
       ]);
       const budget = (boq ?? []).reduce((s: number, r: any) => s + Number(r.quantity ?? 0) * Number(r.unit_rate ?? 0), 0);
       const actual = (boq ?? []).reduce((s: number, r: any) => s + Number(r.completed_qty ?? 0) * Number(r.unit_rate ?? 0), 0);
       const approvedVars = (vars ?? []).filter((v: any) => v.status === "approved").reduce((s: number, v: any) => s + Number(v.amount ?? 0), 0);
-      const certified = (claims ?? []).filter((c: any) => ["approved","paid"].includes(c.status)).reduce((s: number, c: any) => s + Number(c.net_amount ?? 0), 0);
+      const certified = (claims ?? []).filter((c: any) => ["approved","paid"].includes(c.status)).reduce((s: number, c: any) => s + Number(c.net_claim ?? 0), 0);
       out.sections.cost = { budget, actual, approvedVars, certified, claims: claims ?? [] };
     }
 

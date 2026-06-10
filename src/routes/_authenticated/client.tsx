@@ -78,7 +78,7 @@ function ClientPortal() {
             <Stat label="Contract value" value={money(Number(summary.project?.contract_value ?? 0))} />
             <Stat label="Progress" value={`${summary.project?.progress ?? 0}%`} />
             <Stat label="Approved variations" value={money(summary.variations.filter((v: any) => v.status === "approved").reduce((s: number, v: any) => s + Number(v.amount ?? 0), 0))} />
-            <Stat label="Certified to date" value={money(summary.claims.filter((c: any) => ["approved","paid"].includes(c.status)).reduce((s: number, c: any) => s + Number(c.net_amount ?? 0), 0))} />
+            <Stat label="Certified to date" value={money(summary.claims.filter((c: any) => ["approved","paid"].includes(c.status)).reduce((s: number, c: any) => s + Number(c.net_claim ?? 0), 0))} />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -121,8 +121,8 @@ function ClientPortal() {
                     {summary.claims.map((c: any) => (
                       <tr key={c.id} className="border-t border-border">
                         <td className="py-1.5 text-xs font-mono">{c.claim_number ?? "—"}</td>
-                        <td className="py-1.5 text-xs">{c.claim_date ?? "—"}</td>
-                        <td className="py-1.5 text-xs text-right font-mono">{money(Number(c.net_amount ?? 0))}</td>
+                        <td className="py-1.5 text-xs">{c.period_end ?? "—"}</td>
+                        <td className="py-1.5 text-xs text-right font-mono">{money(Number(c.net_claim ?? 0))}</td>
                         <td className="py-1.5 text-right"><span className={cn("text-[10px] font-bold uppercase px-2 py-0.5 rounded", STATUS_COLORS[c.status] ?? "bg-zinc-100 text-zinc-700")}>{c.status}</span></td>
                       </tr>
                     ))}
