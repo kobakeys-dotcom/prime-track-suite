@@ -1,22 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RegisterPage } from "@/components/register-page";
-import { REGISTERS } from "@/lib/register-configs";
-
-const cfg = REGISTERS["safety_inspections"];
+import { SafetyInspectionRegister } from "@/components/safety-inspection-register";
 
 export const Route = createFileRoute("/_authenticated/safety")({
-  head: () => ({ meta: [{ title: `${cfg.title} — ProjectCore` }] }),
+  head: () => ({ meta: [{ title: "Safety Inspections — ProjectCore" }] }),
   component: () => (
-    <RegisterPage
-      table="safety_inspections"
-      title={cfg.title}
-      description={cfg.description}
-      fields={cfg.fields}
-      projectScoped={cfg.projectScoped}
-      statusField={cfg.statusField}
-      statusStyles={STATUS_STYLES_GENERIC}
-    />
+    <div className="p-6 space-y-4">
+      <div>
+        <h1 className="text-2xl font-display font-bold">Safety Inspections</h1>
+        <p className="text-sm text-muted-foreground">HSE inspections, hazard tracking, and corrective action closeout.</p>
+      </div>
+      <SafetyInspectionRegister />
+    </div>
   ),
 });
-
-import { STATUS_STYLES_GENERIC } from "@/lib/register-configs";
