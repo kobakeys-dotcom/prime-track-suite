@@ -227,7 +227,10 @@ export function RegisterPage(props: RegisterPageProps) {
                       )}
                     </td>
                   ))}
-                  <td className="px-2 py-2 text-right">
+                  <td className="px-2 py-2 text-right whitespace-nowrap">
+                    {APPROVAL_TABLES.has(table) && (r.status === "draft" || !r.status) && (
+                      <button onClick={() => submitForApproval(r)} className="p-1.5 hover:bg-blue-100 text-blue-600 rounded" title="Submit for approval"><Send className="size-3.5" /></button>
+                    )}
                     <button onClick={() => openEdit(r)} className="p-1.5 hover:bg-muted rounded" title="Edit"><Pencil className="size-3.5" /></button>
                     <button onClick={() => confirm("Delete?") && delMut.mutate(r.id)} className="p-1.5 hover:bg-rose-100 text-rose-600 rounded" title="Delete"><Trash2 className="size-3.5" /></button>
                   </td>
