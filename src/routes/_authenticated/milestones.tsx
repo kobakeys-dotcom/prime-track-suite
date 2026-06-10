@@ -221,14 +221,14 @@ function MilestonesPage() {
         </CardContent></Card>
       ) : view === "timeline" ? (
         <TimelineView items={filtered} tasksByMilestone={tasksByMilestone}
-          onEdit={(m) => setDialog({ row: m })} onComplete={markComplete} onArchive={(m) => setConfirmArchive(m)} />
+          onEdit={(m: Milestone) => setDialog({ row: m })} onComplete={markComplete} onArchive={(m: Milestone) => setConfirmArchive(m)} />
       ) : view === "cards" ? (
         <CardsView items={filtered} tasksByMilestone={tasksByMilestone}
-          onEdit={(m) => setDialog({ row: m })} onComplete={markComplete} onArchive={(m) => setConfirmArchive(m)}
+          onEdit={(m: Milestone) => setDialog({ row: m })} onComplete={markComplete} onArchive={(m: Milestone) => setConfirmArchive(m)}
           onSetStatus={setStatus} />
       ) : (
         <TableView items={filtered} tasksByMilestone={tasksByMilestone}
-          onEdit={(m) => setDialog({ row: m })} onComplete={markComplete} onArchive={(m) => setConfirmArchive(m)} />
+          onEdit={(m: Milestone) => setDialog({ row: m })} onComplete={markComplete} onArchive={(m: Milestone) => setConfirmArchive(m)} />
       )}
 
       {dialog && (
