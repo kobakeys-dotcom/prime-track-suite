@@ -110,7 +110,7 @@ export const getMaterialRequest = createServerFn({ method: "GET" })
       sb.from("material_request_attachments").select("*").eq("material_request_id", data.id).order("created_at", { ascending: false }),
       sb.from("material_request_status_history").select("*").eq("material_request_id", data.id).order("created_at", { ascending: false }),
     ]);
-    return { ...mr, items: items.data ?? [], attachments: atts.data ?? [], history: hist.data ?? [] };
+    return { ...(mr as any), items: items.data ?? [], attachments: atts.data ?? [], history: hist.data ?? [] };
   });
 
 export const saveMaterialRequest = createServerFn({ method: "POST" })
