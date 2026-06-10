@@ -224,7 +224,7 @@ export function TimesheetRegister({ projectId: fixedProjectId }: { projectId?: s
             <CreateForm
               projects={(projects.data as any[]) || []}
               fixedProjectId={fixedProjectId}
-              onSubmit={(v) => createMut.mutate(v)}
+              onSubmit={(v: any) => createMut.mutate(v)}
               pending={createMut.isPending}
             />
           </DialogContent>
