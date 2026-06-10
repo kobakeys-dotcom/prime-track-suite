@@ -262,58 +262,112 @@ export type Database = {
       }
       daily_reports: {
         Row: {
+          approved_at: string | null
+          approved_by: string | null
           author_id: string | null
           created_at: string
           equipment: Json
           id: string
+          instructions_received: string | null
+          is_archived: boolean
+          is_client_visible: boolean
           issues: string | null
+          location: string | null
           manpower: Json
           materials_used: Json
           next_day_plan: string | null
           photos: Json
           project_id: string
+          quality_notes: string | null
+          rejection_reason: string | null
           report_date: string
+          report_number: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          revision_notes: string | null
+          safety_notes: string | null
+          shift: string | null
+          site_condition: string | null
           status: Database["public"]["Enums"]["report_status"]
+          submitted_at: string | null
           temperature_c: number | null
           updated_at: string
+          visitors: string | null
           weather: string | null
           work_completed: string | null
+          working_hours: string | null
         }
         Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
           author_id?: string | null
           created_at?: string
           equipment?: Json
           id?: string
+          instructions_received?: string | null
+          is_archived?: boolean
+          is_client_visible?: boolean
           issues?: string | null
+          location?: string | null
           manpower?: Json
           materials_used?: Json
           next_day_plan?: string | null
           photos?: Json
           project_id: string
+          quality_notes?: string | null
+          rejection_reason?: string | null
           report_date: string
+          report_number?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
+          safety_notes?: string | null
+          shift?: string | null
+          site_condition?: string | null
           status?: Database["public"]["Enums"]["report_status"]
+          submitted_at?: string | null
           temperature_c?: number | null
           updated_at?: string
+          visitors?: string | null
           weather?: string | null
           work_completed?: string | null
+          working_hours?: string | null
         }
         Update: {
+          approved_at?: string | null
+          approved_by?: string | null
           author_id?: string | null
           created_at?: string
           equipment?: Json
           id?: string
+          instructions_received?: string | null
+          is_archived?: boolean
+          is_client_visible?: boolean
           issues?: string | null
+          location?: string | null
           manpower?: Json
           materials_used?: Json
           next_day_plan?: string | null
           photos?: Json
           project_id?: string
+          quality_notes?: string | null
+          rejection_reason?: string | null
           report_date?: string
+          report_number?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
+          safety_notes?: string | null
+          shift?: string | null
+          site_condition?: string | null
           status?: Database["public"]["Enums"]["report_status"]
+          submitted_at?: string | null
           temperature_c?: number | null
           updated_at?: string
+          visitors?: string | null
           weather?: string | null
           work_completed?: string | null
+          working_hours?: string | null
         }
         Relationships: [
           {
@@ -2230,7 +2284,14 @@ export type Database = {
         | "on_hold"
         | "completed"
         | "cancelled"
-      report_status: "draft" | "submitted" | "approved"
+      report_status:
+        | "draft"
+        | "submitted"
+        | "approved"
+        | "under_review"
+        | "rejected"
+        | "revision_requested"
+        | "archived"
       task_priority: "low" | "medium" | "high" | "critical"
       task_status: "todo" | "in_progress" | "blocked" | "done" | "cancelled"
     }
@@ -2393,7 +2454,15 @@ export const Constants = {
         "completed",
         "cancelled",
       ],
-      report_status: ["draft", "submitted", "approved"],
+      report_status: [
+        "draft",
+        "submitted",
+        "approved",
+        "under_review",
+        "rejected",
+        "revision_requested",
+        "archived",
+      ],
       task_priority: ["low", "medium", "high", "critical"],
       task_status: ["todo", "in_progress", "blocked", "done", "cancelled"],
     },
