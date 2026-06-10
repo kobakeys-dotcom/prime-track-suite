@@ -567,9 +567,10 @@ function EquipmentDetail({ id, onClose, onChanged }: { id: string | null; onClos
               <Info label="Location" value={eq.current_location} />
               <Info label="Operator" value={eq.operator_name} />
               <Info label="Meter" value={fmt(eq.current_meter_reading)} />
-              <Info label="Status" value={<Badge className={STATUS_STYLE[eq.current_status] || ""}>{eq.current_status}</Badge>} />
+              <Info label="Status" value={<Badge className={STATUS_STYLE[eq.current_status || ""] || ""}>{eq.current_status}</Badge>} />
               <Info label="Availability" value={<Badge variant="outline">{eq.availability_status}</Badge>} />
-              <Info label="Condition" value={<Badge className={COND_STYLE[eq.condition_status] || ""}>{eq.condition_status}</Badge>} />
+              <Info label="Condition" value={<Badge className={COND_STYLE[eq.condition_status || ""] || ""}>{eq.condition_status}</Badge>} />
+
               <Info label="Last Maint." value={eq.last_maintenance_date} />
               <Info label="Next Maint." value={eq.next_maintenance_date} />
               <Info label="Insurance" value={eq.insurance_expiry_date} />
