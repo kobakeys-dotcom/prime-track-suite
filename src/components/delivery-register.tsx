@@ -117,6 +117,7 @@ export function DeliveryRegister({ projectId, variant = "full" }: { projectId?: 
   const qc = useQueryClient();
   const fetchList = useServerFn(listDeliveries);
   const fetchStats = useServerFn(deliveryStats);
+  const archiveFn = useServerFn(archiveDelivery);
 
   const listQ = useQuery({
     queryKey: ["deliveries", effectiveProject || "all", statusFilter],
