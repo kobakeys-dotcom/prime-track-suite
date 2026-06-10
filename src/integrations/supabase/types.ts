@@ -3910,57 +3910,382 @@ export type Database = {
           },
         ]
       }
-      quality_inspections: {
+      quality_inspection_attachments: {
         Row: {
-          checklist: Json
-          comments: string | null
+          attachment_type: string | null
+          checklist_item_id: string | null
+          company_id: string
           created_at: string
+          description: string | null
+          file_name: string
+          file_type: string | null
+          file_url: string
           id: string
-          inspection_date: string | null
-          inspection_number: string
-          inspector_id: string | null
-          location: string | null
-          photos: Json
+          is_client_visible: boolean | null
           project_id: string
-          requested_by: string | null
+          quality_inspection_id: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          attachment_type?: string | null
+          checklist_item_id?: string | null
+          company_id: string
+          created_at?: string
+          description?: string | null
+          file_name: string
+          file_type?: string | null
+          file_url: string
+          id?: string
+          is_client_visible?: boolean | null
+          project_id: string
+          quality_inspection_id: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          attachment_type?: string | null
+          checklist_item_id?: string | null
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          file_name?: string
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          is_client_visible?: boolean | null
+          project_id?: string
+          quality_inspection_id?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quality_inspection_attachments_checklist_item_id_fkey"
+            columns: ["checklist_item_id"]
+            isOneToOne: false
+            referencedRelation: "quality_inspection_checklist_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quality_inspection_attachments_quality_inspection_id_fkey"
+            columns: ["quality_inspection_id"]
+            isOneToOne: false
+            referencedRelation: "quality_inspections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quality_inspection_checklist_items: {
+        Row: {
+          acceptance_criteria: string | null
+          checklist_item: string
+          company_id: string
+          corrective_action: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          is_archived: boolean | null
+          item_number: string | null
+          photo_required: boolean | null
+          project_id: string
+          quality_inspection_id: string
+          remarks: string | null
+          responsible_user_id: string | null
           result: string | null
-          status: string
-          type: string | null
+          sort_order: number | null
+          specification_reference: string | null
+          target_date: string | null
           updated_at: string
         }
         Insert: {
-          checklist?: Json
-          comments?: string | null
+          acceptance_criteria?: string | null
+          checklist_item: string
+          company_id: string
+          corrective_action?: string | null
           created_at?: string
+          created_by?: string | null
           id?: string
-          inspection_date?: string | null
-          inspection_number: string
-          inspector_id?: string | null
-          location?: string | null
-          photos?: Json
+          is_archived?: boolean | null
+          item_number?: string | null
+          photo_required?: boolean | null
           project_id: string
-          requested_by?: string | null
+          quality_inspection_id: string
+          remarks?: string | null
+          responsible_user_id?: string | null
           result?: string | null
-          status?: string
-          type?: string | null
+          sort_order?: number | null
+          specification_reference?: string | null
+          target_date?: string | null
           updated_at?: string
         }
         Update: {
-          checklist?: Json
-          comments?: string | null
+          acceptance_criteria?: string | null
+          checklist_item?: string
+          company_id?: string
+          corrective_action?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_archived?: boolean | null
+          item_number?: string | null
+          photo_required?: boolean | null
+          project_id?: string
+          quality_inspection_id?: string
+          remarks?: string | null
+          responsible_user_id?: string | null
+          result?: string | null
+          sort_order?: number | null
+          specification_reference?: string | null
+          target_date?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quality_inspection_checklist_items_quality_inspection_id_fkey"
+            columns: ["quality_inspection_id"]
+            isOneToOne: false
+            referencedRelation: "quality_inspections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quality_inspection_status_history: {
+        Row: {
+          changed_by: string | null
+          company_id: string
+          created_at: string
+          id: string
+          new_status: string | null
+          old_status: string | null
+          project_id: string
+          quality_inspection_id: string
+          remarks: string | null
+        }
+        Insert: {
+          changed_by?: string | null
+          company_id: string
           created_at?: string
           id?: string
-          inspection_date?: string | null
-          inspection_number?: string
-          inspector_id?: string | null
-          location?: string | null
-          photos?: Json
+          new_status?: string | null
+          old_status?: string | null
+          project_id: string
+          quality_inspection_id: string
+          remarks?: string | null
+        }
+        Update: {
+          changed_by?: string | null
+          company_id?: string
+          created_at?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
           project_id?: string
+          quality_inspection_id?: string
+          remarks?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quality_inspection_status_history_quality_inspection_id_fkey"
+            columns: ["quality_inspection_id"]
+            isOneToOne: false
+            referencedRelation: "quality_inspections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quality_inspections: {
+        Row: {
+          approval_comments: string | null
+          approved_at: string | null
+          approved_by: string | null
+          area: string | null
+          assigned_inspector_id: string | null
+          boq_item_id: string | null
+          category: string | null
+          checklist: Json
+          checklist_fail_count: number | null
+          checklist_na_count: number | null
+          checklist_pass_count: number | null
+          comments: string | null
+          company_id: string | null
+          corrective_action: string | null
+          created_at: string
+          created_by: string | null
+          delivery_id: string | null
+          discipline: string | null
+          drawing_id: string | null
+          due_date: string | null
+          findings: string | null
+          floor_level: string | null
+          id: string
+          inspected_at: string | null
+          inspected_by: string | null
+          inspection_date: string | null
+          inspection_number: string
+          inspection_result: string | null
+          inspection_time: string | null
+          inspection_title: string | null
+          inspection_type: string | null
+          inspector_id: string | null
+          is_archived: boolean | null
+          is_client_visible: boolean | null
+          issue_created: boolean | null
+          issue_id: string | null
+          location: string | null
+          material_id: string | null
+          ncr_created: boolean | null
+          ncr_id: string | null
+          parent_inspection_id: string | null
+          photos: Json
+          priority: string | null
+          project_id: string
+          reinspection_required: boolean | null
+          rejected_at: string | null
+          rejection_reason: string | null
+          requested_by: string | null
+          result: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          revision_notes: string | null
+          room_zone: string | null
+          snag_created: boolean | null
+          snag_id: string | null
+          status: string
+          submittal_id: string | null
+          submitted_at: string | null
+          task_id: string | null
+          total_checklist_items: number | null
+          type: string | null
+          updated_at: string
+          wbs_id: string | null
+        }
+        Insert: {
+          approval_comments?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          area?: string | null
+          assigned_inspector_id?: string | null
+          boq_item_id?: string | null
+          category?: string | null
+          checklist?: Json
+          checklist_fail_count?: number | null
+          checklist_na_count?: number | null
+          checklist_pass_count?: number | null
+          comments?: string | null
+          company_id?: string | null
+          corrective_action?: string | null
+          created_at?: string
+          created_by?: string | null
+          delivery_id?: string | null
+          discipline?: string | null
+          drawing_id?: string | null
+          due_date?: string | null
+          findings?: string | null
+          floor_level?: string | null
+          id?: string
+          inspected_at?: string | null
+          inspected_by?: string | null
+          inspection_date?: string | null
+          inspection_number: string
+          inspection_result?: string | null
+          inspection_time?: string | null
+          inspection_title?: string | null
+          inspection_type?: string | null
+          inspector_id?: string | null
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          issue_created?: boolean | null
+          issue_id?: string | null
+          location?: string | null
+          material_id?: string | null
+          ncr_created?: boolean | null
+          ncr_id?: string | null
+          parent_inspection_id?: string | null
+          photos?: Json
+          priority?: string | null
+          project_id: string
+          reinspection_required?: boolean | null
+          rejected_at?: string | null
+          rejection_reason?: string | null
           requested_by?: string | null
           result?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
+          room_zone?: string | null
+          snag_created?: boolean | null
+          snag_id?: string | null
           status?: string
+          submittal_id?: string | null
+          submitted_at?: string | null
+          task_id?: string | null
+          total_checklist_items?: number | null
           type?: string | null
           updated_at?: string
+          wbs_id?: string | null
+        }
+        Update: {
+          approval_comments?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          area?: string | null
+          assigned_inspector_id?: string | null
+          boq_item_id?: string | null
+          category?: string | null
+          checklist?: Json
+          checklist_fail_count?: number | null
+          checklist_na_count?: number | null
+          checklist_pass_count?: number | null
+          comments?: string | null
+          company_id?: string | null
+          corrective_action?: string | null
+          created_at?: string
+          created_by?: string | null
+          delivery_id?: string | null
+          discipline?: string | null
+          drawing_id?: string | null
+          due_date?: string | null
+          findings?: string | null
+          floor_level?: string | null
+          id?: string
+          inspected_at?: string | null
+          inspected_by?: string | null
+          inspection_date?: string | null
+          inspection_number?: string
+          inspection_result?: string | null
+          inspection_time?: string | null
+          inspection_title?: string | null
+          inspection_type?: string | null
+          inspector_id?: string | null
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          issue_created?: boolean | null
+          issue_id?: string | null
+          location?: string | null
+          material_id?: string | null
+          ncr_created?: boolean | null
+          ncr_id?: string | null
+          parent_inspection_id?: string | null
+          photos?: Json
+          priority?: string | null
+          project_id?: string
+          reinspection_required?: boolean | null
+          rejected_at?: string | null
+          rejection_reason?: string | null
+          requested_by?: string | null
+          result?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
+          room_zone?: string | null
+          snag_created?: boolean | null
+          snag_id?: string | null
+          status?: string
+          submittal_id?: string | null
+          submitted_at?: string | null
+          task_id?: string | null
+          total_checklist_items?: number | null
+          type?: string | null
+          updated_at?: string
+          wbs_id?: string | null
         }
         Relationships: [
           {
