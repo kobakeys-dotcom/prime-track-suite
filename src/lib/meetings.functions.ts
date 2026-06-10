@@ -8,7 +8,7 @@ export const listActionItems = createServerFn({ method: "GET" })
   .handler(async ({ context, data }) => {
     let q = context.supabase
       .from("meeting_action_items")
-      .select("id, description, due_date, status, project_id, meeting_id, assigned_to, meetings(title, meeting_date), profiles:assigned_to(full_name)")
+      .select("id, description, due_date, status, project_id, meeting_id, responsible_person, meetings(title, meeting_date), ")
       .order("due_date", { ascending: true, nullsFirst: false });
     if (data.projectId) q = q.eq("project_id", data.projectId);
     const { data: rows, error } = await q;
@@ -16,7 +16,7 @@ export const listActionItems = createServerFn({ method: "GET" })
     return (rows ?? []).map((r: any) => ({
       ...r,
       meeting_title: r.meetings?.title ?? "—",
-      assignee_name: r.profiles?.full_name ?? "—",
+      assignee_name: r.responsible_person ?? "—",
     }));
   });
 
@@ -26,7 +26,7 @@ export const promoteActionItemToTask = createServerFn({ method: "POST" })
   .handler(async ({ context, data }) => {
     const { data: item, error: e1 } = await context.supabase
       .from("meeting_action_items")
-      .select("description, due_date, assigned_to, project_id, status")
+      .select("description, due_date, responsible_person, project_id, status")
       .eq("id", data.id).maybeSingle();
     if (e1) throw e1;
     if (!item) throw new Error("Action item not found");
@@ -37,7 +37,7 @@ export const promoteActionItemToTask = createServerFn({ method: "POST" })
       title: (item.description ?? "Action item").slice(0, 200),
       description: item.description,
       due_date: item.due_date,
-      assigned_to: item.assigned_to,
+      responsible_person: item.responsible_person,
       status: "todo",
       created_by: context.userId,
     }).select("id").single();
