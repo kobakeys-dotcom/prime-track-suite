@@ -10,7 +10,7 @@ export const listDailyReports = createServerFn({ method: "GET" })
   .handler(async ({ context, data }) => {
     let q = context.supabase
       .from("daily_reports")
-      .select("id, report_date, weather, temperature_c, work_completed, status, project_id, author_id, projects(name)")
+      .select("id, report_date, weather, temperature_c, work_completed, issues, next_day_plan, equipment, materials_used, manpower, photos, status, project_id, author_id, projects(name)")
       .order("report_date", { ascending: false })
       .limit(100);
     if (data.projectId) q = q.eq("project_id", data.projectId);
@@ -37,6 +37,9 @@ const createSchema = z.object({
   issues: z.string().max(5000).optional().nullable(),
   next_day_plan: z.string().max(5000).optional().nullable(),
   manpower_count: z.number().int().min(0).optional().nullable(),
+  equipment: z.string().max(2000).optional().nullable(),
+  materials_used: z.string().max(2000).optional().nullable(),
+  photo_paths: z.array(z.string().min(1).max(500)).max(20).optional(),
   status: z.enum(["draft", "submitted", "approved"]).default("submitted"),
 });
 
@@ -44,13 +47,16 @@ export const createDailyReport = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: unknown) => createSchema.parse(d))
   .handler(async ({ context, data }) => {
-    const { manpower_count, ...rest } = data;
+    const { manpower_count, equipment, materials_used, photo_paths, ...rest } = data;
     const { data: row, error } = await context.supabase
       .from("daily_reports")
       .insert({
         ...rest,
         author_id: context.userId,
         manpower: manpower_count != null ? { total: manpower_count } : {},
+        equipment: equipment ? { notes: equipment } : {},
+        materials_used: materials_used ? { notes: materials_used } : {},
+        photos: photo_paths ?? [],
       })
       .select()
       .single();
