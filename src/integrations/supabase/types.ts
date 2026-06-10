@@ -8794,41 +8794,640 @@ export type Database = {
           },
         ]
       }
-      timesheets: {
+      timesheet_attachments: {
         Row: {
+          attachment_type: string
+          company_id: string
           created_at: string
           description: string | null
-          hours: number
+          file_name: string
+          file_type: string | null
+          file_url: string
           id: string
           project_id: string
+          timesheet_id: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          attachment_type?: string
+          company_id: string
+          created_at?: string
+          description?: string | null
+          file_name: string
+          file_type?: string | null
+          file_url: string
+          id?: string
+          project_id: string
+          timesheet_id: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          attachment_type?: string
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          file_name?: string
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          project_id?: string
+          timesheet_id?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "timesheet_attachments_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_attachments_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_attachments_timesheet_id_fkey"
+            columns: ["timesheet_id"]
+            isOneToOne: false
+            referencedRelation: "timesheets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      timesheet_comments: {
+        Row: {
+          comment: string
+          company_id: string
+          created_at: string
+          id: string
+          project_id: string
+          timesheet_id: string
+          user_id: string | null
+          visibility: string
+        }
+        Insert: {
+          comment: string
+          company_id: string
+          created_at?: string
+          id?: string
+          project_id: string
+          timesheet_id: string
+          user_id?: string | null
+          visibility?: string
+        }
+        Update: {
+          comment?: string
+          company_id?: string
+          created_at?: string
+          id?: string
+          project_id?: string
+          timesheet_id?: string
+          user_id?: string | null
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "timesheet_comments_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_comments_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_comments_timesheet_id_fkey"
+            columns: ["timesheet_id"]
+            isOneToOne: false
+            referencedRelation: "timesheets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      timesheet_entries: {
+        Row: {
+          attendance_status: string
+          boq_item_id: string | null
+          break_hours: number
+          check_in_time: string | null
+          check_out_time: string | null
+          company_id: string
+          cost_amount: number
+          cost_code_id: string | null
+          created_at: string
+          created_by: string | null
+          designation: string | null
+          employee_id: string | null
+          holiday_hours: number
+          hourly_rate: number
+          id: string
+          idle_hours: number
+          is_archived: boolean
+          leave_hours: number
+          location: string | null
+          milestone_id: string | null
+          night_hours: number
+          overtime_hours: number
+          overtime_rate: number
+          productivity_quantity: number
+          productivity_unit: string | null
+          project_id: string
+          regular_hours: number
+          remarks: string | null
+          skill_level: string | null
+          source: string
+          subcontractor_id: string | null
           task_id: string | null
+          timesheet_id: string
+          total_hours: number
+          trade: string | null
           updated_at: string
-          user_id: string
+          wbs_id: string | null
+          weekend_hours: number
+          work_activity: string | null
+          work_area: string | null
+          worker_code: string | null
+          worker_id: string | null
+          worker_name: string
+          worker_type: string
+        }
+        Insert: {
+          attendance_status?: string
+          boq_item_id?: string | null
+          break_hours?: number
+          check_in_time?: string | null
+          check_out_time?: string | null
+          company_id: string
+          cost_amount?: number
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          designation?: string | null
+          employee_id?: string | null
+          holiday_hours?: number
+          hourly_rate?: number
+          id?: string
+          idle_hours?: number
+          is_archived?: boolean
+          leave_hours?: number
+          location?: string | null
+          milestone_id?: string | null
+          night_hours?: number
+          overtime_hours?: number
+          overtime_rate?: number
+          productivity_quantity?: number
+          productivity_unit?: string | null
+          project_id: string
+          regular_hours?: number
+          remarks?: string | null
+          skill_level?: string | null
+          source?: string
+          subcontractor_id?: string | null
+          task_id?: string | null
+          timesheet_id: string
+          total_hours?: number
+          trade?: string | null
+          updated_at?: string
+          wbs_id?: string | null
+          weekend_hours?: number
+          work_activity?: string | null
+          work_area?: string | null
+          worker_code?: string | null
+          worker_id?: string | null
+          worker_name: string
+          worker_type?: string
+        }
+        Update: {
+          attendance_status?: string
+          boq_item_id?: string | null
+          break_hours?: number
+          check_in_time?: string | null
+          check_out_time?: string | null
+          company_id?: string
+          cost_amount?: number
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          designation?: string | null
+          employee_id?: string | null
+          holiday_hours?: number
+          hourly_rate?: number
+          id?: string
+          idle_hours?: number
+          is_archived?: boolean
+          leave_hours?: number
+          location?: string | null
+          milestone_id?: string | null
+          night_hours?: number
+          overtime_hours?: number
+          overtime_rate?: number
+          productivity_quantity?: number
+          productivity_unit?: string | null
+          project_id?: string
+          regular_hours?: number
+          remarks?: string | null
+          skill_level?: string | null
+          source?: string
+          subcontractor_id?: string | null
+          task_id?: string | null
+          timesheet_id?: string
+          total_hours?: number
+          trade?: string | null
+          updated_at?: string
+          wbs_id?: string | null
+          weekend_hours?: number
+          work_activity?: string | null
+          work_area?: string | null
+          worker_code?: string | null
+          worker_id?: string | null
+          worker_name?: string
+          worker_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "timesheet_entries_boq_item_id_fkey"
+            columns: ["boq_item_id"]
+            isOneToOne: false
+            referencedRelation: "boq_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_entries_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_entries_cost_code_id_fkey"
+            columns: ["cost_code_id"]
+            isOneToOne: false
+            referencedRelation: "cost_codes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_entries_milestone_id_fkey"
+            columns: ["milestone_id"]
+            isOneToOne: false
+            referencedRelation: "milestones"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_entries_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_entries_subcontractor_id_fkey"
+            columns: ["subcontractor_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_entries_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_entries_timesheet_id_fkey"
+            columns: ["timesheet_id"]
+            isOneToOne: false
+            referencedRelation: "timesheets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_entries_wbs_id_fkey"
+            columns: ["wbs_id"]
+            isOneToOne: false
+            referencedRelation: "wbs_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_entries_worker_id_fkey"
+            columns: ["worker_id"]
+            isOneToOne: false
+            referencedRelation: "manpower_workers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      timesheet_payroll_exports: {
+        Row: {
+          company_id: string
+          created_at: string
+          export_number: string | null
+          export_period_end: string
+          export_period_start: string
+          export_status: string
+          exported_by: string | null
+          id: string
+          project_id: string | null
+          total_cost: number
+          total_hours: number
+          total_overtime_hours: number
+          total_regular_hours: number
+          total_timesheets: number
+          total_workers: number
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          export_number?: string | null
+          export_period_end: string
+          export_period_start: string
+          export_status?: string
+          exported_by?: string | null
+          id?: string
+          project_id?: string | null
+          total_cost?: number
+          total_hours?: number
+          total_overtime_hours?: number
+          total_regular_hours?: number
+          total_timesheets?: number
+          total_workers?: number
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          export_number?: string | null
+          export_period_end?: string
+          export_period_start?: string
+          export_status?: string
+          exported_by?: string | null
+          id?: string
+          project_id?: string | null
+          total_cost?: number
+          total_hours?: number
+          total_overtime_hours?: number
+          total_regular_hours?: number
+          total_timesheets?: number
+          total_workers?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "timesheet_payroll_exports_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_payroll_exports_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      timesheet_status_history: {
+        Row: {
+          changed_by: string | null
+          company_id: string
+          created_at: string
+          id: string
+          new_status: string
+          old_status: string | null
+          project_id: string
+          remarks: string | null
+          timesheet_id: string
+        }
+        Insert: {
+          changed_by?: string | null
+          company_id: string
+          created_at?: string
+          id?: string
+          new_status: string
+          old_status?: string | null
+          project_id: string
+          remarks?: string | null
+          timesheet_id: string
+        }
+        Update: {
+          changed_by?: string | null
+          company_id?: string
+          created_at?: string
+          id?: string
+          new_status?: string
+          old_status?: string | null
+          project_id?: string
+          remarks?: string | null
+          timesheet_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "timesheet_status_history_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_status_history_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheet_status_history_timesheet_id_fkey"
+            columns: ["timesheet_id"]
+            isOneToOne: false
+            referencedRelation: "timesheets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      timesheets: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          company_id: string | null
+          created_at: string
+          created_by: string | null
+          currency: string
+          daily_report_id: string | null
+          description: string | null
+          hours: number | null
+          id: string
+          is_archived: boolean
+          location: string | null
+          manpower_record_id: string | null
+          month: string | null
+          payroll_exported: boolean
+          payroll_exported_at: string | null
+          payroll_exported_by: string | null
+          prepared_by: string | null
+          project_id: string
+          rejection_reason: string | null
+          remarks: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          revision_notes: string | null
+          shift: string
+          status: string
+          submitted_at: string | null
+          submitted_by: string | null
+          task_id: string | null
+          timesheet_date: string
+          timesheet_number: string | null
+          timesheet_title: string | null
+          timesheet_type: string
+          total_cost: number
+          total_holiday_hours: number
+          total_hours: number
+          total_idle_hours: number
+          total_leave_hours: number
+          total_night_hours: number
+          total_overtime_hours: number
+          total_regular_hours: number
+          total_weekend_hours: number
+          total_workers: number
+          updated_at: string
+          user_id: string | null
+          week_end: string | null
+          week_start: string | null
+          work_area: string | null
           work_date: string
         }
         Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          company_id?: string | null
           created_at?: string
+          created_by?: string | null
+          currency?: string
+          daily_report_id?: string | null
           description?: string | null
-          hours?: number
+          hours?: number | null
           id?: string
+          is_archived?: boolean
+          location?: string | null
+          manpower_record_id?: string | null
+          month?: string | null
+          payroll_exported?: boolean
+          payroll_exported_at?: string | null
+          payroll_exported_by?: string | null
+          prepared_by?: string | null
           project_id: string
+          rejection_reason?: string | null
+          remarks?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
+          shift?: string
+          status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
           task_id?: string | null
+          timesheet_date?: string
+          timesheet_number?: string | null
+          timesheet_title?: string | null
+          timesheet_type?: string
+          total_cost?: number
+          total_holiday_hours?: number
+          total_hours?: number
+          total_idle_hours?: number
+          total_leave_hours?: number
+          total_night_hours?: number
+          total_overtime_hours?: number
+          total_regular_hours?: number
+          total_weekend_hours?: number
+          total_workers?: number
           updated_at?: string
-          user_id: string
+          user_id?: string | null
+          week_end?: string | null
+          week_start?: string | null
+          work_area?: string | null
           work_date?: string
         }
         Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          company_id?: string | null
           created_at?: string
+          created_by?: string | null
+          currency?: string
+          daily_report_id?: string | null
           description?: string | null
-          hours?: number
+          hours?: number | null
           id?: string
+          is_archived?: boolean
+          location?: string | null
+          manpower_record_id?: string | null
+          month?: string | null
+          payroll_exported?: boolean
+          payroll_exported_at?: string | null
+          payroll_exported_by?: string | null
+          prepared_by?: string | null
           project_id?: string
+          rejection_reason?: string | null
+          remarks?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
+          shift?: string
+          status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
           task_id?: string | null
+          timesheet_date?: string
+          timesheet_number?: string | null
+          timesheet_title?: string | null
+          timesheet_type?: string
+          total_cost?: number
+          total_holiday_hours?: number
+          total_hours?: number
+          total_idle_hours?: number
+          total_leave_hours?: number
+          total_night_hours?: number
+          total_overtime_hours?: number
+          total_regular_hours?: number
+          total_weekend_hours?: number
+          total_workers?: number
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
+          week_end?: string | null
+          week_start?: string | null
+          work_area?: string | null
           work_date?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "timesheets_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheets_daily_report_id_fkey"
+            columns: ["daily_report_id"]
+            isOneToOne: false
+            referencedRelation: "daily_reports"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheets_manpower_record_id_fkey"
+            columns: ["manpower_record_id"]
+            isOneToOne: false
+            referencedRelation: "manpower_records"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "timesheets_project_id_fkey"
             columns: ["project_id"]
