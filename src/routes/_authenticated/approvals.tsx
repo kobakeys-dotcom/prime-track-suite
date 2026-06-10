@@ -57,6 +57,17 @@ function ApprovalsPage() {
     setComment("");
   }
 
+  function exportCsv() {
+    const headers = ["Title", "Type", "Project", "Status", "Comment", "Created"];
+    const rows = filtered.map((r: any) => [r.title, r.entity_type, r.project_name ?? "", r.status, r.comment ?? "", r.created_at]);
+    const csv = [headers, ...rows].map((row) => row.map((c) => `"${String(c ?? "").replace(/"/g, '""')}"`).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = `approvals-${new Date().toISOString().slice(0, 10)}.csv`; a.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div className="p-8 space-y-6">
       <div className="flex items-start justify-between gap-4 flex-wrap">
