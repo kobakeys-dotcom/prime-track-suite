@@ -1,22 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RegisterPage } from "@/components/register-page";
-import { REGISTERS } from "@/lib/register-configs";
-
-const cfg = REGISTERS["equipment"];
+import { EquipmentRegister } from "@/components/equipment-register";
 
 export const Route = createFileRoute("/_authenticated/equipment")({
-  head: () => ({ meta: [{ title: `${cfg.title} — ProjectCore` }] }),
+  head: () => ({ meta: [{ title: "Equipment — ProjectCore" }] }),
   component: () => (
-    <RegisterPage
-      table="equipment"
-      title={cfg.title}
-      description={cfg.description}
-      fields={cfg.fields}
-      projectScoped={cfg.projectScoped}
-      statusField={cfg.statusField}
-      statusStyles={STATUS_STYLES_GENERIC}
-    />
+    <div className="space-y-4 p-2 md:p-4">
+      <div>
+        <h1 className="text-2xl font-bold">Equipment / Plant &amp; Machinery</h1>
+        <p className="text-sm text-muted-foreground">Register, assignments, usage logs, maintenance, breakdowns, inspections, and documents.</p>
+      </div>
+      <EquipmentRegister />
+    </div>
   ),
 });
-
-import { STATUS_STYLES_GENERIC } from "@/lib/register-configs";
