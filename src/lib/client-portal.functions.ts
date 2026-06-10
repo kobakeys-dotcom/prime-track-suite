@@ -11,7 +11,7 @@ export const getClientSummary = createServerFn({ method: "GET" })
 
     const [{ data: project }, { data: milestones }, { data: claims }, { data: vars }, { data: docs }, { data: approvals }, { data: photos }] = await Promise.all([
       sb.from("projects").select("id, name, code, client, location, status, progress, start_date, end_date, contract_value").eq("id", projectId).maybeSingle(),
-      sb.from("milestones").select("id, title, due_date, status, completion_percentage").eq("project_id", projectId).order("due_date", { ascending: true }),
+      sb.from("milestones").select("id, name, due_date, completed_at").eq("project_id", projectId).order("due_date", { ascending: true }),
       sb.from("payment_claims").select("id, claim_number, period_end, gross_claim, net_claim, status").eq("project_id", projectId).order("period_end", { ascending: false }),
       sb.from("variations").select("id, variation_number, title, cost_impact, approved_amount, status").eq("project_id", projectId).order("created_at", { ascending: false }),
       sb.from("documents").select("id, name, category, created_at").eq("project_id", projectId).order("created_at", { ascending: false }).limit(20),

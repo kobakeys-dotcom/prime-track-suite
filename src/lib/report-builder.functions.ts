@@ -58,7 +58,7 @@ export const buildReportData = createServerFn({ method: "POST" })
 
     if (data.sections.includes("stakeholder")) {
       const [{ data: ms }, { data: appr }] = await Promise.all([
-        filt(sb.from("milestones").select("title, due_date, status, completion_percentage").order("due_date")),
+        filt(sb.from("milestones").select("name, due_date, completed_at").order("due_date")),
         filt(sb.from("approvals").select("title, status").in("status", ["submitted","under_review"])),
       ]);
       out.sections.stakeholder = { milestones: ms ?? [], approvals: appr ?? [] };
