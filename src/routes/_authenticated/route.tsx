@@ -39,6 +39,7 @@ const sections: { label: string; items: { to: string; label: string; icon: any }
     { to: "/issues", label: "Issues", icon: AlertOctagon },
     { to: "/snags", label: "Snag List", icon: ListTodo },
     { to: "/meetings", label: "Meetings", icon: ClipboardList },
+    { to: "/action-items", label: "Action Items", icon: ListTodo },
   ]},
   { label: "Approvals", items: [
     { to: "/approvals", label: "Approval Inbox", icon: Stamp },

@@ -11,12 +11,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { ProjectPicker } from "@/components/project-picker";
 import { listRegister, upsertRegister, deleteRegister } from "@/lib/registers.functions";
+import { PhotoUploader } from "@/components/photo-uploader";
 import { cn } from "@/lib/utils";
 
 export type RegisterField = {
   name: string;
   label: string;
-  type?: "text" | "textarea" | "number" | "date" | "select";
+  type?: "text" | "textarea" | "number" | "date" | "select" | "photos";
   options?: { value: string; label: string }[];
   required?: boolean;
   hideInTable?: boolean;
@@ -97,7 +98,9 @@ export function RegisterPage(props: RegisterPageProps) {
       if (f.required && (v == null || v === "")) {
         toast.error(`${f.label} is required`); return;
       }
-      values[f.name] = f.type === "number" ? (v === "" || v == null ? null : Number(v)) : v;
+      values[f.name] = f.type === "number" ? (v === "" || v == null ? null : Number(v))
+        : f.type === "photos" ? (Array.isArray(v) ? v : [])
+        : v;
     }
     if (projectScoped) {
       const pid = effectiveProjectId || editing.project_id;
@@ -187,7 +190,7 @@ export function RegisterPage(props: RegisterPageProps) {
           {editing && (
             <div className="grid grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto pr-2">
               {fields.map((f) => (
-                <div key={f.name} className={cn(f.type === "textarea" && "col-span-2")}>
+                <div key={f.name} className={cn((f.type === "textarea" || f.type === "photos") && "col-span-2")}>
                   <Label className="text-xs">{f.label}{f.required && <span className="text-rose-600"> *</span>}</Label>
                   {f.type === "textarea" ? (
                     <Textarea value={editing[f.name] ?? ""} onChange={(e) => setEditing({ ...editing, [f.name]: e.target.value })} rows={3} />
@@ -196,6 +199,8 @@ export function RegisterPage(props: RegisterPageProps) {
                       <SelectTrigger><SelectValue placeholder="Select…" /></SelectTrigger>
                       <SelectContent>{f.options?.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
                     </Select>
+                  ) : f.type === "photos" ? (
+                    <PhotoUploader value={editing[f.name] ?? []} onChange={(urls) => setEditing({ ...editing, [f.name]: urls })} />
                   ) : (
                     <Input
                       type={f.type === "number" ? "number" : f.type === "date" ? "date" : "text"}

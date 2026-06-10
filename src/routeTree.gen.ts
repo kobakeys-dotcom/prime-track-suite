@@ -51,6 +51,7 @@ import { Route as AuthenticatedBoqRouteImport } from './routes/_authenticated/bo
 import { Route as AuthenticatedAuditRouteImport } from './routes/_authenticated/audit'
 import { Route as AuthenticatedApprovalsRouteImport } from './routes/_authenticated/approvals'
 import { Route as AuthenticatedAiRouteImport } from './routes/_authenticated/ai'
+import { Route as AuthenticatedActionItemsRouteImport } from './routes/_authenticated/action-items'
 import { Route as AuthenticatedProjectsProjectIdRouteImport } from './routes/_authenticated/projects.$projectId'
 import { Route as ApiPublicCronDailyRouteImport } from './routes/api/public/cron/daily'
 
@@ -269,6 +270,12 @@ const AuthenticatedAiRoute = AuthenticatedAiRouteImport.update({
   path: '/ai',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedActionItemsRoute =
+  AuthenticatedActionItemsRouteImport.update({
+    id: '/action-items',
+    path: '/action-items',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedProjectsProjectIdRoute =
   AuthenticatedProjectsProjectIdRouteImport.update({
     id: '/$projectId',
@@ -284,6 +291,7 @@ const ApiPublicCronDailyRoute = ApiPublicCronDailyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/action-items': typeof AuthenticatedActionItemsRoute
   '/ai': typeof AuthenticatedAiRoute
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/audit': typeof AuthenticatedAuditRoute
@@ -329,6 +337,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/action-items': typeof AuthenticatedActionItemsRoute
   '/ai': typeof AuthenticatedAiRoute
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/audit': typeof AuthenticatedAuditRoute
@@ -376,6 +385,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/action-items': typeof AuthenticatedActionItemsRoute
   '/_authenticated/ai': typeof AuthenticatedAiRoute
   '/_authenticated/approvals': typeof AuthenticatedApprovalsRoute
   '/_authenticated/audit': typeof AuthenticatedAuditRoute
@@ -423,6 +433,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/action-items'
     | '/ai'
     | '/approvals'
     | '/audit'
@@ -468,6 +479,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/action-items'
     | '/ai'
     | '/approvals'
     | '/audit'
@@ -514,6 +526,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/action-items'
     | '/_authenticated/ai'
     | '/_authenticated/approvals'
     | '/_authenticated/audit'
@@ -860,6 +873,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAiRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/action-items': {
+      id: '/_authenticated/action-items'
+      path: '/action-items'
+      fullPath: '/action-items'
+      preLoaderRoute: typeof AuthenticatedActionItemsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/projects/$projectId': {
       id: '/_authenticated/projects/$projectId'
       path: '/$projectId'
@@ -891,6 +911,7 @@ const AuthenticatedProjectsRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedActionItemsRoute: typeof AuthenticatedActionItemsRoute
   AuthenticatedAiRoute: typeof AuthenticatedAiRoute
   AuthenticatedApprovalsRoute: typeof AuthenticatedApprovalsRoute
   AuthenticatedAuditRoute: typeof AuthenticatedAuditRoute
@@ -933,6 +954,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedActionItemsRoute: AuthenticatedActionItemsRoute,
   AuthenticatedAiRoute: AuthenticatedAiRoute,
   AuthenticatedApprovalsRoute: AuthenticatedApprovalsRoute,
   AuthenticatedAuditRoute: AuthenticatedAuditRoute,

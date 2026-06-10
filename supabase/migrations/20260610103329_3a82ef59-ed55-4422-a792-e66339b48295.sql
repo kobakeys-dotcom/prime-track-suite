@@ -1,0 +1,1 @@
+ALTER TABLE public.snags ADD COLUMN IF NOT EXISTS photos jsonb DEFAULT '[]'::jsonb;

@@ -1646,6 +1646,7 @@ export type Database = {
           due_date: string | null
           id: string
           location: string | null
+          photos: Json | null
           project_id: string
           snag_number: string
           status: string
@@ -1662,6 +1663,7 @@ export type Database = {
           due_date?: string | null
           id?: string
           location?: string | null
+          photos?: Json | null
           project_id: string
           snag_number: string
           status?: string
@@ -1678,6 +1680,7 @@ export type Database = {
           due_date?: string | null
           id?: string
           location?: string | null
+          photos?: Json | null
           project_id?: string
           snag_number?: string
           status?: string
