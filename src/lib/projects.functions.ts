@@ -35,11 +35,18 @@ export const getProject = createServerFn({ method: "GET" })
   .handler(async ({ context, data }) => {
     const { data: project, error } = await context.supabase
       .from("projects")
-      .select(PROJECT_COLUMNS + ", project_manager:profiles!projects_project_manager_id_fkey(id, full_name, email)")
+      .select(PROJECT_COLUMNS)
       .eq("id", data.projectId)
       .maybeSingle();
     if (error) throw error;
     if (!project) throw new Error("Project not found");
+
+    let manager: { id: string; full_name: string | null; email: string | null } | null = null;
+    if (project.project_manager_id) {
+      const { data: m } = await context.supabase
+        .from("profiles").select("id, full_name, email").eq("id", project.project_manager_id).maybeSingle();
+      manager = m ?? null;
+    }
 
     const [{ count: taskCount }, { count: doneCount }, { count: reportCount }] = await Promise.all([
       context.supabase.from("tasks").select("id", { count: "exact", head: true }).eq("project_id", data.projectId),
