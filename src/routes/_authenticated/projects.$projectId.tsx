@@ -14,6 +14,7 @@ import { DeliveryRegister } from "@/components/delivery-register";
 import { QualityInspectionRegister } from "@/components/quality-inspection-register";
 import { SafetyInspectionRegister } from "@/components/safety-inspection-register";
 import { NcrRegister } from "@/components/ncr-register";
+import { RiskRegister } from "@/components/risk-register";
 
 import { RegisterPage } from "@/components/register-page";
 import { REGISTERS, STATUS_STYLES_GENERIC } from "@/lib/register-configs";
@@ -150,9 +151,10 @@ function ProjectDetail() {
         <TabsContent value="quality" className="pt-4"><QualityInspectionRegister projectId={projectId} /></TabsContent>
         <TabsContent value="safety" className="pt-4"><SafetyInspectionRegister projectId={projectId} /></TabsContent>
         <TabsContent value="ncrs" className="pt-4"><NcrRegister projectId={projectId} /></TabsContent>
-        {(["snags", "risks", "issues", "meetings"] as const).map((k) => {
+        <TabsContent value="risks" className="pt-4"><RiskRegister projectId={projectId} /></TabsContent>
+        {(["snags", "issues", "meetings"] as const).map((k) => {
           const cfg = REGISTERS[k];
-          const tabValue = ({ snags: "snags", risks: "risks", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
+          const tabValue = ({ snags: "snags", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
           if (!cfg) return null;
           return (
             <TabsContent key={k} value={tabValue} className="pt-4">
