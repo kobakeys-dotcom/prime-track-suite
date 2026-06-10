@@ -386,7 +386,7 @@ export const addDeliveryAttachment = createServerFn({ method: "POST" })
     const { data: del } = await sb.from("deliveries").select("project_id, company_id").eq("id", data.delivery_id).maybeSingle();
     if (!del) throw new Error("Not found");
     const { error } = await sb.from("delivery_attachments").insert({
-      ...data, project_id: del.project_id, company_id: del.company_id, uploaded_by: context.userId,
+      ...data, project_id: del.project_id, company_id: del.company_id!, uploaded_by: context.userId,
       attachment_type: data.attachment_type ?? "Delivery Document",
     });
     if (error) throw error;
