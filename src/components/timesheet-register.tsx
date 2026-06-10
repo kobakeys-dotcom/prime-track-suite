@@ -660,7 +660,6 @@ function EntryAdd({ onAdd }: { onAdd: (v: any) => void }) {
       const mins = (h2 * 60 + m2) - (h1 * 60 + m1) - Number(f.break_hours || 0) * 60;
       if (mins > 0) set("regular_hours", +(mins / 60).toFixed(2));
     }
-     react-hooks/exhaustive-deps
   }, [f.check_in_time, f.check_out_time, f.break_hours]);
 
   return (
