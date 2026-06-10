@@ -5073,6 +5073,283 @@ export type Database = {
           },
         ]
       }
+      supplier_attachments: {
+        Row: {
+          attachment_type: string | null
+          company_id: string
+          created_at: string
+          description: string | null
+          file_name: string | null
+          file_type: string | null
+          file_url: string | null
+          id: string
+          supplier_id: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          attachment_type?: string | null
+          company_id: string
+          created_at?: string
+          description?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          supplier_id: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          attachment_type?: string | null
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          supplier_id?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supplier_attachments_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      supplier_comments: {
+        Row: {
+          comment: string
+          company_id: string
+          created_at: string
+          id: string
+          supplier_id: string
+          user_id: string | null
+          visibility: string | null
+        }
+        Insert: {
+          comment: string
+          company_id: string
+          created_at?: string
+          id?: string
+          supplier_id: string
+          user_id?: string | null
+          visibility?: string | null
+        }
+        Update: {
+          comment?: string
+          company_id?: string
+          created_at?: string
+          id?: string
+          supplier_id?: string
+          user_id?: string | null
+          visibility?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supplier_comments_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      supplier_contacts: {
+        Row: {
+          company_id: string
+          contact_name: string
+          created_at: string
+          created_by: string | null
+          department: string | null
+          designation: string | null
+          email: string | null
+          id: string
+          is_archived: boolean | null
+          is_primary: boolean | null
+          mobile: string | null
+          phone: string | null
+          remarks: string | null
+          supplier_id: string
+          updated_at: string
+        }
+        Insert: {
+          company_id: string
+          contact_name: string
+          created_at?: string
+          created_by?: string | null
+          department?: string | null
+          designation?: string | null
+          email?: string | null
+          id?: string
+          is_archived?: boolean | null
+          is_primary?: boolean | null
+          mobile?: string | null
+          phone?: string | null
+          remarks?: string | null
+          supplier_id: string
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string
+          contact_name?: string
+          created_at?: string
+          created_by?: string | null
+          department?: string | null
+          designation?: string | null
+          email?: string | null
+          id?: string
+          is_archived?: boolean | null
+          is_primary?: boolean | null
+          mobile?: string | null
+          phone?: string | null
+          remarks?: string | null
+          supplier_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supplier_contacts_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      supplier_documents: {
+        Row: {
+          company_id: string
+          created_at: string
+          document_name: string
+          document_number: string | null
+          document_type: string | null
+          expiry_date: string | null
+          file_name: string | null
+          file_type: string | null
+          file_url: string | null
+          id: string
+          is_archived: boolean | null
+          issue_date: string | null
+          remarks: string | null
+          status: string | null
+          supplier_id: string
+          updated_at: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          document_name: string
+          document_number?: string | null
+          document_type?: string | null
+          expiry_date?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          is_archived?: boolean | null
+          issue_date?: string | null
+          remarks?: string | null
+          status?: string | null
+          supplier_id: string
+          updated_at?: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          document_name?: string
+          document_number?: string | null
+          document_type?: string | null
+          expiry_date?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          is_archived?: boolean | null
+          issue_date?: string | null
+          remarks?: string | null
+          status?: string | null
+          supplier_id?: string
+          updated_at?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supplier_documents_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      supplier_performance_reviews: {
+        Row: {
+          comments: string | null
+          company_id: string
+          created_at: string
+          delivery_score: number | null
+          id: string
+          overall_score: number | null
+          price_score: number | null
+          project_id: string | null
+          quality_score: number | null
+          recommendation: string | null
+          response_score: number | null
+          review_date: string | null
+          reviewed_by: string | null
+          supplier_id: string
+          updated_at: string
+        }
+        Insert: {
+          comments?: string | null
+          company_id: string
+          created_at?: string
+          delivery_score?: number | null
+          id?: string
+          overall_score?: number | null
+          price_score?: number | null
+          project_id?: string | null
+          quality_score?: number | null
+          recommendation?: string | null
+          response_score?: number | null
+          review_date?: string | null
+          reviewed_by?: string | null
+          supplier_id: string
+          updated_at?: string
+        }
+        Update: {
+          comments?: string | null
+          company_id?: string
+          created_at?: string
+          delivery_score?: number | null
+          id?: string
+          overall_score?: number | null
+          price_score?: number | null
+          project_id?: string | null
+          quality_score?: number | null
+          recommendation?: string | null
+          response_score?: number | null
+          review_date?: string | null
+          reviewed_by?: string | null
+          supplier_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supplier_performance_reviews_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       supplier_quotation_items: {
         Row: {
           company_id: string
@@ -5245,51 +5522,182 @@ export type Database = {
           },
         ]
       }
+      supplier_status_history: {
+        Row: {
+          changed_by: string | null
+          company_id: string
+          created_at: string
+          id: string
+          new_status: string | null
+          old_status: string | null
+          remarks: string | null
+          supplier_id: string
+        }
+        Insert: {
+          changed_by?: string | null
+          company_id: string
+          created_at?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          remarks?: string | null
+          supplier_id: string
+        }
+        Update: {
+          changed_by?: string | null
+          company_id?: string
+          created_at?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          remarks?: string | null
+          supplier_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supplier_status_history_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       suppliers: {
         Row: {
           address: string | null
+          blacklist_reason: string | null
           category: string | null
+          city: string | null
           company_id: string
+          contact_designation: string | null
+          contact_email: string | null
           contact_person: string | null
+          contact_phone: string | null
+          country: string | null
           created_at: string
           created_by: string | null
+          credit_limit: number | null
+          currency: string | null
+          delivery_score: number | null
+          delivery_terms: string | null
+          discipline: string | null
           email: string | null
           id: string
+          is_archived: boolean | null
+          is_blacklisted: boolean | null
+          is_preferred: boolean | null
+          is_prequalified: boolean | null
+          legal_name: string | null
           name: string
           notes: string | null
+          payment_terms: string | null
+          performance_score: number | null
           phone: string | null
+          price_score: number | null
+          quality_score: number | null
           rating: number | null
+          registration_number: string | null
+          remarks: string | null
+          response_score: number | null
+          status: string | null
+          supplier_code: string | null
+          supplier_name: string | null
+          supplier_type: string | null
+          tax_number: string | null
+          trade: string | null
           updated_at: string
+          website: string | null
         }
         Insert: {
           address?: string | null
+          blacklist_reason?: string | null
           category?: string | null
+          city?: string | null
           company_id: string
+          contact_designation?: string | null
+          contact_email?: string | null
           contact_person?: string | null
+          contact_phone?: string | null
+          country?: string | null
           created_at?: string
           created_by?: string | null
+          credit_limit?: number | null
+          currency?: string | null
+          delivery_score?: number | null
+          delivery_terms?: string | null
+          discipline?: string | null
           email?: string | null
           id?: string
+          is_archived?: boolean | null
+          is_blacklisted?: boolean | null
+          is_preferred?: boolean | null
+          is_prequalified?: boolean | null
+          legal_name?: string | null
           name: string
           notes?: string | null
+          payment_terms?: string | null
+          performance_score?: number | null
           phone?: string | null
+          price_score?: number | null
+          quality_score?: number | null
           rating?: number | null
+          registration_number?: string | null
+          remarks?: string | null
+          response_score?: number | null
+          status?: string | null
+          supplier_code?: string | null
+          supplier_name?: string | null
+          supplier_type?: string | null
+          tax_number?: string | null
+          trade?: string | null
           updated_at?: string
+          website?: string | null
         }
         Update: {
           address?: string | null
+          blacklist_reason?: string | null
           category?: string | null
+          city?: string | null
           company_id?: string
+          contact_designation?: string | null
+          contact_email?: string | null
           contact_person?: string | null
+          contact_phone?: string | null
+          country?: string | null
           created_at?: string
           created_by?: string | null
+          credit_limit?: number | null
+          currency?: string | null
+          delivery_score?: number | null
+          delivery_terms?: string | null
+          discipline?: string | null
           email?: string | null
           id?: string
+          is_archived?: boolean | null
+          is_blacklisted?: boolean | null
+          is_preferred?: boolean | null
+          is_prequalified?: boolean | null
+          legal_name?: string | null
           name?: string
           notes?: string | null
+          payment_terms?: string | null
+          performance_score?: number | null
           phone?: string | null
+          price_score?: number | null
+          quality_score?: number | null
           rating?: number | null
+          registration_number?: string | null
+          remarks?: string | null
+          response_score?: number | null
+          status?: string | null
+          supplier_code?: string | null
+          supplier_name?: string | null
+          supplier_type?: string | null
+          tax_number?: string | null
+          trade?: string | null
           updated_at?: string
+          website?: string | null
         }
         Relationships: [
           {
