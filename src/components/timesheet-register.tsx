@@ -300,10 +300,10 @@ export function TimesheetRegister({ projectId: fixedProjectId }: { projectId?: s
           id={openDetail}
           onClose={() => setOpenDetail(null)}
           onAction={{
-            submit: (id) => submitMut.mutate({ id }),
-            approve: (id) => approveMut.mutate({ id }),
-            reject: (id, reason) => rejectMut.mutate({ id, reason }),
-            revise: (id, notes) => reviseMut.mutate({ id, notes }),
+            submit: (id: string) => submitMut.mutate({ id }),
+            approve: (id: string) => approveMut.mutate({ id }),
+            reject: (id: string, reason: string) => rejectMut.mutate({ id, reason }),
+            revise: (id: string, notes: string) => reviseMut.mutate({ id, notes }),
           }}
         />
       )}
