@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { getProject } from "@/lib/projects.functions";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { TasksPanel } from "@/components/project/tasks-panel";
+import { GanttView } from "@/components/project/gantt-view";
 import { DailyReportsPanel } from "@/components/project/daily-reports-panel";
 import { ProjectRfisPanel, ProjectSubmittalsPanel, ProjectDocumentsPanel, ProjectBoqPanel } from "@/components/project/module-panels";
 import { RegisterPage } from "@/components/register-page";
