@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
-import { Plus, Pencil, Trash2, Loader2, Search } from "lucide-react";
+import { Plus, Pencil, Trash2, Loader2, Search, Download, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,7 +12,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { ProjectPicker } from "@/components/project-picker";
 import { listRegister, upsertRegister, deleteRegister } from "@/lib/registers.functions";
 import { PhotoUploader } from "@/components/photo-uploader";
+import { CommentsThread } from "@/components/comments-thread";
 import { cn } from "@/lib/utils";
+
+const APPROVAL_TABLES = new Set(["procurement_requests", "variations", "payment_claims", "purchase_orders"]);
 
 export type RegisterField = {
   name: string;
