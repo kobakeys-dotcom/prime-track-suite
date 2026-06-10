@@ -273,7 +273,18 @@ export function RegisterPage(props: RegisterPageProps) {
           )}
           {editing?.id && (
             <div className="border-t border-border pt-4 mt-2">
-              <CommentsThread entityType={table} entityId={editing.id} />
+              <Tabs defaultValue="comments">
+                <TabsList>
+                  <TabsTrigger value="comments">Comments</TabsTrigger>
+                  <TabsTrigger value="activity">Activity</TabsTrigger>
+                </TabsList>
+                <TabsContent value="comments" className="mt-3">
+                  <CommentsThread entityType={table} entityId={editing.id} />
+                </TabsContent>
+                <TabsContent value="activity" className="mt-3">
+                  <ActivityTimeline entityType={table} entityId={editing.id} />
+                </TabsContent>
+              </Tabs>
             </div>
           )}
           <DialogFooter>
