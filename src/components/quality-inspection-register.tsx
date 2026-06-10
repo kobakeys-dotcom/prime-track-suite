@@ -168,7 +168,7 @@ export function QualityInspectionRegister({ projectId }: { projectId?: string })
       <div className="flex flex-wrap items-center gap-2">
         {!projectId && (
           <div className="w-64">
-            <ProjectPicker value={filterProject} onChange={setFilterProject} placeholder="All projects" allowEmpty />
+            <ProjectPicker value={filterProject} onChange={setFilterProject} placeholder="All projects" />
           </div>
         )}
         <div className="relative">
