@@ -7,7 +7,7 @@ const priorities = ["low", "medium", "high", "critical"] as const;
 const riskLevels = ["low", "medium", "high"] as const;
 
 const PROJECT_COLUMNS =
-  "id, name, code, client, consultant_name, contractor_name, location, project_type, contract_number, contract_value, currency, status, start_date, end_date, planned_end_date, revised_end_date, project_manager_id, description, progress, budget_amount, priority, risk_level, is_archived, created_at";
+  "id, name, code, client, consultant_name, contractor_name, location, project_type, contract_number, contract_value, currency, status, start_date, end_date, planned_end_date, revised_end_date, project_manager_id, description, progress, budget_amount, priority, risk_level, is_archived, created_at, updated_at";
 
 export const listProjects = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
