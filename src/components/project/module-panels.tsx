@@ -8,6 +8,7 @@ import { listDocuments } from "@/lib/documents.functions";
 import { listBoqItems, createBoqItem, updateBoqProgress } from "@/lib/boq.functions";
 import { APPROVAL_STATUSES, APPROVAL_STATUS_STYLES, statusLabel } from "@/lib/status";
 import { RfiRegister } from "@/components/rfi-register";
+import { SubmittalRegister } from "@/components/submittal-register";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
