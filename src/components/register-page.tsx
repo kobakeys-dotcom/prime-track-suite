@@ -148,12 +148,22 @@ export function RegisterPage(props: RegisterPageProps) {
             <h1 className="font-display text-2xl font-bold">{title}</h1>
             {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             {projectScoped && <div className="w-56"><ProjectPicker value={projectId} onChange={setProjectId} placeholder="All projects" /></div>}
+            {statusField && statusOptions.length > 0 && (
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-40"><SelectValue placeholder="Status" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__all">All statuses</SelectItem>
+                  {statusOptions.map((s) => <SelectItem key={s} value={s}>{s.replace(/_/g, " ")}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            )}
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
               <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search…" className="pl-9 w-56" />
             </div>
+            <Button variant="outline" onClick={exportCsv} title="Export CSV"><Download className="size-4" /> CSV</Button>
             <Button onClick={openCreate} className="bg-accent text-white hover:bg-accent/90" disabled={projectScoped && !effectiveProjectId}>
               <Plus className="size-4" /> New
             </Button>
@@ -162,12 +172,26 @@ export function RegisterPage(props: RegisterPageProps) {
       )}
 
       {fixedProjectId && (
-        <div className="flex items-center justify-between gap-2">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
-            <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search…" className="pl-9 w-56" />
+        <div className="flex items-center justify-between gap-2 flex-wrap">
+          <div className="flex items-center gap-2">
+            {statusField && statusOptions.length > 0 && (
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-40"><SelectValue placeholder="Status" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__all">All statuses</SelectItem>
+                  {statusOptions.map((s) => <SelectItem key={s} value={s}>{s.replace(/_/g, " ")}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            )}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
+              <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search…" className="pl-9 w-56" />
+            </div>
           </div>
-          <Button onClick={openCreate} className="bg-accent text-white hover:bg-accent/90"><Plus className="size-4" /> New</Button>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" onClick={exportCsv}><Download className="size-4" /> CSV</Button>
+            <Button onClick={openCreate} className="bg-accent text-white hover:bg-accent/90"><Plus className="size-4" /> New</Button>
+          </div>
         </div>
       )}
 
