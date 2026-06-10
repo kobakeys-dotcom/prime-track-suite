@@ -6,6 +6,11 @@ import { SubmittalRegister } from "@/components/submittal-register";
 import { BoqRegister } from "@/components/boq-register";
 import { VariationRegister } from "@/components/variation-register";
 import { PaymentClaimRegister } from "@/components/payment-claim-register";
+import { BudgetVsActual } from "@/components/budget-vs-actual";
+
+export function ProjectBudgetPanel({ projectId }: { projectId: string }) {
+  return <BudgetVsActual projectId={projectId} variant="compact" />;
+}
 
 export function ProjectRfisPanel({ projectId }: { projectId: string }) {
   return <RfiRegister projectId={projectId} variant="compact" />;
