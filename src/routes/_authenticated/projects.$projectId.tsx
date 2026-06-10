@@ -16,6 +16,7 @@ import { SafetyInspectionRegister } from "@/components/safety-inspection-registe
 import { NcrRegister } from "@/components/ncr-register";
 import { RiskRegister } from "@/components/risk-register";
 import { ManpowerRegister } from "@/components/manpower-register";
+import { EquipmentRegister } from "@/components/equipment-register";
 
 import { RegisterPage } from "@/components/register-page";
 import { REGISTERS, STATUS_STYLES_GENERIC } from "@/lib/register-configs";
