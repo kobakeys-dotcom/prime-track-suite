@@ -150,6 +150,7 @@ const wbsSchema = z.object({
   planned_finish: z.string().optional().nullable(),
   sort_order: z.number().int().optional(),
   status: z.string().max(50).optional(),
+  progress: z.number().min(0).max(100).optional(),
 });
 
 export const listWbs = createServerFn({ method: "GET" })
