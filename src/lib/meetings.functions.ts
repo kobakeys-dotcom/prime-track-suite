@@ -8,7 +8,7 @@ export const listActionItems = createServerFn({ method: "GET" })
   .handler(async ({ context, data }) => {
     let q = context.supabase
       .from("meeting_action_items")
-      .select("id, description, due_date, status, project_id, meeting_id, responsible_person, meetings(title, meeting_date), ")
+      .select("id, description, due_date, status, project_id, meeting_id, responsible_person, meetings(title, meeting_date)")
       .order("due_date", { ascending: true, nullsFirst: false });
     if (data.projectId) q = q.eq("project_id", data.projectId);
     const { data: rows, error } = await q;
@@ -37,7 +37,6 @@ export const promoteActionItemToTask = createServerFn({ method: "POST" })
       title: (item.description ?? "Action item").slice(0, 200),
       description: item.description,
       due_date: item.due_date,
-      responsible_person: item.responsible_person,
       status: "todo",
       created_by: context.userId,
     }).select("id").single();
