@@ -133,6 +133,7 @@ export const REGISTERS: Record<string, { title: string; description: string; pro
       { name: "result", label: "Result", type: "select", options: opt(["pass", "fail", "conditional"]) },
       { name: "status", label: "Status", type: "select", options: opt(["pending", "in_progress", "closed"]) },
       { name: "comments", label: "Comments", type: "textarea", hideInTable: true },
+      { name: "photos", label: "Photos", type: "photos", hideInTable: true },
     ],
   },
   safety_inspections: {
@@ -146,6 +147,7 @@ export const REGISTERS: Record<string, { title: string; description: string; pro
       { name: "unsafe_acts", label: "Unsafe Acts", type: "textarea", hideInTable: true },
       { name: "unsafe_conditions", label: "Unsafe Conditions", type: "textarea", hideInTable: true },
       { name: "corrective_action", label: "Corrective Action", type: "textarea", hideInTable: true },
+      { name: "photos", label: "Photos", type: "photos", hideInTable: true },
     ],
   },
   ncrs: {
@@ -157,6 +159,7 @@ export const REGISTERS: Record<string, { title: string; description: string; pro
       { name: "due_date", label: "Due", type: "date" },
       { name: "status", label: "Status", type: "select", options: opt(["open", "in_progress", "closed"]) },
       { name: "corrective_action", label: "Corrective Action", type: "textarea", hideInTable: true },
+      { name: "photos", label: "Photos", type: "photos", hideInTable: true },
     ],
   },
   snags: {
@@ -167,6 +170,7 @@ export const REGISTERS: Record<string, { title: string; description: string; pro
       { name: "description", label: "Description", required: true },
       { name: "due_date", label: "Due", type: "date" },
       { name: "status", label: "Status", type: "select", options: opt(["open", "in_progress", "resolved", "closed"]) },
+      { name: "photos", label: "Photos", type: "photos", hideInTable: true },
     ],
   },
   risks: {
