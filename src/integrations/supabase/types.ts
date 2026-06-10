@@ -1206,26 +1206,342 @@ export type Database = {
         }
         Relationships: []
       }
+      payment_claim_attachments: {
+        Row: {
+          attachment_type: string | null
+          created_at: string
+          description: string | null
+          file_name: string
+          file_type: string | null
+          file_url: string
+          id: string
+          is_client_visible: boolean | null
+          payment_claim_id: string
+          project_id: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          attachment_type?: string | null
+          created_at?: string
+          description?: string | null
+          file_name: string
+          file_type?: string | null
+          file_url: string
+          id?: string
+          is_client_visible?: boolean | null
+          payment_claim_id: string
+          project_id: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          attachment_type?: string | null
+          created_at?: string
+          description?: string | null
+          file_name?: string
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          is_client_visible?: boolean | null
+          payment_claim_id?: string
+          project_id?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_claim_attachments_payment_claim_id_fkey"
+            columns: ["payment_claim_id"]
+            isOneToOne: false
+            referencedRelation: "payment_claims"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_claim_attachments_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payment_claim_items: {
+        Row: {
+          balance_quantity: number | null
+          boq_item_id: string | null
+          certified_amount: number | null
+          certified_quantity: number | null
+          contract_amount: number | null
+          contract_quantity: number | null
+          cost_code_id: string | null
+          created_at: string
+          created_by: string | null
+          cumulative_amount: number | null
+          cumulative_quantity: number | null
+          current_amount: number | null
+          current_quantity: number | null
+          description: string
+          id: string
+          is_archived: boolean | null
+          item_type: string | null
+          payment_claim_id: string
+          previous_amount: number | null
+          previous_quantity: number | null
+          progress_percentage: number | null
+          project_id: string
+          rate: number | null
+          remarks: string | null
+          sort_order: number | null
+          unit: string | null
+          updated_at: string
+        }
+        Insert: {
+          balance_quantity?: number | null
+          boq_item_id?: string | null
+          certified_amount?: number | null
+          certified_quantity?: number | null
+          contract_amount?: number | null
+          contract_quantity?: number | null
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          cumulative_amount?: number | null
+          cumulative_quantity?: number | null
+          current_amount?: number | null
+          current_quantity?: number | null
+          description: string
+          id?: string
+          is_archived?: boolean | null
+          item_type?: string | null
+          payment_claim_id: string
+          previous_amount?: number | null
+          previous_quantity?: number | null
+          progress_percentage?: number | null
+          project_id: string
+          rate?: number | null
+          remarks?: string | null
+          sort_order?: number | null
+          unit?: string | null
+          updated_at?: string
+        }
+        Update: {
+          balance_quantity?: number | null
+          boq_item_id?: string | null
+          certified_amount?: number | null
+          certified_quantity?: number | null
+          contract_amount?: number | null
+          contract_quantity?: number | null
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          cumulative_amount?: number | null
+          cumulative_quantity?: number | null
+          current_amount?: number | null
+          current_quantity?: number | null
+          description?: string
+          id?: string
+          is_archived?: boolean | null
+          item_type?: string | null
+          payment_claim_id?: string
+          previous_amount?: number | null
+          previous_quantity?: number | null
+          progress_percentage?: number | null
+          project_id?: string
+          rate?: number | null
+          remarks?: string | null
+          sort_order?: number | null
+          unit?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_claim_items_boq_item_id_fkey"
+            columns: ["boq_item_id"]
+            isOneToOne: false
+            referencedRelation: "boq_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_claim_items_cost_code_id_fkey"
+            columns: ["cost_code_id"]
+            isOneToOne: false
+            referencedRelation: "cost_codes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_claim_items_payment_claim_id_fkey"
+            columns: ["payment_claim_id"]
+            isOneToOne: false
+            referencedRelation: "payment_claims"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_claim_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payment_claim_status_history: {
+        Row: {
+          changed_by: string | null
+          created_at: string
+          id: string
+          new_status: string | null
+          old_status: string | null
+          payment_claim_id: string
+          project_id: string
+          remarks: string | null
+        }
+        Insert: {
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          payment_claim_id: string
+          project_id: string
+          remarks?: string | null
+        }
+        Update: {
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          payment_claim_id?: string
+          project_id?: string
+          remarks?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_claim_status_history_payment_claim_id_fkey"
+            columns: ["payment_claim_id"]
+            isOneToOne: false
+            referencedRelation: "payment_claims"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_claim_status_history_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payment_claim_variations: {
+        Row: {
+          approved_amount: number | null
+          certified_amount: number | null
+          claimed_amount: number | null
+          created_at: string
+          description: string | null
+          id: string
+          payment_claim_id: string
+          project_id: string
+          remarks: string | null
+          variation_id: string
+          variation_number: string | null
+        }
+        Insert: {
+          approved_amount?: number | null
+          certified_amount?: number | null
+          claimed_amount?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          payment_claim_id: string
+          project_id: string
+          remarks?: string | null
+          variation_id: string
+          variation_number?: string | null
+        }
+        Update: {
+          approved_amount?: number | null
+          certified_amount?: number | null
+          claimed_amount?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          payment_claim_id?: string
+          project_id?: string
+          remarks?: string | null
+          variation_id?: string
+          variation_number?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_claim_variations_payment_claim_id_fkey"
+            columns: ["payment_claim_id"]
+            isOneToOne: false
+            referencedRelation: "payment_claims"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_claim_variations_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_claim_variations_variation_id_fkey"
+            columns: ["variation_id"]
+            isOneToOne: false
+            referencedRelation: "variations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       payment_claims: {
         Row: {
           advance_recovery: number | null
           approved_at: string | null
+          approved_by: string | null
+          certification_comments: string | null
+          certified_amount: number | null
+          certified_at: string | null
+          certified_by: string | null
+          claim_date: string | null
           claim_number: string
+          claim_type: string | null
+          client_approved_at: string | null
+          client_approved_by: string | null
           created_at: string
           created_by: string | null
+          currency: string | null
+          current_claim_amount: number | null
           deductions: number | null
+          due_date: string | null
           gross_claim: number | null
           id: string
+          is_archived: boolean | null
+          is_client_visible: boolean | null
           material_at_site_value: number | null
           net_claim: number | null
           notes: string | null
+          other_claim_value: number | null
+          outstanding_amount: number | null
+          paid_amount: number | null
           paid_at: string | null
+          paid_by: string | null
+          payment_reference: string | null
           period_end: string | null
           period_start: string | null
+          previous_certified_amount: number | null
           project_id: string
+          rejection_reason: string | null
           retention: number | null
+          retention_percentage: number | null
+          review_comments: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          revision_notes: string | null
           status: string
+          submitted_amount: number | null
           submitted_at: string | null
+          tax_amount: number | null
           updated_at: string
           variation_value: number | null
           work_done_value: number | null
@@ -1233,22 +1549,50 @@ export type Database = {
         Insert: {
           advance_recovery?: number | null
           approved_at?: string | null
+          approved_by?: string | null
+          certification_comments?: string | null
+          certified_amount?: number | null
+          certified_at?: string | null
+          certified_by?: string | null
+          claim_date?: string | null
           claim_number: string
+          claim_type?: string | null
+          client_approved_at?: string | null
+          client_approved_by?: string | null
           created_at?: string
           created_by?: string | null
+          currency?: string | null
+          current_claim_amount?: number | null
           deductions?: number | null
+          due_date?: string | null
           gross_claim?: number | null
           id?: string
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
           material_at_site_value?: number | null
           net_claim?: number | null
           notes?: string | null
+          other_claim_value?: number | null
+          outstanding_amount?: number | null
+          paid_amount?: number | null
           paid_at?: string | null
+          paid_by?: string | null
+          payment_reference?: string | null
           period_end?: string | null
           period_start?: string | null
+          previous_certified_amount?: number | null
           project_id: string
+          rejection_reason?: string | null
           retention?: number | null
+          retention_percentage?: number | null
+          review_comments?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
           status?: string
+          submitted_amount?: number | null
           submitted_at?: string | null
+          tax_amount?: number | null
           updated_at?: string
           variation_value?: number | null
           work_done_value?: number | null
@@ -1256,22 +1600,50 @@ export type Database = {
         Update: {
           advance_recovery?: number | null
           approved_at?: string | null
+          approved_by?: string | null
+          certification_comments?: string | null
+          certified_amount?: number | null
+          certified_at?: string | null
+          certified_by?: string | null
+          claim_date?: string | null
           claim_number?: string
+          claim_type?: string | null
+          client_approved_at?: string | null
+          client_approved_by?: string | null
           created_at?: string
           created_by?: string | null
+          currency?: string | null
+          current_claim_amount?: number | null
           deductions?: number | null
+          due_date?: string | null
           gross_claim?: number | null
           id?: string
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
           material_at_site_value?: number | null
           net_claim?: number | null
           notes?: string | null
+          other_claim_value?: number | null
+          outstanding_amount?: number | null
+          paid_amount?: number | null
           paid_at?: string | null
+          paid_by?: string | null
+          payment_reference?: string | null
           period_end?: string | null
           period_start?: string | null
+          previous_certified_amount?: number | null
           project_id?: string
+          rejection_reason?: string | null
           retention?: number | null
+          retention_percentage?: number | null
+          review_comments?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
           status?: string
+          submitted_amount?: number | null
           submitted_at?: string | null
+          tax_amount?: number | null
           updated_at?: string
           variation_value?: number | null
           work_done_value?: number | null
