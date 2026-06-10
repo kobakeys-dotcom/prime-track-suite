@@ -336,11 +336,11 @@ export const saveSupplierQuotation = createServerFn({ method: "POST" })
       qId = ins!.id;
     }
 
-    await sb.from("supplier_quotation_items").delete().eq("supplier_quotation_id", qId);
-    if (items.length) {
+    await sb.from("supplier_quotation_items").delete().eq("supplier_quotation_id", qId!);
+    if (items.length && rfq.company_id) {
       const rows = items.map((it) => ({
-        company_id: rfq.company_id, project_id: rfq.project_id,
-        supplier_quotation_id: qId, rfq_item_id: it.rfq_item_id ?? null,
+        company_id: rfq.company_id as string, project_id: rfq.project_id,
+        supplier_quotation_id: qId as string, rfq_item_id: it.rfq_item_id ?? null,
         item_name: it.item_name, description: it.description ?? null,
         unit: it.unit ?? null, quantity: Number(it.quantity ?? 0),
         quoted_rate: Number(it.quoted_rate ?? 0),
