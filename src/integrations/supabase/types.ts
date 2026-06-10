@@ -743,39 +743,73 @@ export type Database = {
       }
       meeting_action_items: {
         Row: {
+          action_number: string | null
+          completed_date: string | null
+          completion_notes: string | null
           created_at: string
+          created_by: string | null
           description: string
           due_date: string | null
           id: string
+          is_archived: boolean
+          linked_task_id: string | null
           meeting_id: string
+          priority: string | null
+          progress_percentage: number
           project_id: string
           responsible_person: string | null
           status: string
+          title: string | null
           updated_at: string
         }
         Insert: {
+          action_number?: string | null
+          completed_date?: string | null
+          completion_notes?: string | null
           created_at?: string
+          created_by?: string | null
           description: string
           due_date?: string | null
           id?: string
+          is_archived?: boolean
+          linked_task_id?: string | null
           meeting_id: string
+          priority?: string | null
+          progress_percentage?: number
           project_id: string
           responsible_person?: string | null
           status?: string
+          title?: string | null
           updated_at?: string
         }
         Update: {
+          action_number?: string | null
+          completed_date?: string | null
+          completion_notes?: string | null
           created_at?: string
+          created_by?: string | null
           description?: string
           due_date?: string | null
           id?: string
+          is_archived?: boolean
+          linked_task_id?: string | null
           meeting_id?: string
+          priority?: string | null
+          progress_percentage?: number
           project_id?: string
           responsible_person?: string | null
           status?: string
+          title?: string | null
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "meeting_action_items_linked_task_id_fkey"
+            columns: ["linked_task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "meeting_action_items_meeting_id_fkey"
             columns: ["meeting_id"]
@@ -797,13 +831,26 @@ export type Database = {
           agenda: string | null
           attachments: Json
           attendees: Json
+          chairperson_id: string | null
           created_at: string
           created_by: string | null
           decisions: string | null
           discussion_points: string | null
+          end_time: string | null
           id: string
+          is_archived: boolean
+          is_client_visible: boolean
+          location: string | null
           meeting_date: string
+          meeting_link: string | null
+          meeting_mode: string | null
+          meeting_number: string | null
+          meeting_type: string | null
+          next_meeting_date: string | null
+          prepared_by: string | null
           project_id: string
+          status: string
+          summary: string | null
           title: string
           updated_at: string
         }
@@ -811,13 +858,26 @@ export type Database = {
           agenda?: string | null
           attachments?: Json
           attendees?: Json
+          chairperson_id?: string | null
           created_at?: string
           created_by?: string | null
           decisions?: string | null
           discussion_points?: string | null
+          end_time?: string | null
           id?: string
+          is_archived?: boolean
+          is_client_visible?: boolean
+          location?: string | null
           meeting_date: string
+          meeting_link?: string | null
+          meeting_mode?: string | null
+          meeting_number?: string | null
+          meeting_type?: string | null
+          next_meeting_date?: string | null
+          prepared_by?: string | null
           project_id: string
+          status?: string
+          summary?: string | null
           title: string
           updated_at?: string
         }
@@ -825,13 +885,26 @@ export type Database = {
           agenda?: string | null
           attachments?: Json
           attendees?: Json
+          chairperson_id?: string | null
           created_at?: string
           created_by?: string | null
           decisions?: string | null
           discussion_points?: string | null
+          end_time?: string | null
           id?: string
+          is_archived?: boolean
+          is_client_visible?: boolean
+          location?: string | null
           meeting_date?: string
+          meeting_link?: string | null
+          meeting_mode?: string | null
+          meeting_number?: string | null
+          meeting_type?: string | null
+          next_meeting_date?: string | null
+          prepared_by?: string | null
           project_id?: string
+          status?: string
+          summary?: string | null
           title?: string
           updated_at?: string
         }
