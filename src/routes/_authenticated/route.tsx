@@ -32,6 +32,7 @@ const sections: { label: string; items: { to: string; label: string; icon: any }
   { label: "Planning", items: [
     { to: "/planning", label: "Gantt", icon: CalendarRange },
     { to: "/tasks", label: "Tasks", icon: ListChecks },
+    { to: "/wbs", label: "WBS", icon: ListChecks },
     { to: "/milestones", label: "Milestones", icon: Flag },
   ]},
   { label: "Execution", items: [
