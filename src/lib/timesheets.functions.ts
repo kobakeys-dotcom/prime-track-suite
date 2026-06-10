@@ -278,7 +278,7 @@ export const updateTimesheetEntry = createServerFn({ method: "POST" })
     const patch = { ...data.patch, total_hours: calc.total_hours, cost_amount: calc.cost_amount };
     const { data: row, error } = await context.supabase.from("timesheet_entries").update(patch).eq("id", data.id).select(ENTRY_COLS).single();
     if (error) throw error;
-    await recomputeTotals(context.supabase, row.timesheet_id);
+    await recomputeTotals(context.supabase, (row as any).timesheet_id);
     return row;
   });
 
@@ -289,7 +289,7 @@ export const deleteTimesheetEntry = createServerFn({ method: "POST" })
     const { data: row } = await context.supabase.from("timesheet_entries").select("timesheet_id").eq("id", data.id).maybeSingle() as any;
     const { error } = await context.supabase.from("timesheet_entries").delete().eq("id", data.id);
     if (error) throw error;
-    if (row?.timesheet_id) await recomputeTotals(context.supabase, row.timesheet_id);
+    if (row?.timesheet_id) await recomputeTotals(context.supabase, (row as any).timesheet_id);
     return { ok: true };
   });
 
@@ -376,7 +376,7 @@ export const recordPayrollExport = createServerFn({ method: "POST" })
     const { data: tss } = await supabase.from("timesheets").select(TS_COLS).in("id", data.timesheetIds).eq("status", "Approved");
     const list = tss || [];
     if (!list.length) throw new Error("Only approved timesheets can be exported");
-    const companyId = list[0].company_id;
+    const companyId = (list[0] as any).company_id;
     const totals = list.reduce((a: any, t: any) => ({
       total_workers: a.total_workers + num(t.total_workers),
       total_regular_hours: a.total_regular_hours + num(t.total_regular_hours),
