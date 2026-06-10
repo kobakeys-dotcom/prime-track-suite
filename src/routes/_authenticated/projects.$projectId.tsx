@@ -146,9 +146,10 @@ function ProjectDetail() {
         <TabsContent value="purchase-orders" className="pt-4"><PurchaseOrderRegister projectId={projectId} /></TabsContent>
         <TabsContent value="deliveries" className="pt-4"><DeliveryRegister projectId={projectId} /></TabsContent>
         <TabsContent value="quality" className="pt-4"><QualityInspectionRegister projectId={projectId} /></TabsContent>
-        {(["safety_inspections", "snags", "risks", "issues", "meetings"] as const).map((k) => {
+        <TabsContent value="safety" className="pt-4"><SafetyInspectionRegister projectId={projectId} /></TabsContent>
+        {(["snags", "risks", "issues", "meetings"] as const).map((k) => {
           const cfg = REGISTERS[k];
-          const tabValue = ({ safety_inspections: "safety", snags: "snags", risks: "risks", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
+          const tabValue = ({ snags: "snags", risks: "risks", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
           if (!cfg) return null;
           return (
             <TabsContent key={k} value={tabValue} className="pt-4">
