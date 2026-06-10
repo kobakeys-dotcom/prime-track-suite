@@ -13,6 +13,8 @@ import { ProjectPicker } from "@/components/project-picker";
 import { listRegister, upsertRegister, deleteRegister } from "@/lib/registers.functions";
 import { PhotoUploader } from "@/components/photo-uploader";
 import { CommentsThread } from "@/components/comments-thread";
+import { ActivityTimeline } from "@/components/activity-timeline";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 
 const APPROVAL_TABLES = new Set(["procurement_requests", "variations", "payment_claims", "purchase_orders"]);
