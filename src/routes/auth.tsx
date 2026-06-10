@@ -13,7 +13,6 @@ const search = z.object({
 });
 
 export const Route = createFileRoute("/auth")({
-  ssr: false,
   validateSearch: search,
   head: () => ({ meta: [{ title: "Sign in — ProjectCore" }] }),
   component: AuthPage,
