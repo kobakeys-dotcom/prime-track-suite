@@ -545,11 +545,6 @@ function initForm(e: any | null, projectId?: string): any {
   };
 }
 
-// helper because TanStack useServerFn binds with hook semantics; use directly via callback
-function useServerFnCall<T>(_fn: any, _data: any): Promise<T> {
-  // dummy — kept for satisfying hook signature; replaced by actual useServerFn call below
-  return Promise.resolve(_fn) as any;
-}
 
 // ----- Detail Sheet -----
 function RiskDetailSheet({ riskId, onOpenChange, onChange, onEdit, onEscalate, onConvert }: {
