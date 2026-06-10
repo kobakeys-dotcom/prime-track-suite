@@ -73,14 +73,12 @@ export const createTask = createServerFn({ method: "POST" })
       .single();
     if (error) throw error;
     if (data.assignee_id && data.assignee_id !== context.userId) {
-      const proj = await context.supabase.from("projects").select("company_id").eq("id", data.project_id).single();
-      if (proj.data) {
-        await context.supabase.from("notifications").insert({
-          company_id: proj.data.company_id, user_id: data.assignee_id,
-          title: "Task assigned", body: `You were assigned: ${data.title}`,
-          link: `/tasks`,
-        });
-      }
+      await context.supabase.from("notifications").insert({
+        user_id: data.assignee_id,
+        title: "Task assigned",
+        body: `You were assigned: ${data.title}`,
+        link: `/tasks`,
+      });
     }
     return row;
   });
