@@ -120,7 +120,7 @@ export function RfqRegister({ projectId: pinnedProject }: Props) {
     <div className="space-y-4">
       {!pinnedProject && (
         <div className="flex flex-wrap items-end gap-3">
-          <ProjectPicker value={projectId} onChange={setProjectId} />
+          <ProjectPicker value={projectId ?? ""} onChange={setProjectId} />
         </div>
       )}
 
