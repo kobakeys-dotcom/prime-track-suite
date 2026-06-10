@@ -548,7 +548,7 @@ function ActionDetailSheet({
 
           <div>
             <div className="text-xs font-semibold uppercase tracking-widest mb-2">Comments</div>
-            <CommentsThread entityType="meeting_action_item" entityId={item.id} projectId={item.project_id} />
+            <CommentsThread entityType="meeting_action_item" entityId={item.id} />
           </div>
         </div>
       </SheetContent>
