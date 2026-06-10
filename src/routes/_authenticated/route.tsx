@@ -116,24 +116,29 @@ function Sidebar({ companyName }: { companyName?: string | null }) {
           {companyName && <div className="text-[10px] uppercase tracking-widest text-sidebar-foreground/60 truncate">{companyName}</div>}
         </div>
       </div>
-      <nav className="flex-1 px-3 py-2 space-y-0.5 overflow-y-auto text-sm">
-        {nav.map((item) => {
-          const active = pathname === item.to || pathname.startsWith(item.to + "/");
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={cn(
-                "flex items-center gap-3 px-3 py-2 rounded-md transition-colors",
-                active ? "bg-sidebar-accent text-white" : "hover:text-white hover:bg-sidebar-accent/50",
-              )}
-            >
-              <Icon className="size-4 shrink-0" />
-              <span className="truncate">{item.label}</span>
-            </Link>
-          );
-        })}
+      <nav className="flex-1 px-3 py-2 space-y-3 overflow-y-auto text-sm">
+        {sections.map((section) => (
+          <div key={section.label} className="space-y-0.5">
+            <div className="px-3 text-[10px] font-bold uppercase tracking-widest text-sidebar-foreground/40 mb-1">{section.label}</div>
+            {section.items.map((item) => {
+              const active = pathname === item.to || pathname.startsWith(item.to + "/");
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={cn(
+                    "flex items-center gap-3 px-3 py-1.5 rounded-md transition-colors text-[13px]",
+                    active ? "bg-sidebar-accent text-white" : "hover:text-white hover:bg-sidebar-accent/50",
+                  )}
+                >
+                  <Icon className="size-4 shrink-0" />
+                  <span className="truncate">{item.label}</span>
+                </Link>
+              );
+            })}
+          </div>
+        ))}
       </nav>
       <div className="p-3 border-t border-sidebar-border space-y-0.5">
         <Link to="/settings" className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover:text-white hover:bg-sidebar-accent/50">
