@@ -214,9 +214,8 @@ export const saveAssignment = createServerFn({ method: "POST" })
       if (error) throw error;
       return out;
     }
-    const { data: out, error } = await context.supabase.from("equipment_assignments").insert({
-      ...rest, company_id: companyId, assigned_by: context.userId, created_by: context.userId,
-    }).select().maybeSingle();
+    const insertPayload: any = { ...rest, company_id: companyId, assigned_by: context.userId, created_by: context.userId };
+    const { data: out, error } = await context.supabase.from("equipment_assignments").insert(insertPayload).select().maybeSingle();
     if (error) throw error;
     // update equipment
     await context.supabase.from("equipment").update({
