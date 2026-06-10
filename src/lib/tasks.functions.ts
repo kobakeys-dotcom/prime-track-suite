@@ -13,7 +13,7 @@ export const listTasks = createServerFn({ method: "GET" })
   .handler(async ({ context, data }) => {
     let q = context.supabase
       .from("tasks")
-      .select("id, title, status, priority, progress, due_date, project_id, assignee_id, projects(name)")
+      .select("id, title, status, priority, progress, start_date, due_date, project_id, assignee_id, projects(name)")
       .order("due_date", { ascending: true, nullsFirst: false });
     if (data.projectId) q = q.eq("project_id", data.projectId);
     const { data: rows, error } = await q;
