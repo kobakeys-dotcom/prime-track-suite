@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { getProject } from "@/lib/projects.functions";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { TasksPanel } from "@/components/project/tasks-panel";
+import { GanttView } from "@/components/project/gantt-view";
 import { DailyReportsPanel } from "@/components/project/daily-reports-panel";
 import { ProjectRfisPanel, ProjectSubmittalsPanel, ProjectDocumentsPanel, ProjectBoqPanel } from "@/components/project/module-panels";
 import { RegisterPage } from "@/components/register-page";
@@ -73,6 +74,7 @@ function ProjectDetail() {
         <TabsList className="flex-wrap h-auto">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="tasks">Tasks</TabsTrigger>
+          <TabsTrigger value="planning">Planning</TabsTrigger>
           <TabsTrigger value="reports">Daily Reports</TabsTrigger>
           <TabsTrigger value="boq">BOQ</TabsTrigger>
           <TabsTrigger value="rfis">RFIs</TabsTrigger>
@@ -114,6 +116,7 @@ function ProjectDetail() {
           </div>
         </TabsContent>
         <TabsContent value="tasks" className="pt-4"><TasksPanel projectId={projectId} /></TabsContent>
+        <TabsContent value="planning" className="pt-4"><GanttView projectId={projectId} hideProjectPicker /></TabsContent>
         <TabsContent value="reports" className="pt-4"><DailyReportsPanel projectId={projectId} /></TabsContent>
         <TabsContent value="boq" className="pt-4"><ProjectBoqPanel projectId={projectId} /></TabsContent>
         <TabsContent value="rfis" className="pt-4"><ProjectRfisPanel projectId={projectId} /></TabsContent>
