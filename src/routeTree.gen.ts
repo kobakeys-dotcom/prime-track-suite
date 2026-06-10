@@ -25,11 +25,13 @@ import { Route as AuthenticatedRfqsRouteImport } from './routes/_authenticated/r
 import { Route as AuthenticatedRfisRouteImport } from './routes/_authenticated/rfis'
 import { Route as AuthenticatedResourcesRouteImport } from './routes/_authenticated/resources'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
+import { Route as AuthenticatedReportBuilderRouteImport } from './routes/_authenticated/report-builder'
 import { Route as AuthenticatedQualityRouteImport } from './routes/_authenticated/quality'
 import { Route as AuthenticatedPurchaseOrdersRouteImport } from './routes/_authenticated/purchase-orders'
 import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticated/projects'
 import { Route as AuthenticatedProcurementRouteImport } from './routes/_authenticated/procurement'
 import { Route as AuthenticatedPlanningRouteImport } from './routes/_authenticated/planning'
+import { Route as AuthenticatedPermissionsRouteImport } from './routes/_authenticated/permissions'
 import { Route as AuthenticatedPaymentClaimsRouteImport } from './routes/_authenticated/payment-claims'
 import { Route as AuthenticatedNcrsRouteImport } from './routes/_authenticated/ncrs'
 import { Route as AuthenticatedMilestonesRouteImport } from './routes/_authenticated/milestones'
@@ -43,6 +45,8 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as AuthenticatedDailyReportsRouteImport } from './routes/_authenticated/daily-reports'
 import { Route as AuthenticatedCostCodesRouteImport } from './routes/_authenticated/cost-codes'
 import { Route as AuthenticatedClientRouteImport } from './routes/_authenticated/client'
+import { Route as AuthenticatedCashFlowRouteImport } from './routes/_authenticated/cash-flow'
+import { Route as AuthenticatedBudgetRouteImport } from './routes/_authenticated/budget'
 import { Route as AuthenticatedBoqRouteImport } from './routes/_authenticated/boq'
 import { Route as AuthenticatedAuditRouteImport } from './routes/_authenticated/audit'
 import { Route as AuthenticatedApprovalsRouteImport } from './routes/_authenticated/approvals'
@@ -129,6 +133,12 @@ const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
   path: '/reports',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedReportBuilderRoute =
+  AuthenticatedReportBuilderRouteImport.update({
+    id: '/report-builder',
+    path: '/report-builder',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedQualityRoute = AuthenticatedQualityRouteImport.update({
   id: '/quality',
   path: '/quality',
@@ -156,6 +166,12 @@ const AuthenticatedPlanningRoute = AuthenticatedPlanningRouteImport.update({
   path: '/planning',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedPermissionsRoute =
+  AuthenticatedPermissionsRouteImport.update({
+    id: '/permissions',
+    path: '/permissions',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPaymentClaimsRoute =
   AuthenticatedPaymentClaimsRouteImport.update({
     id: '/payment-claims',
@@ -223,6 +239,16 @@ const AuthenticatedClientRoute = AuthenticatedClientRouteImport.update({
   path: '/client',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCashFlowRoute = AuthenticatedCashFlowRouteImport.update({
+  id: '/cash-flow',
+  path: '/cash-flow',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedBudgetRoute = AuthenticatedBudgetRouteImport.update({
+  id: '/budget',
+  path: '/budget',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedBoqRoute = AuthenticatedBoqRouteImport.update({
   id: '/boq',
   path: '/boq',
@@ -262,6 +288,8 @@ export interface FileRoutesByFullPath {
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/audit': typeof AuthenticatedAuditRoute
   '/boq': typeof AuthenticatedBoqRoute
+  '/budget': typeof AuthenticatedBudgetRoute
+  '/cash-flow': typeof AuthenticatedCashFlowRoute
   '/client': typeof AuthenticatedClientRoute
   '/cost-codes': typeof AuthenticatedCostCodesRoute
   '/daily-reports': typeof AuthenticatedDailyReportsRoute
@@ -275,11 +303,13 @@ export interface FileRoutesByFullPath {
   '/milestones': typeof AuthenticatedMilestonesRoute
   '/ncrs': typeof AuthenticatedNcrsRoute
   '/payment-claims': typeof AuthenticatedPaymentClaimsRoute
+  '/permissions': typeof AuthenticatedPermissionsRoute
   '/planning': typeof AuthenticatedPlanningRoute
   '/procurement': typeof AuthenticatedProcurementRoute
   '/projects': typeof AuthenticatedProjectsRouteWithChildren
   '/purchase-orders': typeof AuthenticatedPurchaseOrdersRoute
   '/quality': typeof AuthenticatedQualityRoute
+  '/report-builder': typeof AuthenticatedReportBuilderRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/resources': typeof AuthenticatedResourcesRoute
   '/rfis': typeof AuthenticatedRfisRoute
@@ -303,6 +333,8 @@ export interface FileRoutesByTo {
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/audit': typeof AuthenticatedAuditRoute
   '/boq': typeof AuthenticatedBoqRoute
+  '/budget': typeof AuthenticatedBudgetRoute
+  '/cash-flow': typeof AuthenticatedCashFlowRoute
   '/client': typeof AuthenticatedClientRoute
   '/cost-codes': typeof AuthenticatedCostCodesRoute
   '/daily-reports': typeof AuthenticatedDailyReportsRoute
@@ -316,11 +348,13 @@ export interface FileRoutesByTo {
   '/milestones': typeof AuthenticatedMilestonesRoute
   '/ncrs': typeof AuthenticatedNcrsRoute
   '/payment-claims': typeof AuthenticatedPaymentClaimsRoute
+  '/permissions': typeof AuthenticatedPermissionsRoute
   '/planning': typeof AuthenticatedPlanningRoute
   '/procurement': typeof AuthenticatedProcurementRoute
   '/projects': typeof AuthenticatedProjectsRouteWithChildren
   '/purchase-orders': typeof AuthenticatedPurchaseOrdersRoute
   '/quality': typeof AuthenticatedQualityRoute
+  '/report-builder': typeof AuthenticatedReportBuilderRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/resources': typeof AuthenticatedResourcesRoute
   '/rfis': typeof AuthenticatedRfisRoute
@@ -346,6 +380,8 @@ export interface FileRoutesById {
   '/_authenticated/approvals': typeof AuthenticatedApprovalsRoute
   '/_authenticated/audit': typeof AuthenticatedAuditRoute
   '/_authenticated/boq': typeof AuthenticatedBoqRoute
+  '/_authenticated/budget': typeof AuthenticatedBudgetRoute
+  '/_authenticated/cash-flow': typeof AuthenticatedCashFlowRoute
   '/_authenticated/client': typeof AuthenticatedClientRoute
   '/_authenticated/cost-codes': typeof AuthenticatedCostCodesRoute
   '/_authenticated/daily-reports': typeof AuthenticatedDailyReportsRoute
@@ -359,11 +395,13 @@ export interface FileRoutesById {
   '/_authenticated/milestones': typeof AuthenticatedMilestonesRoute
   '/_authenticated/ncrs': typeof AuthenticatedNcrsRoute
   '/_authenticated/payment-claims': typeof AuthenticatedPaymentClaimsRoute
+  '/_authenticated/permissions': typeof AuthenticatedPermissionsRoute
   '/_authenticated/planning': typeof AuthenticatedPlanningRoute
   '/_authenticated/procurement': typeof AuthenticatedProcurementRoute
   '/_authenticated/projects': typeof AuthenticatedProjectsRouteWithChildren
   '/_authenticated/purchase-orders': typeof AuthenticatedPurchaseOrdersRoute
   '/_authenticated/quality': typeof AuthenticatedQualityRoute
+  '/_authenticated/report-builder': typeof AuthenticatedReportBuilderRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/resources': typeof AuthenticatedResourcesRoute
   '/_authenticated/rfis': typeof AuthenticatedRfisRoute
@@ -389,6 +427,8 @@ export interface FileRouteTypes {
     | '/approvals'
     | '/audit'
     | '/boq'
+    | '/budget'
+    | '/cash-flow'
     | '/client'
     | '/cost-codes'
     | '/daily-reports'
@@ -402,11 +442,13 @@ export interface FileRouteTypes {
     | '/milestones'
     | '/ncrs'
     | '/payment-claims'
+    | '/permissions'
     | '/planning'
     | '/procurement'
     | '/projects'
     | '/purchase-orders'
     | '/quality'
+    | '/report-builder'
     | '/reports'
     | '/resources'
     | '/rfis'
@@ -430,6 +472,8 @@ export interface FileRouteTypes {
     | '/approvals'
     | '/audit'
     | '/boq'
+    | '/budget'
+    | '/cash-flow'
     | '/client'
     | '/cost-codes'
     | '/daily-reports'
@@ -443,11 +487,13 @@ export interface FileRouteTypes {
     | '/milestones'
     | '/ncrs'
     | '/payment-claims'
+    | '/permissions'
     | '/planning'
     | '/procurement'
     | '/projects'
     | '/purchase-orders'
     | '/quality'
+    | '/report-builder'
     | '/reports'
     | '/resources'
     | '/rfis'
@@ -472,6 +518,8 @@ export interface FileRouteTypes {
     | '/_authenticated/approvals'
     | '/_authenticated/audit'
     | '/_authenticated/boq'
+    | '/_authenticated/budget'
+    | '/_authenticated/cash-flow'
     | '/_authenticated/client'
     | '/_authenticated/cost-codes'
     | '/_authenticated/daily-reports'
@@ -485,11 +533,13 @@ export interface FileRouteTypes {
     | '/_authenticated/milestones'
     | '/_authenticated/ncrs'
     | '/_authenticated/payment-claims'
+    | '/_authenticated/permissions'
     | '/_authenticated/planning'
     | '/_authenticated/procurement'
     | '/_authenticated/projects'
     | '/_authenticated/purchase-orders'
     | '/_authenticated/quality'
+    | '/_authenticated/report-builder'
     | '/_authenticated/reports'
     | '/_authenticated/resources'
     | '/_authenticated/rfis'
@@ -628,6 +678,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReportsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/report-builder': {
+      id: '/_authenticated/report-builder'
+      path: '/report-builder'
+      fullPath: '/report-builder'
+      preLoaderRoute: typeof AuthenticatedReportBuilderRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/quality': {
       id: '/_authenticated/quality'
       path: '/quality'
@@ -661,6 +718,13 @@ declare module '@tanstack/react-router' {
       path: '/planning'
       fullPath: '/planning'
       preLoaderRoute: typeof AuthenticatedPlanningRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/permissions': {
+      id: '/_authenticated/permissions'
+      path: '/permissions'
+      fullPath: '/permissions'
+      preLoaderRoute: typeof AuthenticatedPermissionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/payment-claims': {
@@ -754,6 +818,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedClientRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/cash-flow': {
+      id: '/_authenticated/cash-flow'
+      path: '/cash-flow'
+      fullPath: '/cash-flow'
+      preLoaderRoute: typeof AuthenticatedCashFlowRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/budget': {
+      id: '/_authenticated/budget'
+      path: '/budget'
+      fullPath: '/budget'
+      preLoaderRoute: typeof AuthenticatedBudgetRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/boq': {
       id: '/_authenticated/boq'
       path: '/boq'
@@ -817,6 +895,8 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedApprovalsRoute: typeof AuthenticatedApprovalsRoute
   AuthenticatedAuditRoute: typeof AuthenticatedAuditRoute
   AuthenticatedBoqRoute: typeof AuthenticatedBoqRoute
+  AuthenticatedBudgetRoute: typeof AuthenticatedBudgetRoute
+  AuthenticatedCashFlowRoute: typeof AuthenticatedCashFlowRoute
   AuthenticatedClientRoute: typeof AuthenticatedClientRoute
   AuthenticatedCostCodesRoute: typeof AuthenticatedCostCodesRoute
   AuthenticatedDailyReportsRoute: typeof AuthenticatedDailyReportsRoute
@@ -830,11 +910,13 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedMilestonesRoute: typeof AuthenticatedMilestonesRoute
   AuthenticatedNcrsRoute: typeof AuthenticatedNcrsRoute
   AuthenticatedPaymentClaimsRoute: typeof AuthenticatedPaymentClaimsRoute
+  AuthenticatedPermissionsRoute: typeof AuthenticatedPermissionsRoute
   AuthenticatedPlanningRoute: typeof AuthenticatedPlanningRoute
   AuthenticatedProcurementRoute: typeof AuthenticatedProcurementRoute
   AuthenticatedProjectsRoute: typeof AuthenticatedProjectsRouteWithChildren
   AuthenticatedPurchaseOrdersRoute: typeof AuthenticatedPurchaseOrdersRoute
   AuthenticatedQualityRoute: typeof AuthenticatedQualityRoute
+  AuthenticatedReportBuilderRoute: typeof AuthenticatedReportBuilderRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedResourcesRoute: typeof AuthenticatedResourcesRoute
   AuthenticatedRfisRoute: typeof AuthenticatedRfisRoute
@@ -855,6 +937,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedApprovalsRoute: AuthenticatedApprovalsRoute,
   AuthenticatedAuditRoute: AuthenticatedAuditRoute,
   AuthenticatedBoqRoute: AuthenticatedBoqRoute,
+  AuthenticatedBudgetRoute: AuthenticatedBudgetRoute,
+  AuthenticatedCashFlowRoute: AuthenticatedCashFlowRoute,
   AuthenticatedClientRoute: AuthenticatedClientRoute,
   AuthenticatedCostCodesRoute: AuthenticatedCostCodesRoute,
   AuthenticatedDailyReportsRoute: AuthenticatedDailyReportsRoute,
@@ -868,11 +952,13 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedMilestonesRoute: AuthenticatedMilestonesRoute,
   AuthenticatedNcrsRoute: AuthenticatedNcrsRoute,
   AuthenticatedPaymentClaimsRoute: AuthenticatedPaymentClaimsRoute,
+  AuthenticatedPermissionsRoute: AuthenticatedPermissionsRoute,
   AuthenticatedPlanningRoute: AuthenticatedPlanningRoute,
   AuthenticatedProcurementRoute: AuthenticatedProcurementRoute,
   AuthenticatedProjectsRoute: AuthenticatedProjectsRouteWithChildren,
   AuthenticatedPurchaseOrdersRoute: AuthenticatedPurchaseOrdersRoute,
   AuthenticatedQualityRoute: AuthenticatedQualityRoute,
+  AuthenticatedReportBuilderRoute: AuthenticatedReportBuilderRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedResourcesRoute: AuthenticatedResourcesRoute,
   AuthenticatedRfisRoute: AuthenticatedRfisRoute,
