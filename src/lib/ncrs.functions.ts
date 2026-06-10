@@ -229,7 +229,7 @@ export const saveNcrAction = createServerFn({ method: "POST" })
     if (e1) throw new Error(e1.message);
     if (!data.id) {
       const { error } = await sb.from("ncr_actions").insert({
-        ...data, project_id: ncr.project_id, company_id: ncr.company_id, created_by: context.userId,
+        ...data, project_id: (ncr as any).project_id, company_id: (ncr as any).company_id, created_by: context.userId ?? null,
       });
       if (error) throw new Error(error.message);
     } else {
