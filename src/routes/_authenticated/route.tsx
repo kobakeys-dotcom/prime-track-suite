@@ -5,7 +5,7 @@ import {
   LayoutDashboard, FolderKanban, CalendarRange, ListChecks, FileText, Calculator,
   HelpCircle, FileCheck2, Files, PencilRuler, Stamp, BarChart3, Settings, LogOut, Search, History,
   Truck, ShoppingCart, Package, ClipboardList, ShieldCheck, AlertTriangle, AlertOctagon, ListTodo,
-  Users, Wrench, Clock, Flag, Sparkles, UserCheck, Building2, Receipt, FileSignature, Tag,
+  Users, Wrench, Clock, Flag, Sparkles, UserCheck, Building2, Receipt, FileSignature, Tag, Bell,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getCurrentContext } from "@/lib/dashboard.functions";

@@ -33,6 +33,7 @@ import { Route as AuthenticatedProcurementRouteImport } from './routes/_authenti
 import { Route as AuthenticatedPlanningRouteImport } from './routes/_authenticated/planning'
 import { Route as AuthenticatedPermissionsRouteImport } from './routes/_authenticated/permissions'
 import { Route as AuthenticatedPaymentClaimsRouteImport } from './routes/_authenticated/payment-claims'
+import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
 import { Route as AuthenticatedNcrsRouteImport } from './routes/_authenticated/ncrs'
 import { Route as AuthenticatedMilestonesRouteImport } from './routes/_authenticated/milestones'
 import { Route as AuthenticatedMeetingsRouteImport } from './routes/_authenticated/meetings'
@@ -180,6 +181,12 @@ const AuthenticatedPaymentClaimsRoute =
     path: '/payment-claims',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedNotificationsRoute =
+  AuthenticatedNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedNcrsRoute = AuthenticatedNcrsRouteImport.update({
   id: '/ncrs',
   path: '/ncrs',
@@ -318,6 +325,7 @@ export interface FileRoutesByFullPath {
   '/meetings': typeof AuthenticatedMeetingsRoute
   '/milestones': typeof AuthenticatedMilestonesRoute
   '/ncrs': typeof AuthenticatedNcrsRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
   '/payment-claims': typeof AuthenticatedPaymentClaimsRoute
   '/permissions': typeof AuthenticatedPermissionsRoute
   '/planning': typeof AuthenticatedPlanningRoute
@@ -365,6 +373,7 @@ export interface FileRoutesByTo {
   '/meetings': typeof AuthenticatedMeetingsRoute
   '/milestones': typeof AuthenticatedMilestonesRoute
   '/ncrs': typeof AuthenticatedNcrsRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
   '/payment-claims': typeof AuthenticatedPaymentClaimsRoute
   '/permissions': typeof AuthenticatedPermissionsRoute
   '/planning': typeof AuthenticatedPlanningRoute
@@ -414,6 +423,7 @@ export interface FileRoutesById {
   '/_authenticated/meetings': typeof AuthenticatedMeetingsRoute
   '/_authenticated/milestones': typeof AuthenticatedMilestonesRoute
   '/_authenticated/ncrs': typeof AuthenticatedNcrsRoute
+  '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
   '/_authenticated/payment-claims': typeof AuthenticatedPaymentClaimsRoute
   '/_authenticated/permissions': typeof AuthenticatedPermissionsRoute
   '/_authenticated/planning': typeof AuthenticatedPlanningRoute
@@ -463,6 +473,7 @@ export interface FileRouteTypes {
     | '/meetings'
     | '/milestones'
     | '/ncrs'
+    | '/notifications'
     | '/payment-claims'
     | '/permissions'
     | '/planning'
@@ -510,6 +521,7 @@ export interface FileRouteTypes {
     | '/meetings'
     | '/milestones'
     | '/ncrs'
+    | '/notifications'
     | '/payment-claims'
     | '/permissions'
     | '/planning'
@@ -558,6 +570,7 @@ export interface FileRouteTypes {
     | '/_authenticated/meetings'
     | '/_authenticated/milestones'
     | '/_authenticated/ncrs'
+    | '/_authenticated/notifications'
     | '/_authenticated/payment-claims'
     | '/_authenticated/permissions'
     | '/_authenticated/planning'
@@ -760,6 +773,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPaymentClaimsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/notifications': {
+      id: '/_authenticated/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/ncrs': {
       id: '/_authenticated/ncrs'
       path: '/ncrs'
@@ -951,6 +971,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedMeetingsRoute: typeof AuthenticatedMeetingsRoute
   AuthenticatedMilestonesRoute: typeof AuthenticatedMilestonesRoute
   AuthenticatedNcrsRoute: typeof AuthenticatedNcrsRoute
+  AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
   AuthenticatedPaymentClaimsRoute: typeof AuthenticatedPaymentClaimsRoute
   AuthenticatedPermissionsRoute: typeof AuthenticatedPermissionsRoute
   AuthenticatedPlanningRoute: typeof AuthenticatedPlanningRoute
@@ -995,6 +1016,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedMeetingsRoute: AuthenticatedMeetingsRoute,
   AuthenticatedMilestonesRoute: AuthenticatedMilestonesRoute,
   AuthenticatedNcrsRoute: AuthenticatedNcrsRoute,
+  AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
   AuthenticatedPaymentClaimsRoute: AuthenticatedPaymentClaimsRoute,
   AuthenticatedPermissionsRoute: AuthenticatedPermissionsRoute,
   AuthenticatedPlanningRoute: AuthenticatedPlanningRoute,
