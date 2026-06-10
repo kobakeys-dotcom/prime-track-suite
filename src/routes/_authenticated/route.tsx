@@ -80,6 +80,7 @@ const sections: { label: string; items: { to: string; label: string; icon: any }
     { to: "/reports", label: "Reports", icon: BarChart3 },
     { to: "/report-builder", label: "Report Builder", icon: BarChart3 },
     { to: "/ai", label: "AI Assistant", icon: Sparkles },
+    { to: "/notifications", label: "Notifications", icon: Bell },
     { to: "/permissions", label: "Permissions", icon: Stamp },
     { to: "/audit", label: "Audit Log", icon: History },
     { to: "/audit-summary", label: "Audit Summary", icon: History },
