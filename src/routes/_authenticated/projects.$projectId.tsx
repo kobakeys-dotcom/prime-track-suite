@@ -16,6 +16,7 @@ import { SafetyInspectionRegister } from "@/components/safety-inspection-registe
 import { NcrRegister } from "@/components/ncr-register";
 import { RiskRegister } from "@/components/risk-register";
 import { ManpowerRegister } from "@/components/manpower-register";
+import { EquipmentRegister } from "@/components/equipment-register";
 
 import { RegisterPage } from "@/components/register-page";
 import { REGISTERS, STATUS_STYLES_GENERIC } from "@/lib/register-configs";
@@ -105,6 +106,7 @@ function ProjectDetail() {
           <TabsTrigger value="ncrs">NCRs</TabsTrigger>
           <TabsTrigger value="risks">Risks</TabsTrigger>
           <TabsTrigger value="manpower">Manpower</TabsTrigger>
+          <TabsTrigger value="equipment">Equipment</TabsTrigger>
           <TabsTrigger value="issues">Issues</TabsTrigger>
           <TabsTrigger value="meetings">Meetings</TabsTrigger>
           <TabsTrigger value="action-items">Action Items</TabsTrigger>
@@ -155,6 +157,7 @@ function ProjectDetail() {
         <TabsContent value="ncrs" className="pt-4"><NcrRegister projectId={projectId} /></TabsContent>
         <TabsContent value="risks" className="pt-4"><RiskRegister projectId={projectId} /></TabsContent>
         <TabsContent value="manpower" className="pt-4"><ManpowerRegister projectId={projectId} /></TabsContent>
+        <TabsContent value="equipment" className="pt-4"><EquipmentRegister projectId={projectId} /></TabsContent>
         {(["snags", "issues", "meetings"] as const).map((k) => {
           const cfg = REGISTERS[k];
           const tabValue = ({ snags: "snags", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
