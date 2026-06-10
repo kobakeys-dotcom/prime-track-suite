@@ -3547,44 +3547,425 @@ export type Database = {
           },
         ]
       }
-      rfqs: {
+      rfq_attachments: {
         Row: {
+          attachment_type: string | null
+          company_id: string | null
+          created_at: string
+          description: string | null
+          file_name: string | null
+          file_type: string | null
+          file_url: string | null
+          id: string
+          project_id: string
+          rfq_id: string
+          supplier_quotation_id: string | null
+          uploaded_by: string | null
+        }
+        Insert: {
+          attachment_type?: string | null
+          company_id?: string | null
+          created_at?: string
+          description?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          project_id: string
+          rfq_id: string
+          supplier_quotation_id?: string | null
+          uploaded_by?: string | null
+        }
+        Update: {
+          attachment_type?: string | null
+          company_id?: string | null
+          created_at?: string
+          description?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          project_id?: string
+          rfq_id?: string
+          supplier_quotation_id?: string | null
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rfq_attachments_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rfq_attachments_rfq_id_fkey"
+            columns: ["rfq_id"]
+            isOneToOne: false
+            referencedRelation: "rfqs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rfq_items: {
+        Row: {
+          boq_item_id: string | null
+          company_id: string
+          cost_code_id: string | null
           created_at: string
           created_by: string | null
+          description: string | null
+          estimated_amount: number
+          estimated_rate: number
+          id: string
+          is_archived: boolean | null
+          item_code: string | null
+          item_name: string
+          material_request_item_id: string | null
+          project_id: string
+          quantity: number
+          remarks: string | null
+          required_delivery_date: string | null
+          rfq_id: string
+          specification: string | null
+          task_id: string | null
+          unit: string
+          updated_at: string
+          wbs_id: string | null
+        }
+        Insert: {
+          boq_item_id?: string | null
+          company_id: string
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          estimated_amount?: number
+          estimated_rate?: number
+          id?: string
+          is_archived?: boolean | null
+          item_code?: string | null
+          item_name: string
+          material_request_item_id?: string | null
+          project_id: string
+          quantity?: number
+          remarks?: string | null
+          required_delivery_date?: string | null
+          rfq_id: string
+          specification?: string | null
+          task_id?: string | null
+          unit?: string
+          updated_at?: string
+          wbs_id?: string | null
+        }
+        Update: {
+          boq_item_id?: string | null
+          company_id?: string
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          estimated_amount?: number
+          estimated_rate?: number
+          id?: string
+          is_archived?: boolean | null
+          item_code?: string | null
+          item_name?: string
+          material_request_item_id?: string | null
+          project_id?: string
+          quantity?: number
+          remarks?: string | null
+          required_delivery_date?: string | null
+          rfq_id?: string
+          specification?: string | null
+          task_id?: string | null
+          unit?: string
+          updated_at?: string
+          wbs_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rfq_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rfq_items_rfq_id_fkey"
+            columns: ["rfq_id"]
+            isOneToOne: false
+            referencedRelation: "rfqs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rfq_status_history: {
+        Row: {
+          changed_by: string | null
+          company_id: string | null
+          created_at: string
+          id: string
+          new_status: string | null
+          old_status: string | null
+          project_id: string
+          remarks: string | null
+          rfq_id: string
+        }
+        Insert: {
+          changed_by?: string | null
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id: string
+          remarks?: string | null
+          rfq_id: string
+        }
+        Update: {
+          changed_by?: string | null
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id?: string
+          remarks?: string | null
+          rfq_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rfq_status_history_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rfq_status_history_rfq_id_fkey"
+            columns: ["rfq_id"]
+            isOneToOne: false
+            referencedRelation: "rfqs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rfq_suppliers: {
+        Row: {
+          company_id: string
+          contact_person: string | null
+          created_at: string
+          currency: string | null
+          delivery_days: number | null
+          id: string
+          invitation_status: string | null
+          invited_at: string | null
+          is_recommended: boolean | null
+          is_selected: boolean | null
+          payment_terms: string | null
+          project_id: string
+          quotation_status: string | null
+          remarks: string | null
+          responded_at: string | null
+          rfq_id: string
+          supplier_email: string | null
+          supplier_id: string | null
+          supplier_name: string | null
+          supplier_phone: string | null
+          total_quoted_amount: number | null
+          updated_at: string
+          validity_days: number | null
+        }
+        Insert: {
+          company_id: string
+          contact_person?: string | null
+          created_at?: string
+          currency?: string | null
+          delivery_days?: number | null
+          id?: string
+          invitation_status?: string | null
+          invited_at?: string | null
+          is_recommended?: boolean | null
+          is_selected?: boolean | null
+          payment_terms?: string | null
+          project_id: string
+          quotation_status?: string | null
+          remarks?: string | null
+          responded_at?: string | null
+          rfq_id: string
+          supplier_email?: string | null
+          supplier_id?: string | null
+          supplier_name?: string | null
+          supplier_phone?: string | null
+          total_quoted_amount?: number | null
+          updated_at?: string
+          validity_days?: number | null
+        }
+        Update: {
+          company_id?: string
+          contact_person?: string | null
+          created_at?: string
+          currency?: string | null
+          delivery_days?: number | null
+          id?: string
+          invitation_status?: string | null
+          invited_at?: string | null
+          is_recommended?: boolean | null
+          is_selected?: boolean | null
+          payment_terms?: string | null
+          project_id?: string
+          quotation_status?: string | null
+          remarks?: string | null
+          responded_at?: string | null
+          rfq_id?: string
+          supplier_email?: string | null
+          supplier_id?: string | null
+          supplier_name?: string | null
+          supplier_phone?: string | null
+          total_quoted_amount?: number | null
+          updated_at?: string
+          validity_days?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rfq_suppliers_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rfq_suppliers_rfq_id_fkey"
+            columns: ["rfq_id"]
+            isOneToOne: false
+            referencedRelation: "rfqs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rfqs: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          award_status: string | null
+          company_id: string | null
+          converted_to_po: boolean | null
+          created_at: string
+          created_by: string | null
+          currency: string | null
+          delivery_location: string | null
+          description: string | null
           due_date: string | null
           id: string
+          is_archived: boolean | null
+          issued_at: string | null
+          issued_by: string | null
+          material_request_id: string | null
           notes: string | null
+          prepared_by: string | null
+          priority: string | null
           procurement_request_id: string | null
           project_id: string
+          purchase_order_id: string | null
+          quotation_deadline: string | null
+          recommended_supplier_id: string | null
+          rejected_at: string | null
+          rejection_reason: string | null
+          remarks: string | null
+          requested_by: string | null
+          required_delivery_date: string | null
+          revision_notes: string | null
           rfq_number: string
+          rfq_title: string | null
+          selected_amount: number | null
+          selected_quotation_id: string | null
+          selected_supplier_id: string | null
           status: string
           supplier_ids: string[]
+          terms_and_conditions: string | null
           updated_at: string
         }
         Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          award_status?: string | null
+          company_id?: string | null
+          converted_to_po?: boolean | null
           created_at?: string
           created_by?: string | null
+          currency?: string | null
+          delivery_location?: string | null
+          description?: string | null
           due_date?: string | null
           id?: string
+          is_archived?: boolean | null
+          issued_at?: string | null
+          issued_by?: string | null
+          material_request_id?: string | null
           notes?: string | null
+          prepared_by?: string | null
+          priority?: string | null
           procurement_request_id?: string | null
           project_id: string
+          purchase_order_id?: string | null
+          quotation_deadline?: string | null
+          recommended_supplier_id?: string | null
+          rejected_at?: string | null
+          rejection_reason?: string | null
+          remarks?: string | null
+          requested_by?: string | null
+          required_delivery_date?: string | null
+          revision_notes?: string | null
           rfq_number: string
+          rfq_title?: string | null
+          selected_amount?: number | null
+          selected_quotation_id?: string | null
+          selected_supplier_id?: string | null
           status?: string
           supplier_ids?: string[]
+          terms_and_conditions?: string | null
           updated_at?: string
         }
         Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          award_status?: string | null
+          company_id?: string | null
+          converted_to_po?: boolean | null
           created_at?: string
           created_by?: string | null
+          currency?: string | null
+          delivery_location?: string | null
+          description?: string | null
           due_date?: string | null
           id?: string
+          is_archived?: boolean | null
+          issued_at?: string | null
+          issued_by?: string | null
+          material_request_id?: string | null
           notes?: string | null
+          prepared_by?: string | null
+          priority?: string | null
           procurement_request_id?: string | null
           project_id?: string
+          purchase_order_id?: string | null
+          quotation_deadline?: string | null
+          recommended_supplier_id?: string | null
+          rejected_at?: string | null
+          rejection_reason?: string | null
+          remarks?: string | null
+          requested_by?: string | null
+          required_delivery_date?: string | null
+          revision_notes?: string | null
           rfq_number?: string
+          rfq_title?: string | null
+          selected_amount?: number | null
+          selected_quotation_id?: string | null
+          selected_supplier_id?: string | null
           status?: string
           supplier_ids?: string[]
+          terms_and_conditions?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -3983,6 +4364,178 @@ export type Database = {
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      supplier_quotation_items: {
+        Row: {
+          company_id: string
+          created_at: string
+          description: string | null
+          id: string
+          item_name: string
+          project_id: string
+          quantity: number | null
+          quoted_amount: number | null
+          quoted_rate: number | null
+          remarks: string | null
+          rfq_item_id: string | null
+          supplier_quotation_id: string
+          unit: string | null
+          updated_at: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          item_name: string
+          project_id: string
+          quantity?: number | null
+          quoted_amount?: number | null
+          quoted_rate?: number | null
+          remarks?: string | null
+          rfq_item_id?: string | null
+          supplier_quotation_id: string
+          unit?: string | null
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          item_name?: string
+          project_id?: string
+          quantity?: number | null
+          quoted_amount?: number | null
+          quoted_rate?: number | null
+          remarks?: string | null
+          rfq_item_id?: string | null
+          supplier_quotation_id?: string
+          unit?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supplier_quotation_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "supplier_quotation_items_supplier_quotation_id_fkey"
+            columns: ["supplier_quotation_id"]
+            isOneToOne: false
+            referencedRelation: "supplier_quotations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      supplier_quotations: {
+        Row: {
+          company_id: string
+          created_at: string
+          created_by: string | null
+          currency: string | null
+          delivery_days: number | null
+          discount_amount: number | null
+          evaluation_notes: string | null
+          evaluation_score: number | null
+          id: string
+          is_archived: boolean | null
+          is_selected: boolean | null
+          net_amount: number | null
+          payment_terms: string | null
+          project_id: string
+          quotation_date: string | null
+          quotation_number: string | null
+          quotation_valid_until: string | null
+          rfq_id: string
+          rfq_supplier_id: string
+          status: string | null
+          supplier_id: string | null
+          tax_amount: number | null
+          total_amount: number | null
+          updated_at: string
+          warranty_terms: string | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          currency?: string | null
+          delivery_days?: number | null
+          discount_amount?: number | null
+          evaluation_notes?: string | null
+          evaluation_score?: number | null
+          id?: string
+          is_archived?: boolean | null
+          is_selected?: boolean | null
+          net_amount?: number | null
+          payment_terms?: string | null
+          project_id: string
+          quotation_date?: string | null
+          quotation_number?: string | null
+          quotation_valid_until?: string | null
+          rfq_id: string
+          rfq_supplier_id: string
+          status?: string | null
+          supplier_id?: string | null
+          tax_amount?: number | null
+          total_amount?: number | null
+          updated_at?: string
+          warranty_terms?: string | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          currency?: string | null
+          delivery_days?: number | null
+          discount_amount?: number | null
+          evaluation_notes?: string | null
+          evaluation_score?: number | null
+          id?: string
+          is_archived?: boolean | null
+          is_selected?: boolean | null
+          net_amount?: number | null
+          payment_terms?: string | null
+          project_id?: string
+          quotation_date?: string | null
+          quotation_number?: string | null
+          quotation_valid_until?: string | null
+          rfq_id?: string
+          rfq_supplier_id?: string
+          status?: string | null
+          supplier_id?: string | null
+          tax_amount?: number | null
+          total_amount?: number | null
+          updated_at?: string
+          warranty_terms?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supplier_quotations_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "supplier_quotations_rfq_id_fkey"
+            columns: ["rfq_id"]
+            isOneToOne: false
+            referencedRelation: "rfqs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "supplier_quotations_rfq_supplier_id_fkey"
+            columns: ["rfq_supplier_id"]
+            isOneToOne: false
+            referencedRelation: "rfq_suppliers"
             referencedColumns: ["id"]
           },
         ]
