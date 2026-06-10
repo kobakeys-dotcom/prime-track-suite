@@ -90,6 +90,7 @@ function ProjectDetail() {
           <TabsTrigger value="risks">Risks</TabsTrigger>
           <TabsTrigger value="issues">Issues</TabsTrigger>
           <TabsTrigger value="meetings">Meetings</TabsTrigger>
+          <TabsTrigger value="action-items">Action Items</TabsTrigger>
         </TabsList>
         <TabsContent value="overview" className="pt-4">
           <div className="bg-card border border-border rounded-sm p-6 space-y-4">
