@@ -332,7 +332,7 @@ export const addInspectionAttachment = createServerFn({ method: "POST" })
     const { data: qi } = await sb.from("quality_inspections").select("project_id, company_id").eq("id", data.quality_inspection_id).maybeSingle();
     if (!qi) throw new Error("Inspection not found");
     const { error } = await sb.from("quality_inspection_attachments").insert({
-      ...data, project_id: qi.project_id, company_id: qi.company_id, uploaded_by: context.userId,
+      ...data, project_id: qi.project_id, company_id: qi.company_id as string, uploaded_by: context.userId,
     });
     if (error) throw error;
     return { ok: true };
