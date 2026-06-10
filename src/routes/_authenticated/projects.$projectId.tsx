@@ -11,6 +11,7 @@ import { ProjectRfisPanel, ProjectSubmittalsPanel, ProjectDocumentsPanel, Projec
 import { RegisterPage } from "@/components/register-page";
 import { REGISTERS, STATUS_STYLES_GENERIC } from "@/lib/register-configs";
 import { MeetingActionItems } from "@/components/meeting-action-items";
+import { CashFlowModule } from "@/components/cash-flow-module";
 
 export const Route = createFileRoute("/_authenticated/projects/$projectId")({
   head: () => ({ meta: [{ title: "Project — ProjectCore" }] }),
