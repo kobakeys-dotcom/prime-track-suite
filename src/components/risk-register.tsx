@@ -348,7 +348,7 @@ function RiskFormDialog({ open, onOpenChange, projectId, editing, onSaved }: {
   const rLevel = rScore ? calcLevel(rScore) : null;
 
   const mut = useMutation({
-    mutationFn: (data: any) => sb({ data }),
+    mutationFn: (data: any) => saveFn({ data }),
     onSuccess: () => { toast.success(editing ? "Risk updated" : "Risk created"); onSaved(); },
     onError: (er: any) => toast.error(er.message),
   });
