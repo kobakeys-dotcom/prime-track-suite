@@ -75,7 +75,7 @@ async function recomputeTotals(supabase: any, timesheetId: string) {
 }
 
 async function nextTsNumber(supabase: any, projectId: string, date: string) {
-  const { data: proj } = await supabase.from("projects").select("code, name").eq("id", projectId).maybeSingle();
+  const { data: proj } = await supabase.from("projects").select("code, name").eq("id", projectId).maybeSingle() as any;
   const code = (proj?.code || proj?.name || "PRJ").toString().toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8) || "PRJ";
   const ymd = (date || new Date().toISOString().slice(0, 10)).replace(/-/g, "");
   const prefix = `TS-${code}-${ymd}-`;
@@ -151,7 +151,7 @@ export const createTimesheet = createServerFn({ method: "POST" })
   .inputValidator((d: any) => d)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const { data: proj } = await supabase.from("projects").select("company_id, currency").eq("id", data.project_id).maybeSingle();
+    const { data: proj } = await supabase.from("projects").select("company_id, currency").eq("id", data.project_id).maybeSingle() as any;
     if (!proj) throw new Error("Project not found");
     const number = data.timesheet_number || await nextTsNumber(supabase, data.project_id, data.timesheet_date);
     const payload: any = {
@@ -201,7 +201,7 @@ export const archiveTimesheet = createServerFn({ method: "POST" })
 
 // ===== STATUS WORKFLOW =====
 async function setStatus(supabase: any, userId: string, id: string, newStatus: string, extra: any = {}, remarks?: string) {
-  const { data: t } = await supabase.from("timesheets").select(TS_COLS).eq("id", id).maybeSingle();
+  const { data: t } = await supabase.from("timesheets").select(TS_COLS).eq("id", id).maybeSingle() as any;
   if (!t) throw new Error("Timesheet not found");
   const patch: any = { status: newStatus, ...extra };
   const { data: row, error } = await supabase.from("timesheets").update(patch).eq("id", id).select(TS_COLS).single();
@@ -240,7 +240,7 @@ export const addTimesheetEntry = createServerFn({ method: "POST" })
   .inputValidator((d: any) => d)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const { data: ts } = await supabase.from("timesheets").select("company_id, project_id").eq("id", data.timesheet_id).maybeSingle();
+    const { data: ts } = await supabase.from("timesheets").select("company_id, project_id").eq("id", data.timesheet_id).maybeSingle() as any;
     if (!ts) throw new Error("Timesheet not found");
     const calc = calcEntryHours(data);
     const payload = {
@@ -286,7 +286,7 @@ export const deleteTimesheetEntry = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: { id: string }) => d)
   .handler(async ({ data, context }) => {
-    const { data: row } = await context.supabase.from("timesheet_entries").select("timesheet_id").eq("id", data.id).maybeSingle();
+    const { data: row } = await context.supabase.from("timesheet_entries").select("timesheet_id").eq("id", data.id).maybeSingle() as any;
     const { error } = await context.supabase.from("timesheet_entries").delete().eq("id", data.id);
     if (error) throw error;
     if (row?.timesheet_id) await recomputeTotals(context.supabase, row.timesheet_id);
@@ -299,7 +299,7 @@ export const addTimesheetAttachment = createServerFn({ method: "POST" })
   .inputValidator((d: any) => d)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const { data: ts } = await supabase.from("timesheets").select("company_id, project_id").eq("id", data.timesheet_id).maybeSingle();
+    const { data: ts } = await supabase.from("timesheets").select("company_id, project_id").eq("id", data.timesheet_id).maybeSingle() as any;
     if (!ts) throw new Error("Timesheet not found");
     const { data: row, error } = await supabase.from("timesheet_attachments").insert({
       company_id: ts.company_id, project_id: ts.project_id, timesheet_id: data.timesheet_id,
@@ -325,7 +325,7 @@ export const addTimesheetComment = createServerFn({ method: "POST" })
   .inputValidator((d: any) => d)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const { data: ts } = await supabase.from("timesheets").select("company_id, project_id").eq("id", data.timesheet_id).maybeSingle();
+    const { data: ts } = await supabase.from("timesheets").select("company_id, project_id").eq("id", data.timesheet_id).maybeSingle() as any;
     if (!ts) throw new Error("Timesheet not found");
     const { data: row, error } = await supabase.from("timesheet_comments").insert({
       company_id: ts.company_id, project_id: ts.project_id, timesheet_id: data.timesheet_id,
@@ -341,9 +341,9 @@ export const pullFromManpower = createServerFn({ method: "POST" })
   .inputValidator((d: { timesheet_id: string; manpower_record_id: string }) => d)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const { data: ts } = await supabase.from("timesheets").select("company_id, project_id").eq("id", data.timesheet_id).maybeSingle();
+    const { data: ts } = await supabase.from("timesheets").select("company_id, project_id").eq("id", data.timesheet_id).maybeSingle() as any;
     if (!ts) throw new Error("Timesheet not found");
-    const { data: mp } = await supabase.from("manpower_records").select("*").eq("id", data.manpower_record_id).maybeSingle();
+    const { data: mp } = await supabase.from("manpower_records").select("*").eq("id", data.manpower_record_id).maybeSingle() as any;
     if (!mp) throw new Error("Manpower record not found");
     const calc = calcEntryHours(mp);
     const payload = {
