@@ -539,6 +539,399 @@ export type Database = {
           },
         ]
       }
+      cash_flow_entries: {
+        Row: {
+          actual_inflow: number
+          actual_outflow: number
+          cash_flow_plan_id: string | null
+          category: string
+          company_id: string
+          created_at: string
+          created_by: string | null
+          cumulative_actual: number
+          cumulative_forecast: number
+          cumulative_planned: number
+          description: string | null
+          entry_type: string
+          forecast_inflow: number
+          forecast_outflow: number
+          id: string
+          is_archived: boolean
+          net_actual: number
+          net_forecast: number
+          net_planned: number
+          period_end: string
+          period_label: string
+          period_start: string
+          planned_inflow: number
+          planned_outflow: number
+          project_id: string
+          remarks: string | null
+          source_module: string
+          source_record_id: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          actual_inflow?: number
+          actual_outflow?: number
+          cash_flow_plan_id?: string | null
+          category?: string
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          cumulative_actual?: number
+          cumulative_forecast?: number
+          cumulative_planned?: number
+          description?: string | null
+          entry_type?: string
+          forecast_inflow?: number
+          forecast_outflow?: number
+          id?: string
+          is_archived?: boolean
+          net_actual?: number
+          net_forecast?: number
+          net_planned?: number
+          period_end: string
+          period_label: string
+          period_start: string
+          planned_inflow?: number
+          planned_outflow?: number
+          project_id: string
+          remarks?: string | null
+          source_module?: string
+          source_record_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          actual_inflow?: number
+          actual_outflow?: number
+          cash_flow_plan_id?: string | null
+          category?: string
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          cumulative_actual?: number
+          cumulative_forecast?: number
+          cumulative_planned?: number
+          description?: string | null
+          entry_type?: string
+          forecast_inflow?: number
+          forecast_outflow?: number
+          id?: string
+          is_archived?: boolean
+          net_actual?: number
+          net_forecast?: number
+          net_planned?: number
+          period_end?: string
+          period_label?: string
+          period_start?: string
+          planned_inflow?: number
+          planned_outflow?: number
+          project_id?: string
+          remarks?: string | null
+          source_module?: string
+          source_record_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cash_flow_entries_cash_flow_plan_id_fkey"
+            columns: ["cash_flow_plan_id"]
+            isOneToOne: false
+            referencedRelation: "cash_flow_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cash_flow_payables: {
+        Row: {
+          actual_payment_date: string | null
+          cash_flow_plan_id: string | null
+          committed_amount: number
+          company_id: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          expected_payment_date: string | null
+          id: string
+          is_archived: boolean
+          outstanding_amount: number
+          paid_amount: number
+          payment_reference: string | null
+          project_id: string
+          purchase_order_id: string | null
+          status: string
+          subcontractor_id: string | null
+          supplier_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          actual_payment_date?: string | null
+          cash_flow_plan_id?: string | null
+          committed_amount?: number
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          expected_payment_date?: string | null
+          id?: string
+          is_archived?: boolean
+          outstanding_amount?: number
+          paid_amount?: number
+          payment_reference?: string | null
+          project_id: string
+          purchase_order_id?: string | null
+          status?: string
+          subcontractor_id?: string | null
+          supplier_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          actual_payment_date?: string | null
+          cash_flow_plan_id?: string | null
+          committed_amount?: number
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          expected_payment_date?: string | null
+          id?: string
+          is_archived?: boolean
+          outstanding_amount?: number
+          paid_amount?: number
+          payment_reference?: string | null
+          project_id?: string
+          purchase_order_id?: string | null
+          status?: string
+          subcontractor_id?: string | null
+          supplier_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cash_flow_payables_cash_flow_plan_id_fkey"
+            columns: ["cash_flow_plan_id"]
+            isOneToOne: false
+            referencedRelation: "cash_flow_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cash_flow_plans: {
+        Row: {
+          closing_balance: number
+          company_id: string
+          created_at: string
+          created_by: string | null
+          currency: string
+          description: string | null
+          end_date: string
+          id: string
+          is_archived: boolean
+          net_actual_cash_flow: number
+          net_forecast_cash_flow: number
+          net_planned_cash_flow: number
+          opening_balance: number
+          plan_name: string
+          plan_type: string
+          project_id: string
+          start_date: string
+          status: string
+          total_actual_inflow: number
+          total_actual_outflow: number
+          total_forecast_inflow: number
+          total_forecast_outflow: number
+          total_planned_inflow: number
+          total_planned_outflow: number
+          updated_at: string
+        }
+        Insert: {
+          closing_balance?: number
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          description?: string | null
+          end_date: string
+          id?: string
+          is_archived?: boolean
+          net_actual_cash_flow?: number
+          net_forecast_cash_flow?: number
+          net_planned_cash_flow?: number
+          opening_balance?: number
+          plan_name?: string
+          plan_type?: string
+          project_id: string
+          start_date: string
+          status?: string
+          total_actual_inflow?: number
+          total_actual_outflow?: number
+          total_forecast_inflow?: number
+          total_forecast_outflow?: number
+          total_planned_inflow?: number
+          total_planned_outflow?: number
+          updated_at?: string
+        }
+        Update: {
+          closing_balance?: number
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          description?: string | null
+          end_date?: string
+          id?: string
+          is_archived?: boolean
+          net_actual_cash_flow?: number
+          net_forecast_cash_flow?: number
+          net_planned_cash_flow?: number
+          opening_balance?: number
+          plan_name?: string
+          plan_type?: string
+          project_id?: string
+          start_date?: string
+          status?: string
+          total_actual_inflow?: number
+          total_actual_outflow?: number
+          total_forecast_inflow?: number
+          total_forecast_outflow?: number
+          total_planned_inflow?: number
+          total_planned_outflow?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      cash_flow_receivables: {
+        Row: {
+          actual_receipt_date: string | null
+          cash_flow_plan_id: string | null
+          certified_amount: number
+          claim_number: string | null
+          claimed_amount: number
+          company_id: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          expected_receipt_date: string | null
+          id: string
+          invoice_number: string | null
+          is_archived: boolean
+          outstanding_amount: number
+          payment_claim_id: string | null
+          project_id: string
+          received_amount: number
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          actual_receipt_date?: string | null
+          cash_flow_plan_id?: string | null
+          certified_amount?: number
+          claim_number?: string | null
+          claimed_amount?: number
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          expected_receipt_date?: string | null
+          id?: string
+          invoice_number?: string | null
+          is_archived?: boolean
+          outstanding_amount?: number
+          payment_claim_id?: string | null
+          project_id: string
+          received_amount?: number
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          actual_receipt_date?: string | null
+          cash_flow_plan_id?: string | null
+          certified_amount?: number
+          claim_number?: string | null
+          claimed_amount?: number
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          expected_receipt_date?: string | null
+          id?: string
+          invoice_number?: string | null
+          is_archived?: boolean
+          outstanding_amount?: number
+          payment_claim_id?: string | null
+          project_id?: string
+          received_amount?: number
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cash_flow_receivables_cash_flow_plan_id_fkey"
+            columns: ["cash_flow_plan_id"]
+            isOneToOne: false
+            referencedRelation: "cash_flow_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cash_flow_snapshots: {
+        Row: {
+          actual_inflow: number
+          actual_outflow: number
+          closing_balance: number
+          company_id: string
+          created_at: string
+          created_by: string | null
+          cumulative_cash_flow: number
+          forecast_inflow: number
+          forecast_outflow: number
+          id: string
+          net_cash_flow: number
+          planned_inflow: number
+          planned_outflow: number
+          project_id: string
+          snapshot_date: string
+        }
+        Insert: {
+          actual_inflow?: number
+          actual_outflow?: number
+          closing_balance?: number
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          cumulative_cash_flow?: number
+          forecast_inflow?: number
+          forecast_outflow?: number
+          id?: string
+          net_cash_flow?: number
+          planned_inflow?: number
+          planned_outflow?: number
+          project_id: string
+          snapshot_date?: string
+        }
+        Update: {
+          actual_inflow?: number
+          actual_outflow?: number
+          closing_balance?: number
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          cumulative_cash_flow?: number
+          forecast_inflow?: number
+          forecast_outflow?: number
+          id?: string
+          net_cash_flow?: number
+          planned_inflow?: number
+          planned_outflow?: number
+          project_id?: string
+          snapshot_date?: string
+        }
+        Relationships: []
+      }
       comments: {
         Row: {
           author_id: string | null

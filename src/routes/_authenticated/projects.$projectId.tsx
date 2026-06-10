@@ -11,6 +11,7 @@ import { ProjectRfisPanel, ProjectSubmittalsPanel, ProjectDocumentsPanel, Projec
 import { RegisterPage } from "@/components/register-page";
 import { REGISTERS, STATUS_STYLES_GENERIC } from "@/lib/register-configs";
 import { MeetingActionItems } from "@/components/meeting-action-items";
+import { CashFlowModule } from "@/components/cash-flow-module";
 
 export const Route = createFileRoute("/_authenticated/projects/$projectId")({
   head: () => ({ meta: [{ title: "Project — ProjectCore" }] }),
@@ -84,6 +85,7 @@ function ProjectDetail() {
           <TabsTrigger value="variations">Variations</TabsTrigger>
           <TabsTrigger value="claims">Payment Claims</TabsTrigger>
           <TabsTrigger value="budget">Budget vs Actual</TabsTrigger>
+          <TabsTrigger value="cash-flow">Cash Flow</TabsTrigger>
           <TabsTrigger value="procurement">Procurement</TabsTrigger>
           <TabsTrigger value="quality">Quality</TabsTrigger>
           <TabsTrigger value="safety">Safety</TabsTrigger>
@@ -129,6 +131,7 @@ function ProjectDetail() {
         <TabsContent value="variations" className="pt-4"><ProjectVariationsPanel projectId={projectId} /></TabsContent>
         <TabsContent value="claims" className="pt-4"><ProjectPaymentClaimsPanel projectId={projectId} /></TabsContent>
         <TabsContent value="budget" className="pt-4"><ProjectBudgetPanel projectId={projectId} /></TabsContent>
+        <TabsContent value="cash-flow" className="pt-4"><CashFlowModule fixedProjectId={projectId} compact /></TabsContent>
         {(["procurement_requests", "quality_inspections", "safety_inspections", "snags", "risks", "issues", "meetings"] as const).map((k) => {
           const cfg = REGISTERS[k];
           const tabValue = ({ procurement_requests: "procurement", quality_inspections: "quality", safety_inspections: "safety", snags: "snags", risks: "risks", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
