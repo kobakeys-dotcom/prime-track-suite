@@ -462,9 +462,8 @@ function TaskDialog({ mode, task, projectId, members, onClose, onSaved }: any) {
         location: form.location || null,
         remarks: form.remarks || null,
       };
-      return isEdit
-        ? update({ data: { id: task.id, ...payload } })
-        : create({ data: { project_id: projectId, ...payload } });
+      if (isEdit) return (await update({ data: { id: task.id, ...payload } })) as any;
+      return (await create({ data: { project_id: projectId, ...payload } })) as any;
     },
     onSuccess: () => { toast.success(isEdit ? "Task updated" : "Task created"); onSaved(); },
     onError: (e: any) => toast.error(e?.message ?? "Failed"),
