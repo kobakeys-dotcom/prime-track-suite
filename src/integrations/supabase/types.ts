@@ -212,6 +212,54 @@ export type Database = {
         }
         Relationships: []
       }
+      cost_codes: {
+        Row: {
+          code: string
+          company_id: string
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          parent_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          code: string
+          company_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          parent_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          parent_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cost_codes_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cost_codes_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "cost_codes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       daily_reports: {
         Row: {
           author_id: string | null
@@ -273,6 +321,66 @@ export type Database = {
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      deliveries: {
+        Row: {
+          created_at: string
+          delivered_quantity: number
+          delivery_date: string
+          delivery_note: string | null
+          id: string
+          notes: string | null
+          photos: Json
+          project_id: string
+          purchase_order_id: string | null
+          received_by: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          delivered_quantity?: number
+          delivery_date?: string
+          delivery_note?: string | null
+          id?: string
+          notes?: string | null
+          photos?: Json
+          project_id: string
+          purchase_order_id?: string | null
+          received_by?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          delivered_quantity?: number
+          delivery_date?: string
+          delivery_note?: string | null
+          id?: string
+          notes?: string | null
+          photos?: Json
+          project_id?: string
+          purchase_order_id?: string | null
+          received_by?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deliveries_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deliveries_purchase_order_id_fkey"
+            columns: ["purchase_order_id"]
+            isOneToOne: false
+            referencedRelation: "purchase_orders"
             referencedColumns: ["id"]
           },
         ]
@@ -375,6 +483,56 @@ export type Database = {
           },
         ]
       }
+      equipment: {
+        Row: {
+          code: string | null
+          created_at: string
+          id: string
+          maintenance_due_date: string | null
+          name: string
+          notes: string | null
+          operator: string | null
+          project_id: string
+          status: string
+          updated_at: string
+          usage_hours: number | null
+        }
+        Insert: {
+          code?: string | null
+          created_at?: string
+          id?: string
+          maintenance_due_date?: string | null
+          name: string
+          notes?: string | null
+          operator?: string | null
+          project_id: string
+          status?: string
+          updated_at?: string
+          usage_hours?: number | null
+        }
+        Update: {
+          code?: string | null
+          created_at?: string
+          id?: string
+          maintenance_due_date?: string | null
+          name?: string
+          notes?: string | null
+          operator?: string | null
+          project_id?: string
+          status?: string
+          updated_at?: string
+          usage_hours?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipment_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       invitations: {
         Row: {
           accepted_at: string | null
@@ -419,6 +577,166 @@ export type Database = {
           },
         ]
       }
+      issues: {
+        Row: {
+          assigned_to: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          due_date: string | null
+          id: string
+          photos: Json
+          priority: string
+          project_id: string
+          resolution: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          photos?: Json
+          priority?: string
+          project_id: string
+          resolution?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          photos?: Json
+          priority?: string
+          project_id?: string
+          resolution?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "issues_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      meeting_action_items: {
+        Row: {
+          created_at: string
+          description: string
+          due_date: string | null
+          id: string
+          meeting_id: string
+          project_id: string
+          responsible_person: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          due_date?: string | null
+          id?: string
+          meeting_id: string
+          project_id: string
+          responsible_person?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          due_date?: string | null
+          id?: string
+          meeting_id?: string
+          project_id?: string
+          responsible_person?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meeting_action_items_meeting_id_fkey"
+            columns: ["meeting_id"]
+            isOneToOne: false
+            referencedRelation: "meetings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "meeting_action_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      meetings: {
+        Row: {
+          agenda: string | null
+          attachments: Json
+          attendees: Json
+          created_at: string
+          created_by: string | null
+          decisions: string | null
+          discussion_points: string | null
+          id: string
+          meeting_date: string
+          project_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          agenda?: string | null
+          attachments?: Json
+          attendees?: Json
+          created_at?: string
+          created_by?: string | null
+          decisions?: string | null
+          discussion_points?: string | null
+          id?: string
+          meeting_date: string
+          project_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          agenda?: string | null
+          attachments?: Json
+          attendees?: Json
+          created_at?: string
+          created_by?: string | null
+          decisions?: string | null
+          discussion_points?: string | null
+          id?: string
+          meeting_date?: string
+          project_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meetings_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       milestones: {
         Row: {
           completed_at: string | null
@@ -454,6 +772,92 @@ export type Database = {
           },
         ]
       }
+      ncrs: {
+        Row: {
+          corrective_action: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          due_date: string | null
+          id: string
+          location: string | null
+          ncr_number: string
+          photos: Json
+          project_id: string
+          responsible_person: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          corrective_action?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          location?: string | null
+          ncr_number: string
+          photos?: Json
+          project_id: string
+          responsible_person?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          corrective_action?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          location?: string | null
+          ncr_number?: string
+          photos?: Json
+          project_id?: string
+          responsible_person?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ncrs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notification_preferences: {
+        Row: {
+          created_at: string
+          email_enabled: boolean
+          in_app_enabled: boolean
+          reminder_days: number
+          updated_at: string
+          user_id: string
+          whatsapp_enabled: boolean
+        }
+        Insert: {
+          created_at?: string
+          email_enabled?: boolean
+          in_app_enabled?: boolean
+          reminder_days?: number
+          updated_at?: string
+          user_id: string
+          whatsapp_enabled?: boolean
+        }
+        Update: {
+          created_at?: string
+          email_enabled?: boolean
+          in_app_enabled?: boolean
+          reminder_days?: number
+          updated_at?: string
+          user_id?: string
+          whatsapp_enabled?: boolean
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           body: string | null
@@ -486,6 +890,151 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      payment_claims: {
+        Row: {
+          advance_recovery: number | null
+          approved_at: string | null
+          claim_number: string
+          created_at: string
+          created_by: string | null
+          deductions: number | null
+          gross_claim: number | null
+          id: string
+          material_at_site_value: number | null
+          net_claim: number | null
+          notes: string | null
+          paid_at: string | null
+          period_end: string | null
+          period_start: string | null
+          project_id: string
+          retention: number | null
+          status: string
+          submitted_at: string | null
+          updated_at: string
+          variation_value: number | null
+          work_done_value: number | null
+        }
+        Insert: {
+          advance_recovery?: number | null
+          approved_at?: string | null
+          claim_number: string
+          created_at?: string
+          created_by?: string | null
+          deductions?: number | null
+          gross_claim?: number | null
+          id?: string
+          material_at_site_value?: number | null
+          net_claim?: number | null
+          notes?: string | null
+          paid_at?: string | null
+          period_end?: string | null
+          period_start?: string | null
+          project_id: string
+          retention?: number | null
+          status?: string
+          submitted_at?: string | null
+          updated_at?: string
+          variation_value?: number | null
+          work_done_value?: number | null
+        }
+        Update: {
+          advance_recovery?: number | null
+          approved_at?: string | null
+          claim_number?: string
+          created_at?: string
+          created_by?: string | null
+          deductions?: number | null
+          gross_claim?: number | null
+          id?: string
+          material_at_site_value?: number | null
+          net_claim?: number | null
+          notes?: string | null
+          paid_at?: string | null
+          period_end?: string | null
+          period_start?: string | null
+          project_id?: string
+          retention?: number | null
+          status?: string
+          submitted_at?: string | null
+          updated_at?: string
+          variation_value?: number | null
+          work_done_value?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_claims_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      procurement_requests: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          created_at: string
+          id: string
+          material_name: string
+          notes: string | null
+          priority: string
+          project_id: string
+          quantity: number
+          reason: string | null
+          request_number: string
+          requested_by: string | null
+          required_date: string | null
+          status: string
+          unit: string | null
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          id?: string
+          material_name: string
+          notes?: string | null
+          priority?: string
+          project_id: string
+          quantity?: number
+          reason?: string | null
+          request_number: string
+          requested_by?: string | null
+          required_date?: string | null
+          status?: string
+          unit?: string | null
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          id?: string
+          material_name?: string
+          notes?: string | null
+          priority?: string
+          project_id?: string
+          quantity?: number
+          reason?: string | null
+          request_number?: string
+          requested_by?: string | null
+          required_date?: string | null
+          status?: string
+          unit?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "procurement_requests_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -660,6 +1209,194 @@ export type Database = {
           },
         ]
       }
+      purchase_orders: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          created_at: string
+          created_by: string | null
+          currency: string | null
+          delivery_date: string | null
+          id: string
+          items: Json
+          notes: string | null
+          po_number: string
+          procurement_request_id: string | null
+          project_id: string
+          status: string
+          supplier_id: string | null
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string | null
+          delivery_date?: string | null
+          id?: string
+          items?: Json
+          notes?: string | null
+          po_number: string
+          procurement_request_id?: string | null
+          project_id: string
+          status?: string
+          supplier_id?: string | null
+          total_amount?: number
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string | null
+          delivery_date?: string | null
+          id?: string
+          items?: Json
+          notes?: string | null
+          po_number?: string
+          procurement_request_id?: string | null
+          project_id?: string
+          status?: string
+          supplier_id?: string | null
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchase_orders_procurement_request_id_fkey"
+            columns: ["procurement_request_id"]
+            isOneToOne: false
+            referencedRelation: "procurement_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_orders_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_orders_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quality_inspections: {
+        Row: {
+          checklist: Json
+          comments: string | null
+          created_at: string
+          id: string
+          inspection_date: string | null
+          inspection_number: string
+          inspector_id: string | null
+          location: string | null
+          photos: Json
+          project_id: string
+          requested_by: string | null
+          result: string | null
+          status: string
+          type: string | null
+          updated_at: string
+        }
+        Insert: {
+          checklist?: Json
+          comments?: string | null
+          created_at?: string
+          id?: string
+          inspection_date?: string | null
+          inspection_number: string
+          inspector_id?: string | null
+          location?: string | null
+          photos?: Json
+          project_id: string
+          requested_by?: string | null
+          result?: string | null
+          status?: string
+          type?: string | null
+          updated_at?: string
+        }
+        Update: {
+          checklist?: Json
+          comments?: string | null
+          created_at?: string
+          id?: string
+          inspection_date?: string | null
+          inspection_number?: string
+          inspector_id?: string | null
+          location?: string | null
+          photos?: Json
+          project_id?: string
+          requested_by?: string | null
+          result?: string | null
+          status?: string
+          type?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quality_inspections_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resources: {
+        Row: {
+          assigned_date: string | null
+          attendance_status: string | null
+          created_at: string
+          employee_name: string
+          id: string
+          overtime_hours: number | null
+          project_id: string
+          remarks: string | null
+          trade: string | null
+          updated_at: string
+        }
+        Insert: {
+          assigned_date?: string | null
+          attendance_status?: string | null
+          created_at?: string
+          employee_name: string
+          id?: string
+          overtime_hours?: number | null
+          project_id: string
+          remarks?: string | null
+          trade?: string | null
+          updated_at?: string
+        }
+        Update: {
+          assigned_date?: string | null
+          attendance_status?: string | null
+          created_at?: string
+          employee_name?: string
+          id?: string
+          overtime_hours?: number | null
+          project_id?: string
+          remarks?: string | null
+          trade?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resources_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       rfis: {
         Row: {
           answer: string | null
@@ -706,6 +1443,249 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "rfis_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rfqs: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          due_date: string | null
+          id: string
+          notes: string | null
+          procurement_request_id: string | null
+          project_id: string
+          rfq_number: string
+          status: string
+          supplier_ids: string[]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          due_date?: string | null
+          id?: string
+          notes?: string | null
+          procurement_request_id?: string | null
+          project_id: string
+          rfq_number: string
+          status?: string
+          supplier_ids?: string[]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          due_date?: string | null
+          id?: string
+          notes?: string | null
+          procurement_request_id?: string | null
+          project_id?: string
+          rfq_number?: string
+          status?: string
+          supplier_ids?: string[]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rfqs_procurement_request_id_fkey"
+            columns: ["procurement_request_id"]
+            isOneToOne: false
+            referencedRelation: "procurement_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rfqs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      risks: {
+        Row: {
+          category: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          due_date: string | null
+          id: string
+          impact: number | null
+          mitigation_action: string | null
+          owner_id: string | null
+          probability: number | null
+          project_id: string
+          risk_score: number | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          impact?: number | null
+          mitigation_action?: string | null
+          owner_id?: string | null
+          probability?: number | null
+          project_id: string
+          risk_score?: number | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          impact?: number | null
+          mitigation_action?: string | null
+          owner_id?: string | null
+          probability?: number | null
+          project_id?: string
+          risk_score?: number | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "risks_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      safety_inspections: {
+        Row: {
+          checklist: Json
+          corrective_action: string | null
+          created_at: string
+          created_by: string | null
+          due_date: string | null
+          id: string
+          inspection_number: string
+          location: string | null
+          photos: Json
+          ppe_compliance: string | null
+          project_id: string
+          responsible_person: string | null
+          status: string
+          unsafe_acts: string | null
+          unsafe_conditions: string | null
+          updated_at: string
+        }
+        Insert: {
+          checklist?: Json
+          corrective_action?: string | null
+          created_at?: string
+          created_by?: string | null
+          due_date?: string | null
+          id?: string
+          inspection_number: string
+          location?: string | null
+          photos?: Json
+          ppe_compliance?: string | null
+          project_id: string
+          responsible_person?: string | null
+          status?: string
+          unsafe_acts?: string | null
+          unsafe_conditions?: string | null
+          updated_at?: string
+        }
+        Update: {
+          checklist?: Json
+          corrective_action?: string | null
+          created_at?: string
+          created_by?: string | null
+          due_date?: string | null
+          id?: string
+          inspection_number?: string
+          location?: string | null
+          photos?: Json
+          ppe_compliance?: string | null
+          project_id?: string
+          responsible_person?: string | null
+          status?: string
+          unsafe_acts?: string | null
+          unsafe_conditions?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "safety_inspections_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      snags: {
+        Row: {
+          after_photo: string | null
+          assigned_to: string | null
+          before_photo: string | null
+          client_approval: boolean | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          due_date: string | null
+          id: string
+          location: string | null
+          project_id: string
+          snag_number: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          after_photo?: string | null
+          assigned_to?: string | null
+          before_photo?: string | null
+          client_approval?: boolean | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          location?: string | null
+          project_id: string
+          snag_number: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          after_photo?: string | null
+          assigned_to?: string | null
+          before_photo?: string | null
+          client_approval?: boolean | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          location?: string | null
+          project_id?: string
+          snag_number?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "snags_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
@@ -762,6 +1742,62 @@ export type Database = {
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      suppliers: {
+        Row: {
+          address: string | null
+          category: string | null
+          company_id: string
+          contact_person: string | null
+          created_at: string
+          created_by: string | null
+          email: string | null
+          id: string
+          name: string
+          notes: string | null
+          phone: string | null
+          rating: number | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          category?: string | null
+          company_id: string
+          contact_person?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          phone?: string | null
+          rating?: number | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          category?: string | null
+          company_id?: string
+          contact_person?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          rating?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "suppliers_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
             referencedColumns: ["id"]
           },
         ]
@@ -835,6 +1871,57 @@ export type Database = {
           },
         ]
       }
+      timesheets: {
+        Row: {
+          created_at: string
+          description: string | null
+          hours: number
+          id: string
+          project_id: string
+          task_id: string | null
+          updated_at: string
+          user_id: string
+          work_date: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          hours?: number
+          id?: string
+          project_id: string
+          task_id?: string | null
+          updated_at?: string
+          user_id: string
+          work_date?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          hours?: number
+          id?: string
+          project_id?: string
+          task_id?: string | null
+          updated_at?: string
+          user_id?: string
+          work_date?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "timesheets_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timesheets_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           company_id: string | null
@@ -863,6 +1950,68 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      variations: {
+        Row: {
+          approved_amount: number | null
+          approved_days: number | null
+          attachments: Json
+          cost_impact: number | null
+          created_at: string
+          description: string | null
+          id: string
+          project_id: string
+          reason: string | null
+          status: string
+          submitted_by: string | null
+          time_impact_days: number | null
+          title: string
+          updated_at: string
+          variation_number: string
+        }
+        Insert: {
+          approved_amount?: number | null
+          approved_days?: number | null
+          attachments?: Json
+          cost_impact?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          project_id: string
+          reason?: string | null
+          status?: string
+          submitted_by?: string | null
+          time_impact_days?: number | null
+          title: string
+          updated_at?: string
+          variation_number: string
+        }
+        Update: {
+          approved_amount?: number | null
+          approved_days?: number | null
+          attachments?: Json
+          cost_impact?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          project_id?: string
+          reason?: string | null
+          status?: string
+          submitted_by?: string | null
+          time_impact_days?: number | null
+          title?: string
+          updated_at?: string
+          variation_number?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "variations_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
             referencedColumns: ["id"]
           },
         ]

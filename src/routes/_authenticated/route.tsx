@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import {
   LayoutDashboard, FolderKanban, CalendarRange, ListChecks, FileText, Calculator,
   HelpCircle, FileCheck2, Files, PencilRuler, Stamp, BarChart3, Settings, LogOut, Search, History,
+  Truck, ShoppingCart, Package, ClipboardList, ShieldCheck, AlertTriangle, AlertOctagon, ListTodo,
+  Users, Wrench, Clock, Flag, Sparkles, UserCheck, Building2, Receipt, FileSignature, Tag,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getCurrentContext } from "@/lib/dashboard.functions";
@@ -21,21 +23,62 @@ export const Route = createFileRoute("/_authenticated")({
   component: AuthedLayout,
 });
 
-const nav = [
-  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/projects", label: "Projects", icon: FolderKanban },
-  { to: "/planning", label: "Planning", icon: CalendarRange },
-  { to: "/tasks", label: "Tasks", icon: ListChecks },
-  { to: "/daily-reports", label: "Daily Reports", icon: FileText },
-  { to: "/boq", label: "BOQ Progress", icon: Calculator },
-  { to: "/rfis", label: "RFIs", icon: HelpCircle },
-  { to: "/submittals", label: "Submittals", icon: FileCheck2 },
-  { to: "/documents", label: "Documents", icon: Files },
-  { to: "/drawings", label: "Drawing Register", icon: PencilRuler },
-  { to: "/approvals", label: "Approvals", icon: Stamp },
-  { to: "/reports", label: "Reports", icon: BarChart3 },
-  { to: "/audit", label: "Audit Log", icon: History },
-] as const;
+const sections: { label: string; items: { to: string; label: string; icon: any }[] }[] = [
+  { label: "Overview", items: [
+    { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { to: "/projects", label: "Projects", icon: FolderKanban },
+    { to: "/client", label: "Client Portal", icon: UserCheck },
+  ]},
+  { label: "Planning", items: [
+    { to: "/planning", label: "Gantt", icon: CalendarRange },
+    { to: "/tasks", label: "Tasks", icon: ListChecks },
+    { to: "/milestones", label: "Milestones", icon: Flag },
+  ]},
+  { label: "Execution", items: [
+    { to: "/daily-reports", label: "Daily Reports", icon: FileText },
+    { to: "/issues", label: "Issues", icon: AlertOctagon },
+    { to: "/snags", label: "Snag List", icon: ListTodo },
+    { to: "/meetings", label: "Meetings", icon: ClipboardList },
+  ]},
+  { label: "Approvals", items: [
+    { to: "/approvals", label: "Approval Inbox", icon: Stamp },
+    { to: "/rfis", label: "RFIs", icon: HelpCircle },
+    { to: "/submittals", label: "Submittals", icon: FileCheck2 },
+  ]},
+  { label: "Cost Control", items: [
+    { to: "/boq", label: "BOQ", icon: Calculator },
+    { to: "/cost-codes", label: "Cost Codes", icon: Tag },
+    { to: "/variations", label: "Variations", icon: FileSignature },
+    { to: "/payment-claims", label: "Payment Claims", icon: Receipt },
+  ]},
+  { label: "Procurement", items: [
+    { to: "/procurement", label: "Material Requests", icon: ShoppingCart },
+    { to: "/rfqs", label: "RFQs", icon: FileText },
+    { to: "/purchase-orders", label: "Purchase Orders", icon: Package },
+    { to: "/deliveries", label: "Deliveries", icon: Truck },
+    { to: "/suppliers", label: "Suppliers", icon: Building2 },
+  ]},
+  { label: "Quality & Safety", items: [
+    { to: "/quality", label: "Quality Inspections", icon: ShieldCheck },
+    { to: "/safety", label: "Safety Inspections", icon: ShieldCheck },
+    { to: "/ncrs", label: "NCRs", icon: AlertTriangle },
+    { to: "/risks", label: "Risk Register", icon: AlertTriangle },
+  ]},
+  { label: "Resources", items: [
+    { to: "/resources", label: "Manpower", icon: Users },
+    { to: "/equipment", label: "Equipment", icon: Wrench },
+    { to: "/timesheets", label: "Timesheets", icon: Clock },
+  ]},
+  { label: "Documents", items: [
+    { to: "/documents", label: "Document Manager", icon: Files },
+    { to: "/drawings", label: "Drawing Register", icon: PencilRuler },
+  ]},
+  { label: "Insights", items: [
+    { to: "/reports", label: "Reports", icon: BarChart3 },
+    { to: "/ai", label: "AI Assistant", icon: Sparkles },
+    { to: "/audit", label: "Audit Log", icon: History },
+  ]},
+];
 
 function AuthedLayout() {
   const navigate = useNavigate();
@@ -73,24 +116,29 @@ function Sidebar({ companyName }: { companyName?: string | null }) {
           {companyName && <div className="text-[10px] uppercase tracking-widest text-sidebar-foreground/60 truncate">{companyName}</div>}
         </div>
       </div>
-      <nav className="flex-1 px-3 py-2 space-y-0.5 overflow-y-auto text-sm">
-        {nav.map((item) => {
-          const active = pathname === item.to || pathname.startsWith(item.to + "/");
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={cn(
-                "flex items-center gap-3 px-3 py-2 rounded-md transition-colors",
-                active ? "bg-sidebar-accent text-white" : "hover:text-white hover:bg-sidebar-accent/50",
-              )}
-            >
-              <Icon className="size-4 shrink-0" />
-              <span className="truncate">{item.label}</span>
-            </Link>
-          );
-        })}
+      <nav className="flex-1 px-3 py-2 space-y-3 overflow-y-auto text-sm">
+        {sections.map((section) => (
+          <div key={section.label} className="space-y-0.5">
+            <div className="px-3 text-[10px] font-bold uppercase tracking-widest text-sidebar-foreground/40 mb-1">{section.label}</div>
+            {section.items.map((item) => {
+              const active = pathname === item.to || pathname.startsWith(item.to + "/");
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={cn(
+                    "flex items-center gap-3 px-3 py-1.5 rounded-md transition-colors text-[13px]",
+                    active ? "bg-sidebar-accent text-white" : "hover:text-white hover:bg-sidebar-accent/50",
+                  )}
+                >
+                  <Icon className="size-4 shrink-0" />
+                  <span className="truncate">{item.label}</span>
+                </Link>
+              );
+            })}
+          </div>
+        ))}
       </nav>
       <div className="p-3 border-t border-sidebar-border space-y-0.5">
         <Link to="/settings" className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover:text-white hover:bg-sidebar-accent/50">
