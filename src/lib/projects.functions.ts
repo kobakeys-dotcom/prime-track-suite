@@ -55,7 +55,7 @@ export const getProject = createServerFn({ method: "GET" })
     ]);
 
     return {
-      project,
+      project: { ...project, project_manager: manager },
       stats: { tasks: taskCount ?? 0, tasksDone: doneCount ?? 0, reports: reportCount ?? 0 },
     };
   });
