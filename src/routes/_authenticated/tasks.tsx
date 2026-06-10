@@ -172,12 +172,12 @@ function TasksPage() {
             isLoading={isLoading} error={error} tasks={filtered}
             memberMap={memberMap}
             onEdit={setEditing}
-            onArchive={(id) => archiveMut.mutate(id)}
-            onStatus={(id, s) => statusMut.mutate({ id, status: s })}
+            onArchive={(id: string) => archiveMut.mutate(id)}
+            onStatus={(id: string, s: string) => statusMut.mutate({ id, status: s })}
           />
         </TabsContent>
         <TabsContent value="kanban" className="mt-4">
-          <KanbanView tasks={filtered} onCardClick={setEditing} onStatus={(id, s) => statusMut.mutate({ id, status: s })} />
+          <KanbanView tasks={filtered} onCardClick={setEditing} onStatus={(id: string, s: string) => statusMut.mutate({ id, status: s })} />
         </TabsContent>
         <TabsContent value="calendar" className="mt-4">
           <CalendarView tasks={filtered} onClick={setEditing} />
