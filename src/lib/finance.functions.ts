@@ -14,7 +14,7 @@ export const getBudgetVsActual = createServerFn({ method: "GET" })
     const { data: boq, error: e1 } = await boqQ;
     if (e1) throw e1;
 
-    let varQ = sb.from("variations").select("project_id, amount, status");
+    let varQ = sb.from("variations").select("project_id, cost_impact, approved_amount, status");
     if (data.projectId) varQ = varQ.eq("project_id", data.projectId);
     const { data: vars } = await varQ;
 
@@ -32,7 +32,7 @@ export const getBudgetVsActual = createServerFn({ method: "GET" })
     (vars ?? []).forEach((v: any) => {
       if (v.status !== "approved") return;
       const cur = byProject.get(v.project_id) ?? { name: "—", budget: 0, actual: 0, variations: 0, certified: 0 };
-      cur.variations += Number(v.amount ?? 0);
+      cur.variations += Number(v.approved_amount ?? v.cost_impact ?? 0);
       byProject.set(v.project_id, cur);
     });
     (claims ?? []).forEach((c: any) => {
@@ -77,11 +77,11 @@ export const calcPaymentClaim = createServerFn({ method: "POST" })
   .handler(async ({ context, data }) => {
     const sb = context.supabase as any;
     const { data: boq } = await sb.from("boq_items").select("quantity, completed_qty, unit_rate").eq("project_id", data.projectId);
-    const { data: vars } = await sb.from("variations").select("amount, status").eq("project_id", data.projectId);
+    const { data: vars } = await sb.from("variations").select("cost_impact, approved_amount, status").eq("project_id", data.projectId);
     const { data: prev } = await sb.from("payment_claims").select("gross_claim").eq("project_id", data.projectId).in("status", ["approved", "paid"]);
 
     const workDone = (boq ?? []).reduce((s: number, r: any) => s + Number(r.completed_qty ?? 0) * Number(r.unit_rate ?? 0), 0);
-    const approvedVars = (vars ?? []).filter((v: any) => v.status === "approved").reduce((s: number, v: any) => s + Number(v.amount ?? 0), 0);
+    const approvedVars = (vars ?? []).filter((v: any) => v.status === "approved").reduce((s: number, v: any) => s + Number(v.approved_amount ?? v.cost_impact ?? 0), 0);
     const previousGross = (prev ?? []).reduce((s: number, p: any) => s + Number(p.gross_claim ?? 0), 0);
 
     const gross = workDone + approvedVars;
