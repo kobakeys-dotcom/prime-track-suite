@@ -1286,46 +1286,130 @@ export type Database = {
       }
       deliveries: {
         Row: {
+          approved_at: string | null
+          approved_by: string | null
+          company_id: string | null
+          confirmed_at: string | null
           created_at: string
+          created_by: string | null
           delivered_quantity: number
+          delivery_condition: string | null
           delivery_date: string
+          delivery_location: string | null
           delivery_note: string | null
+          delivery_note_number: string | null
+          delivery_number: string | null
+          delivery_time: string | null
+          delivery_title: string | null
+          driver_name: string | null
+          driver_phone: string | null
           id: string
+          inspected_at: string | null
+          inspected_by: string | null
+          inspection_status: string | null
+          invoice_number: string | null
+          is_archived: boolean | null
+          material_request_id: string | null
           notes: string | null
           photos: Json
           project_id: string
           purchase_order_id: string | null
           received_by: string | null
+          rejection_reason: string | null
+          remarks: string | null
+          rfq_id: string | null
           status: string
+          storage_location: string | null
+          supplier_contact: string | null
+          supplier_id: string | null
+          supplier_name: string | null
+          total_amount: number | null
           updated_at: string
+          vehicle_number: string | null
         }
         Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          company_id?: string | null
+          confirmed_at?: string | null
           created_at?: string
+          created_by?: string | null
           delivered_quantity?: number
+          delivery_condition?: string | null
           delivery_date?: string
+          delivery_location?: string | null
           delivery_note?: string | null
+          delivery_note_number?: string | null
+          delivery_number?: string | null
+          delivery_time?: string | null
+          delivery_title?: string | null
+          driver_name?: string | null
+          driver_phone?: string | null
           id?: string
+          inspected_at?: string | null
+          inspected_by?: string | null
+          inspection_status?: string | null
+          invoice_number?: string | null
+          is_archived?: boolean | null
+          material_request_id?: string | null
           notes?: string | null
           photos?: Json
           project_id: string
           purchase_order_id?: string | null
           received_by?: string | null
+          rejection_reason?: string | null
+          remarks?: string | null
+          rfq_id?: string | null
           status?: string
+          storage_location?: string | null
+          supplier_contact?: string | null
+          supplier_id?: string | null
+          supplier_name?: string | null
+          total_amount?: number | null
           updated_at?: string
+          vehicle_number?: string | null
         }
         Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          company_id?: string | null
+          confirmed_at?: string | null
           created_at?: string
+          created_by?: string | null
           delivered_quantity?: number
+          delivery_condition?: string | null
           delivery_date?: string
+          delivery_location?: string | null
           delivery_note?: string | null
+          delivery_note_number?: string | null
+          delivery_number?: string | null
+          delivery_time?: string | null
+          delivery_title?: string | null
+          driver_name?: string | null
+          driver_phone?: string | null
           id?: string
+          inspected_at?: string | null
+          inspected_by?: string | null
+          inspection_status?: string | null
+          invoice_number?: string | null
+          is_archived?: boolean | null
+          material_request_id?: string | null
           notes?: string | null
           photos?: Json
           project_id?: string
           purchase_order_id?: string | null
           received_by?: string | null
+          rejection_reason?: string | null
+          remarks?: string | null
+          rfq_id?: string | null
           status?: string
+          storage_location?: string | null
+          supplier_contact?: string | null
+          supplier_id?: string | null
+          supplier_name?: string | null
+          total_amount?: number | null
           updated_at?: string
+          vehicle_number?: string | null
         }
         Relationships: [
           {
@@ -1340,6 +1424,225 @@ export type Database = {
             columns: ["purchase_order_id"]
             isOneToOne: false
             referencedRelation: "purchase_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      delivery_attachments: {
+        Row: {
+          attachment_type: string | null
+          company_id: string
+          created_at: string
+          delivery_id: string
+          description: string | null
+          file_name: string
+          file_type: string | null
+          file_url: string
+          id: string
+          project_id: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          attachment_type?: string | null
+          company_id: string
+          created_at?: string
+          delivery_id: string
+          description?: string | null
+          file_name: string
+          file_type?: string | null
+          file_url: string
+          id?: string
+          project_id: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          attachment_type?: string | null
+          company_id?: string
+          created_at?: string
+          delivery_id?: string
+          description?: string | null
+          file_name?: string
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          project_id?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "delivery_attachments_delivery_id_fkey"
+            columns: ["delivery_id"]
+            isOneToOne: false
+            referencedRelation: "deliveries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      delivery_items: {
+        Row: {
+          accepted_quantity: number | null
+          balance_quantity: number | null
+          batch_number: string | null
+          boq_item_id: string | null
+          company_id: string
+          condition: string | null
+          cost_code_id: string | null
+          created_at: string
+          created_by: string | null
+          damaged_quantity: number | null
+          delivered_amount: number | null
+          delivered_quantity: number | null
+          delivery_id: string
+          description: string | null
+          expiry_date: string | null
+          id: string
+          inspection_result: string | null
+          is_archived: boolean | null
+          item_code: string | null
+          item_name: string
+          material_id: string | null
+          material_request_item_id: string | null
+          ordered_quantity: number | null
+          previously_delivered_quantity: number | null
+          project_id: string
+          purchase_order_item_id: string | null
+          rejected_quantity: number | null
+          remarks: string | null
+          serial_number: string | null
+          specification: string | null
+          storage_location: string | null
+          task_id: string | null
+          unit: string
+          unit_rate: number | null
+          updated_at: string
+          wbs_id: string | null
+        }
+        Insert: {
+          accepted_quantity?: number | null
+          balance_quantity?: number | null
+          batch_number?: string | null
+          boq_item_id?: string | null
+          company_id: string
+          condition?: string | null
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          damaged_quantity?: number | null
+          delivered_amount?: number | null
+          delivered_quantity?: number | null
+          delivery_id: string
+          description?: string | null
+          expiry_date?: string | null
+          id?: string
+          inspection_result?: string | null
+          is_archived?: boolean | null
+          item_code?: string | null
+          item_name: string
+          material_id?: string | null
+          material_request_item_id?: string | null
+          ordered_quantity?: number | null
+          previously_delivered_quantity?: number | null
+          project_id: string
+          purchase_order_item_id?: string | null
+          rejected_quantity?: number | null
+          remarks?: string | null
+          serial_number?: string | null
+          specification?: string | null
+          storage_location?: string | null
+          task_id?: string | null
+          unit?: string
+          unit_rate?: number | null
+          updated_at?: string
+          wbs_id?: string | null
+        }
+        Update: {
+          accepted_quantity?: number | null
+          balance_quantity?: number | null
+          batch_number?: string | null
+          boq_item_id?: string | null
+          company_id?: string
+          condition?: string | null
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          damaged_quantity?: number | null
+          delivered_amount?: number | null
+          delivered_quantity?: number | null
+          delivery_id?: string
+          description?: string | null
+          expiry_date?: string | null
+          id?: string
+          inspection_result?: string | null
+          is_archived?: boolean | null
+          item_code?: string | null
+          item_name?: string
+          material_id?: string | null
+          material_request_item_id?: string | null
+          ordered_quantity?: number | null
+          previously_delivered_quantity?: number | null
+          project_id?: string
+          purchase_order_item_id?: string | null
+          rejected_quantity?: number | null
+          remarks?: string | null
+          serial_number?: string | null
+          specification?: string | null
+          storage_location?: string | null
+          task_id?: string | null
+          unit?: string
+          unit_rate?: number | null
+          updated_at?: string
+          wbs_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "delivery_items_delivery_id_fkey"
+            columns: ["delivery_id"]
+            isOneToOne: false
+            referencedRelation: "deliveries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      delivery_status_history: {
+        Row: {
+          changed_by: string | null
+          company_id: string
+          created_at: string
+          delivery_id: string
+          id: string
+          new_status: string
+          old_status: string | null
+          project_id: string
+          remarks: string | null
+        }
+        Insert: {
+          changed_by?: string | null
+          company_id: string
+          created_at?: string
+          delivery_id: string
+          id?: string
+          new_status: string
+          old_status?: string | null
+          project_id: string
+          remarks?: string | null
+        }
+        Update: {
+          changed_by?: string | null
+          company_id?: string
+          created_at?: string
+          delivery_id?: string
+          id?: string
+          new_status?: string
+          old_status?: string | null
+          project_id?: string
+          remarks?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "delivery_status_history_delivery_id_fkey"
+            columns: ["delivery_id"]
+            isOneToOne: false
+            referencedRelation: "deliveries"
             referencedColumns: ["id"]
           },
         ]
@@ -4527,6 +4830,54 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      stock_movements: {
+        Row: {
+          company_id: string
+          created_at: string
+          created_by: string | null
+          delivery_id: string | null
+          id: string
+          material_id: string | null
+          movement_date: string | null
+          movement_type: string | null
+          project_id: string | null
+          quantity: number | null
+          reference_number: string | null
+          remarks: string | null
+          unit: string | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          delivery_id?: string | null
+          id?: string
+          material_id?: string | null
+          movement_date?: string | null
+          movement_type?: string | null
+          project_id?: string | null
+          quantity?: number | null
+          reference_number?: string | null
+          remarks?: string | null
+          unit?: string | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          delivery_id?: string | null
+          id?: string
+          material_id?: string | null
+          movement_date?: string | null
+          movement_type?: string | null
+          project_id?: string | null
+          quantity?: number | null
+          reference_number?: string | null
+          remarks?: string | null
+          unit?: string | null
+        }
+        Relationships: []
       }
       submittal_attachments: {
         Row: {
