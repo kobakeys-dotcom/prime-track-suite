@@ -380,28 +380,28 @@ export function SupplierRegister({ embedded = false }: { embedded?: boolean }) {
       <Sheet open={!!detailId} onOpenChange={(o) => !o && setDetailId(null)}>
         <SheetContent className="w-full sm:max-w-2xl overflow-y-auto">
           <SheetHeader>
-            <SheetTitle>{detail.data?.supplier?.supplier_name || "Supplier"}</SheetTitle>
+            <SheetTitle>{(detail.data as any)?.supplier?.supplier_name || "Supplier"}</SheetTitle>
           </SheetHeader>
           {detail.isLoading || !detail.data ? (
             <div className="space-y-2 mt-4">{Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} className="h-10 w-full" />)}</div>
-          ) : detail.data.supplier && (
+          ) : (detail.data as any).supplier && (
             <SupplierDetail
-              data={detail.data}
-              onEdit={() => openEdit(detail.data!.supplier)}
-              onTogglePreferred={(v) => flagsMut.mutate({ id: detailId!, is_preferred: v })}
-              onTogglePrequalified={(v) => flagsMut.mutate({ id: detailId!, is_prequalified: v })}
+              data={detail.data as any}
+              onEdit={() => openEdit((detail.data as any).supplier)}
+              onTogglePreferred={(v: boolean) => flagsMut.mutate({ id: detailId!, is_preferred: v })}
+              onTogglePrequalified={(v: boolean) => flagsMut.mutate({ id: detailId!, is_prequalified: v })}
               onBlacklist={() => { setBlReason(""); setBlOpen(detailId); }}
               onUnblacklist={() => flagsMut.mutate({ id: detailId!, is_blacklisted: false })}
               onArchive={() => setConfirmArchive(detailId)}
               onRefresh={() => qc.invalidateQueries({ queryKey: ["supplier", detailId] })}
-              saveContact={(c) => saveContactFn({ data: c }).then(() => qc.invalidateQueries({ queryKey: ["supplier", detailId] }))}
-              delContact={(id) => delContactFn({ data: { id } }).then(() => qc.invalidateQueries({ queryKey: ["supplier", detailId] }))}
-              saveDoc={(d) => saveDocFn({ data: d }).then(() => qc.invalidateQueries({ queryKey: ["supplier", detailId] }))}
-              delDoc={(id) => delDocFn({ data: { id } }).then(() => qc.invalidateQueries({ queryKey: ["supplier", detailId] }))}
-              addReview={(r) => addReviewFn({ data: r }).then(() => { qc.invalidateQueries({ queryKey: ["supplier", detailId] }); qc.invalidateQueries({ queryKey: ["suppliers"] }); })}
-              addAtt={(a) => addAttFn({ data: a }).then(() => qc.invalidateQueries({ queryKey: ["supplier", detailId] }))}
-              delAtt={(id) => delAttFn({ data: { id } }).then(() => qc.invalidateQueries({ queryKey: ["supplier", detailId] }))}
-              addComment={(c) => addCommentFn({ data: c }).then(() => qc.invalidateQueries({ queryKey: ["supplier", detailId] }))}
+              saveContact={(c: any) => saveContactFn({ data: c }).then(() => qc.invalidateQueries({ queryKey: ["supplier", detailId] }))}
+              delContact={(id: string) => delContactFn({ data: { id } }).then(() => qc.invalidateQueries({ queryKey: ["supplier", detailId] }))}
+              saveDoc={(d: any) => saveDocFn({ data: d }).then(() => qc.invalidateQueries({ queryKey: ["supplier", detailId] }))}
+              delDoc={(id: string) => delDocFn({ data: { id } }).then(() => qc.invalidateQueries({ queryKey: ["supplier", detailId] }))}
+              addReview={(r: any) => addReviewFn({ data: r }).then(() => { qc.invalidateQueries({ queryKey: ["supplier", detailId] }); qc.invalidateQueries({ queryKey: ["suppliers"] }); })}
+              addAtt={(a: any) => addAttFn({ data: a }).then(() => qc.invalidateQueries({ queryKey: ["supplier", detailId] }))}
+              delAtt={(id: string) => delAttFn({ data: { id } }).then(() => qc.invalidateQueries({ queryKey: ["supplier", detailId] }))}
+              addComment={(c: any) => addCommentFn({ data: c }).then(() => qc.invalidateQueries({ queryKey: ["supplier", detailId] }))}
             />
           )}
         </SheetContent>
