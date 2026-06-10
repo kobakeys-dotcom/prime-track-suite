@@ -12,6 +12,7 @@ import { RfqRegister } from "@/components/rfq-register";
 import { PurchaseOrderRegister } from "@/components/purchase-order-register";
 import { DeliveryRegister } from "@/components/delivery-register";
 import { QualityInspectionRegister } from "@/components/quality-inspection-register";
+import { SafetyInspectionRegister } from "@/components/safety-inspection-register";
 
 import { RegisterPage } from "@/components/register-page";
 import { REGISTERS, STATUS_STYLES_GENERIC } from "@/lib/register-configs";
