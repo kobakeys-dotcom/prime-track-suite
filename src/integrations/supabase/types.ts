@@ -3154,66 +3154,420 @@ export type Database = {
           },
         ]
       }
+      purchase_order_attachments: {
+        Row: {
+          attachment_type: string | null
+          company_id: string
+          created_at: string
+          description: string | null
+          file_name: string
+          file_type: string | null
+          file_url: string
+          id: string
+          project_id: string
+          purchase_order_id: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          attachment_type?: string | null
+          company_id: string
+          created_at?: string
+          description?: string | null
+          file_name: string
+          file_type?: string | null
+          file_url: string
+          id?: string
+          project_id: string
+          purchase_order_id: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          attachment_type?: string | null
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          file_name?: string
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          project_id?: string
+          purchase_order_id?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchase_order_attachments_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_order_attachments_purchase_order_id_fkey"
+            columns: ["purchase_order_id"]
+            isOneToOne: false
+            referencedRelation: "purchase_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      purchase_order_items: {
+        Row: {
+          amount: number | null
+          balance_quantity: number | null
+          boq_item_id: string | null
+          budget_line_id: string | null
+          company_id: string
+          cost_code_id: string | null
+          created_at: string
+          created_by: string | null
+          delivered_quantity: number | null
+          delivery_status: string | null
+          description: string | null
+          discount_amount: number | null
+          id: string
+          is_archived: boolean | null
+          item_code: string | null
+          item_name: string
+          material_request_item_id: string | null
+          ordered_quantity: number | null
+          project_id: string
+          purchase_order_id: string
+          received_quantity: number | null
+          remarks: string | null
+          rfq_item_id: string | null
+          specification: string | null
+          supplier_quotation_item_id: string | null
+          task_id: string | null
+          tax_amount: number | null
+          total_amount: number | null
+          unit: string
+          unit_rate: number | null
+          updated_at: string
+          wbs_id: string | null
+        }
+        Insert: {
+          amount?: number | null
+          balance_quantity?: number | null
+          boq_item_id?: string | null
+          budget_line_id?: string | null
+          company_id: string
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          delivered_quantity?: number | null
+          delivery_status?: string | null
+          description?: string | null
+          discount_amount?: number | null
+          id?: string
+          is_archived?: boolean | null
+          item_code?: string | null
+          item_name: string
+          material_request_item_id?: string | null
+          ordered_quantity?: number | null
+          project_id: string
+          purchase_order_id: string
+          received_quantity?: number | null
+          remarks?: string | null
+          rfq_item_id?: string | null
+          specification?: string | null
+          supplier_quotation_item_id?: string | null
+          task_id?: string | null
+          tax_amount?: number | null
+          total_amount?: number | null
+          unit?: string
+          unit_rate?: number | null
+          updated_at?: string
+          wbs_id?: string | null
+        }
+        Update: {
+          amount?: number | null
+          balance_quantity?: number | null
+          boq_item_id?: string | null
+          budget_line_id?: string | null
+          company_id?: string
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          delivered_quantity?: number | null
+          delivery_status?: string | null
+          description?: string | null
+          discount_amount?: number | null
+          id?: string
+          is_archived?: boolean | null
+          item_code?: string | null
+          item_name?: string
+          material_request_item_id?: string | null
+          ordered_quantity?: number | null
+          project_id?: string
+          purchase_order_id?: string
+          received_quantity?: number | null
+          remarks?: string | null
+          rfq_item_id?: string | null
+          specification?: string | null
+          supplier_quotation_item_id?: string | null
+          task_id?: string | null
+          tax_amount?: number | null
+          total_amount?: number | null
+          unit?: string
+          unit_rate?: number | null
+          updated_at?: string
+          wbs_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchase_order_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_order_items_purchase_order_id_fkey"
+            columns: ["purchase_order_id"]
+            isOneToOne: false
+            referencedRelation: "purchase_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      purchase_order_status_history: {
+        Row: {
+          changed_by: string | null
+          company_id: string
+          created_at: string
+          id: string
+          new_status: string | null
+          old_status: string | null
+          project_id: string
+          purchase_order_id: string
+          remarks: string | null
+        }
+        Insert: {
+          changed_by?: string | null
+          company_id: string
+          created_at?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id: string
+          purchase_order_id: string
+          remarks?: string | null
+        }
+        Update: {
+          changed_by?: string | null
+          company_id?: string
+          created_at?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id?: string
+          purchase_order_id?: string
+          remarks?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchase_order_status_history_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_order_status_history_purchase_order_id_fkey"
+            columns: ["purchase_order_id"]
+            isOneToOne: false
+            referencedRelation: "purchase_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       purchase_orders: {
         Row: {
+          approval_status: string | null
           approved_at: string | null
           approved_by: string | null
           budget_line_id: string | null
+          closed_at: string | null
+          company_id: string | null
+          contact_person: string | null
           cost_code_id: string | null
           created_at: string
           created_by: string | null
           currency: string | null
           delivery_date: string | null
+          delivery_location: string | null
+          delivery_status: string | null
+          delivery_terms: string | null
+          discount_amount: number | null
+          expected_delivery_date: string | null
           id: string
+          invoiced_amount: number | null
+          is_archived: boolean | null
+          issued_at: string | null
+          issued_by: string | null
           items: Json
+          material_request_id: string | null
           notes: string | null
-          po_number: string
+          other_charges: number | null
+          outstanding_amount: number | null
+          paid_amount: number | null
+          payment_reference: string | null
+          payment_status: string | null
+          payment_terms: string | null
+          po_date: string | null
+          po_number: string | null
+          po_title: string | null
+          prepared_by: string | null
+          priority: string | null
           procurement_request_id: string | null
           project_id: string
+          rejection_reason: string | null
+          remarks: string | null
+          required_delivery_date: string | null
+          reviewed_by: string | null
+          revision_notes: string | null
+          rfq_id: string | null
+          shipping_amount: number | null
           status: string
+          submitted_at: string | null
+          submitted_by: string | null
+          subtotal_amount: number | null
+          supplier_email: string | null
           supplier_id: string | null
+          supplier_name: string | null
+          supplier_phone: string | null
+          supplier_quotation_id: string | null
+          tax_amount: number | null
+          tax_percentage: number | null
+          terms_and_conditions: string | null
           total_amount: number
           updated_at: string
+          warranty_terms: string | null
         }
         Insert: {
+          approval_status?: string | null
           approved_at?: string | null
           approved_by?: string | null
           budget_line_id?: string | null
+          closed_at?: string | null
+          company_id?: string | null
+          contact_person?: string | null
           cost_code_id?: string | null
           created_at?: string
           created_by?: string | null
           currency?: string | null
           delivery_date?: string | null
+          delivery_location?: string | null
+          delivery_status?: string | null
+          delivery_terms?: string | null
+          discount_amount?: number | null
+          expected_delivery_date?: string | null
           id?: string
+          invoiced_amount?: number | null
+          is_archived?: boolean | null
+          issued_at?: string | null
+          issued_by?: string | null
           items?: Json
+          material_request_id?: string | null
           notes?: string | null
-          po_number: string
+          other_charges?: number | null
+          outstanding_amount?: number | null
+          paid_amount?: number | null
+          payment_reference?: string | null
+          payment_status?: string | null
+          payment_terms?: string | null
+          po_date?: string | null
+          po_number?: string | null
+          po_title?: string | null
+          prepared_by?: string | null
+          priority?: string | null
           procurement_request_id?: string | null
           project_id: string
+          rejection_reason?: string | null
+          remarks?: string | null
+          required_delivery_date?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
+          rfq_id?: string | null
+          shipping_amount?: number | null
           status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
+          subtotal_amount?: number | null
+          supplier_email?: string | null
           supplier_id?: string | null
+          supplier_name?: string | null
+          supplier_phone?: string | null
+          supplier_quotation_id?: string | null
+          tax_amount?: number | null
+          tax_percentage?: number | null
+          terms_and_conditions?: string | null
           total_amount?: number
           updated_at?: string
+          warranty_terms?: string | null
         }
         Update: {
+          approval_status?: string | null
           approved_at?: string | null
           approved_by?: string | null
           budget_line_id?: string | null
+          closed_at?: string | null
+          company_id?: string | null
+          contact_person?: string | null
           cost_code_id?: string | null
           created_at?: string
           created_by?: string | null
           currency?: string | null
           delivery_date?: string | null
+          delivery_location?: string | null
+          delivery_status?: string | null
+          delivery_terms?: string | null
+          discount_amount?: number | null
+          expected_delivery_date?: string | null
           id?: string
+          invoiced_amount?: number | null
+          is_archived?: boolean | null
+          issued_at?: string | null
+          issued_by?: string | null
           items?: Json
+          material_request_id?: string | null
           notes?: string | null
-          po_number?: string
+          other_charges?: number | null
+          outstanding_amount?: number | null
+          paid_amount?: number | null
+          payment_reference?: string | null
+          payment_status?: string | null
+          payment_terms?: string | null
+          po_date?: string | null
+          po_number?: string | null
+          po_title?: string | null
+          prepared_by?: string | null
+          priority?: string | null
           procurement_request_id?: string | null
           project_id?: string
+          rejection_reason?: string | null
+          remarks?: string | null
+          required_delivery_date?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
+          rfq_id?: string | null
+          shipping_amount?: number | null
           status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
+          subtotal_amount?: number | null
+          supplier_email?: string | null
           supplier_id?: string | null
+          supplier_name?: string | null
+          supplier_phone?: string | null
+          supplier_quotation_id?: string | null
+          tax_amount?: number | null
+          tax_percentage?: number | null
+          terms_and_conditions?: string | null
           total_amount?: number
           updated_at?: string
+          warranty_terms?: string | null
         }
         Relationships: [
           {
