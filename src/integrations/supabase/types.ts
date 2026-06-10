@@ -2432,51 +2432,475 @@ export type Database = {
           },
         ]
       }
-      ncrs: {
+      ncr_actions: {
         Row: {
-          corrective_action: string | null
+          action_description: string | null
+          action_title: string
+          action_type: string | null
+          assigned_to: string | null
+          company_id: string
+          completed_date: string | null
+          completion_notes: string | null
           created_at: string
           created_by: string | null
-          description: string | null
-          due_date: string | null
           id: string
-          location: string | null
-          ncr_number: string
-          photos: Json
+          is_archived: boolean | null
+          ncr_id: string
+          priority: string | null
           project_id: string
-          responsible_person: string | null
-          status: string
+          status: string | null
+          target_date: string | null
           updated_at: string
+          verification_notes: string | null
+          verified_at: string | null
+          verified_by: string | null
         }
         Insert: {
-          corrective_action?: string | null
+          action_description?: string | null
+          action_title: string
+          action_type?: string | null
+          assigned_to?: string | null
+          company_id: string
+          completed_date?: string | null
+          completion_notes?: string | null
           created_at?: string
           created_by?: string | null
-          description?: string | null
-          due_date?: string | null
           id?: string
-          location?: string | null
-          ncr_number: string
-          photos?: Json
+          is_archived?: boolean | null
+          ncr_id: string
+          priority?: string | null
           project_id: string
-          responsible_person?: string | null
-          status?: string
+          status?: string | null
+          target_date?: string | null
           updated_at?: string
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
         }
         Update: {
-          corrective_action?: string | null
+          action_description?: string | null
+          action_title?: string
+          action_type?: string | null
+          assigned_to?: string | null
+          company_id?: string
+          completed_date?: string | null
+          completion_notes?: string | null
           created_at?: string
           created_by?: string | null
-          description?: string | null
-          due_date?: string | null
           id?: string
-          location?: string | null
-          ncr_number?: string
-          photos?: Json
+          is_archived?: boolean | null
+          ncr_id?: string
+          priority?: string | null
           project_id?: string
-          responsible_person?: string | null
-          status?: string
+          status?: string | null
+          target_date?: string | null
           updated_at?: string
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ncr_actions_ncr_id_fkey"
+            columns: ["ncr_id"]
+            isOneToOne: false
+            referencedRelation: "ncrs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ncr_actions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ncr_attachments: {
+        Row: {
+          attachment_type: string | null
+          company_id: string | null
+          created_at: string
+          description: string | null
+          file_name: string | null
+          file_type: string | null
+          file_url: string | null
+          id: string
+          is_client_visible: boolean | null
+          ncr_action_id: string | null
+          ncr_id: string
+          project_id: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          attachment_type?: string | null
+          company_id?: string | null
+          created_at?: string
+          description?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          is_client_visible?: boolean | null
+          ncr_action_id?: string | null
+          ncr_id: string
+          project_id: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          attachment_type?: string | null
+          company_id?: string | null
+          created_at?: string
+          description?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          is_client_visible?: boolean | null
+          ncr_action_id?: string | null
+          ncr_id?: string
+          project_id?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ncr_attachments_ncr_action_id_fkey"
+            columns: ["ncr_action_id"]
+            isOneToOne: false
+            referencedRelation: "ncr_actions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ncr_attachments_ncr_id_fkey"
+            columns: ["ncr_id"]
+            isOneToOne: false
+            referencedRelation: "ncrs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ncr_attachments_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ncr_comments: {
+        Row: {
+          comment: string
+          company_id: string | null
+          created_at: string
+          id: string
+          ncr_id: string
+          project_id: string
+          user_id: string | null
+          visibility: string | null
+        }
+        Insert: {
+          comment: string
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          ncr_id: string
+          project_id: string
+          user_id?: string | null
+          visibility?: string | null
+        }
+        Update: {
+          comment?: string
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          ncr_id?: string
+          project_id?: string
+          user_id?: string | null
+          visibility?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ncr_comments_ncr_id_fkey"
+            columns: ["ncr_id"]
+            isOneToOne: false
+            referencedRelation: "ncrs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ncr_comments_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ncr_status_history: {
+        Row: {
+          changed_by: string | null
+          company_id: string | null
+          created_at: string
+          id: string
+          ncr_id: string
+          new_status: string | null
+          old_status: string | null
+          project_id: string
+          remarks: string | null
+        }
+        Insert: {
+          changed_by?: string | null
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          ncr_id: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id: string
+          remarks?: string | null
+        }
+        Update: {
+          changed_by?: string | null
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          ncr_id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id?: string
+          remarks?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ncr_status_history_ncr_id_fkey"
+            columns: ["ncr_id"]
+            isOneToOne: false
+            referencedRelation: "ncrs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ncr_status_history_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ncrs: {
+        Row: {
+          actual_closeout_date: string | null
+          approved_at: string | null
+          approved_by: string | null
+          area: string | null
+          assigned_to: string | null
+          boq_item_id: string | null
+          category: string | null
+          closed_at: string | null
+          closeout_notes: string | null
+          company_id: string | null
+          containment_action: string | null
+          corrective_action: string | null
+          cost_impact: boolean | null
+          cost_impact_amount: number | null
+          created_at: string
+          created_by: string | null
+          delivery_id: string | null
+          description: string | null
+          detected_by: string | null
+          drawing_id: string | null
+          drawing_reference: string | null
+          due_date: string | null
+          floor_level: string | null
+          id: string
+          is_archived: boolean | null
+          is_client_visible: boolean | null
+          issue_id: string | null
+          location: string | null
+          material_id: string | null
+          ncr_number: string | null
+          ncr_source: string | null
+          ncr_title: string | null
+          ncr_type: string | null
+          non_conformance_details: string | null
+          photos: Json
+          preventive_action: string | null
+          priority: string | null
+          project_id: string
+          quality_inspection_id: string | null
+          recurrence_risk: string | null
+          rejected_at: string | null
+          rejected_by: string | null
+          rejection_reason: string | null
+          responsible_party: string | null
+          responsible_person: string | null
+          responsible_user_id: string | null
+          revision_notes: string | null
+          root_cause: string | null
+          root_cause_category: string | null
+          safety_inspection_id: string | null
+          severity: string | null
+          snag_id: string | null
+          source_record_id: string | null
+          specification_reference: string | null
+          standard_reference: string | null
+          status: string
+          subcontractor_id: string | null
+          submittal_id: string | null
+          submitted_at: string | null
+          supplier_id: string | null
+          target_closeout_date: string | null
+          task_id: string | null
+          time_impact: boolean | null
+          time_impact_days: number | null
+          updated_at: string
+          verification_notes: string | null
+          verification_required: boolean | null
+          verified_at: string | null
+          verified_by: string | null
+          wbs_id: string | null
+        }
+        Insert: {
+          actual_closeout_date?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          area?: string | null
+          assigned_to?: string | null
+          boq_item_id?: string | null
+          category?: string | null
+          closed_at?: string | null
+          closeout_notes?: string | null
+          company_id?: string | null
+          containment_action?: string | null
+          corrective_action?: string | null
+          cost_impact?: boolean | null
+          cost_impact_amount?: number | null
+          created_at?: string
+          created_by?: string | null
+          delivery_id?: string | null
+          description?: string | null
+          detected_by?: string | null
+          drawing_id?: string | null
+          drawing_reference?: string | null
+          due_date?: string | null
+          floor_level?: string | null
+          id?: string
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          issue_id?: string | null
+          location?: string | null
+          material_id?: string | null
+          ncr_number?: string | null
+          ncr_source?: string | null
+          ncr_title?: string | null
+          ncr_type?: string | null
+          non_conformance_details?: string | null
+          photos?: Json
+          preventive_action?: string | null
+          priority?: string | null
+          project_id: string
+          quality_inspection_id?: string | null
+          recurrence_risk?: string | null
+          rejected_at?: string | null
+          rejected_by?: string | null
+          rejection_reason?: string | null
+          responsible_party?: string | null
+          responsible_person?: string | null
+          responsible_user_id?: string | null
+          revision_notes?: string | null
+          root_cause?: string | null
+          root_cause_category?: string | null
+          safety_inspection_id?: string | null
+          severity?: string | null
+          snag_id?: string | null
+          source_record_id?: string | null
+          specification_reference?: string | null
+          standard_reference?: string | null
+          status?: string
+          subcontractor_id?: string | null
+          submittal_id?: string | null
+          submitted_at?: string | null
+          supplier_id?: string | null
+          target_closeout_date?: string | null
+          task_id?: string | null
+          time_impact?: boolean | null
+          time_impact_days?: number | null
+          updated_at?: string
+          verification_notes?: string | null
+          verification_required?: boolean | null
+          verified_at?: string | null
+          verified_by?: string | null
+          wbs_id?: string | null
+        }
+        Update: {
+          actual_closeout_date?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          area?: string | null
+          assigned_to?: string | null
+          boq_item_id?: string | null
+          category?: string | null
+          closed_at?: string | null
+          closeout_notes?: string | null
+          company_id?: string | null
+          containment_action?: string | null
+          corrective_action?: string | null
+          cost_impact?: boolean | null
+          cost_impact_amount?: number | null
+          created_at?: string
+          created_by?: string | null
+          delivery_id?: string | null
+          description?: string | null
+          detected_by?: string | null
+          drawing_id?: string | null
+          drawing_reference?: string | null
+          due_date?: string | null
+          floor_level?: string | null
+          id?: string
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          issue_id?: string | null
+          location?: string | null
+          material_id?: string | null
+          ncr_number?: string | null
+          ncr_source?: string | null
+          ncr_title?: string | null
+          ncr_type?: string | null
+          non_conformance_details?: string | null
+          photos?: Json
+          preventive_action?: string | null
+          priority?: string | null
+          project_id?: string
+          quality_inspection_id?: string | null
+          recurrence_risk?: string | null
+          rejected_at?: string | null
+          rejected_by?: string | null
+          rejection_reason?: string | null
+          responsible_party?: string | null
+          responsible_person?: string | null
+          responsible_user_id?: string | null
+          revision_notes?: string | null
+          root_cause?: string | null
+          root_cause_category?: string | null
+          safety_inspection_id?: string | null
+          severity?: string | null
+          snag_id?: string | null
+          source_record_id?: string | null
+          specification_reference?: string | null
+          standard_reference?: string | null
+          status?: string
+          subcontractor_id?: string | null
+          submittal_id?: string | null
+          submitted_at?: string | null
+          supplier_id?: string | null
+          target_closeout_date?: string | null
+          task_id?: string | null
+          time_impact?: boolean | null
+          time_impact_days?: number | null
+          updated_at?: string
+          verification_notes?: string | null
+          verification_required?: boolean | null
+          verified_at?: string | null
+          verified_by?: string | null
+          wbs_id?: string | null
         }
         Relationships: [
           {
