@@ -144,7 +144,7 @@ export function ManpowerRegister({ projectId: fixedProjectId }: { projectId?: st
     <div className="space-y-4">
       {!fixedProjectId && (
         <div className="flex flex-wrap items-center gap-2">
-          <ProjectPicker value={projectId} onChange={setProjectId} />
+          <ProjectPicker value={projectId || ""} onChange={(v) => setProjectId(v || null)} />
         </div>
       )}
 
