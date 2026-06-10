@@ -3,8 +3,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import {
-  Plus, Search, Archive, Pencil, CheckCircle2, X as XIcon, Download,
-  AlertTriangle, Paperclip, Trash2, Send, ShieldAlert, ArrowUpCircle,
+  Plus, Search, Archive, Pencil, Download,
+  Paperclip, Trash2, Send, ShieldAlert, ArrowUpCircle,
 } from "lucide-react";
 
 import {
