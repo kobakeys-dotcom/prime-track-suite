@@ -10,6 +10,7 @@ import { DailyReportsPanel } from "@/components/project/daily-reports-panel";
 import { ProjectRfisPanel, ProjectSubmittalsPanel, ProjectDocumentsPanel, ProjectBoqPanel, ProjectVariationsPanel, ProjectPaymentClaimsPanel, ProjectBudgetPanel, ProjectMaterialRequestsPanel } from "@/components/project/module-panels";
 import { RfqRegister } from "@/components/rfq-register";
 import { PurchaseOrderRegister } from "@/components/purchase-order-register";
+import { DeliveryRegister } from "@/components/delivery-register";
 import { RegisterPage } from "@/components/register-page";
 import { REGISTERS, STATUS_STYLES_GENERIC } from "@/lib/register-configs";
 import { MeetingActionItems } from "@/components/meeting-action-items";
@@ -91,6 +92,7 @@ function ProjectDetail() {
           <TabsTrigger value="material-requests">Material Requests</TabsTrigger>
           <TabsTrigger value="rfqs">RFQs</TabsTrigger>
           <TabsTrigger value="purchase-orders">Purchase Orders</TabsTrigger>
+          <TabsTrigger value="deliveries">Deliveries</TabsTrigger>
           <TabsTrigger value="quality">Quality</TabsTrigger>
           <TabsTrigger value="safety">Safety</TabsTrigger>
           <TabsTrigger value="snags">Snags</TabsTrigger>
@@ -139,6 +141,7 @@ function ProjectDetail() {
         <TabsContent value="material-requests" className="pt-4"><ProjectMaterialRequestsPanel projectId={projectId} /></TabsContent>
         <TabsContent value="rfqs" className="pt-4"><RfqRegister projectId={projectId} /></TabsContent>
         <TabsContent value="purchase-orders" className="pt-4"><PurchaseOrderRegister projectId={projectId} /></TabsContent>
+        <TabsContent value="deliveries" className="pt-4"><DeliveryRegister projectId={projectId} /></TabsContent>
         {(["quality_inspections", "safety_inspections", "snags", "risks", "issues", "meetings"] as const).map((k) => {
           const cfg = REGISTERS[k];
           const tabValue = ({ quality_inspections: "quality", safety_inspections: "safety", snags: "snags", risks: "risks", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
