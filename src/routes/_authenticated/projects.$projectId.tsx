@@ -7,6 +7,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { TasksPanel } from "@/components/project/tasks-panel";
 import { DailyReportsPanel } from "@/components/project/daily-reports-panel";
 import { ProjectRfisPanel, ProjectSubmittalsPanel, ProjectDocumentsPanel, ProjectBoqPanel } from "@/components/project/module-panels";
+import { RegisterPage } from "@/components/register-page";
+import { REGISTERS, STATUS_STYLES_GENERIC } from "@/lib/register-configs";
 
 export const Route = createFileRoute("/_authenticated/projects/$projectId")({
   head: () => ({ meta: [{ title: "Project — ProjectCore" }] }),
@@ -68,7 +70,7 @@ function ProjectDetail() {
       </div>
 
       <Tabs defaultValue="overview" className="w-full">
-        <TabsList>
+        <TabsList className="flex-wrap h-auto">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="tasks">Tasks</TabsTrigger>
           <TabsTrigger value="reports">Daily Reports</TabsTrigger>
@@ -76,6 +78,15 @@ function ProjectDetail() {
           <TabsTrigger value="rfis">RFIs</TabsTrigger>
           <TabsTrigger value="submittals">Submittals</TabsTrigger>
           <TabsTrigger value="documents">Documents</TabsTrigger>
+          <TabsTrigger value="variations">Variations</TabsTrigger>
+          <TabsTrigger value="claims">Payment Claims</TabsTrigger>
+          <TabsTrigger value="procurement">Procurement</TabsTrigger>
+          <TabsTrigger value="quality">Quality</TabsTrigger>
+          <TabsTrigger value="safety">Safety</TabsTrigger>
+          <TabsTrigger value="snags">Snags</TabsTrigger>
+          <TabsTrigger value="risks">Risks</TabsTrigger>
+          <TabsTrigger value="issues">Issues</TabsTrigger>
+          <TabsTrigger value="meetings">Meetings</TabsTrigger>
         </TabsList>
         <TabsContent value="overview" className="pt-4">
           <div className="bg-card border border-border rounded-sm p-6 space-y-4">
@@ -97,6 +108,16 @@ function ProjectDetail() {
         <TabsContent value="rfis" className="pt-4"><ProjectRfisPanel projectId={projectId} /></TabsContent>
         <TabsContent value="submittals" className="pt-4"><ProjectSubmittalsPanel projectId={projectId} /></TabsContent>
         <TabsContent value="documents" className="pt-4"><ProjectDocumentsPanel projectId={projectId} /></TabsContent>
+        {(["variations", "payment_claims", "procurement_requests", "quality_inspections", "safety_inspections", "snags", "risks", "issues", "meetings"] as const).map((k) => {
+          const cfg = REGISTERS[k];
+          const tabValue = ({ variations: "variations", payment_claims: "claims", procurement_requests: "procurement", quality_inspections: "quality", safety_inspections: "safety", snags: "snags", risks: "risks", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
+          if (!cfg) return null;
+          return (
+            <TabsContent key={k} value={tabValue} className="pt-4">
+              <RegisterPage table={k} title={cfg.title} description={cfg.description} fields={cfg.fields} projectScoped fixedProjectId={projectId} statusField={cfg.statusField} statusStyles={STATUS_STYLES_GENERIC} />
+            </TabsContent>
+          );
+        })}
       </Tabs>
     </div>
   );

@@ -5,7 +5,7 @@ import {
   LayoutDashboard, FolderKanban, CalendarRange, ListChecks, FileText, Calculator,
   HelpCircle, FileCheck2, Files, PencilRuler, Stamp, BarChart3, Settings, LogOut, Search, History,
   Truck, ShoppingCart, Package, ClipboardList, ShieldCheck, AlertTriangle, AlertOctagon, ListTodo,
-  Users, Wrench, Clock, Flag, Sparkles, UserCheck, Building2, Receipt, FileSignature, Tag,
+  Users, Wrench, Clock, Flag, Sparkles, UserCheck, Building2, Receipt, FileSignature, Tag, Bell,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getCurrentContext } from "@/lib/dashboard.functions";
@@ -80,6 +80,7 @@ const sections: { label: string; items: { to: string; label: string; icon: any }
     { to: "/reports", label: "Reports", icon: BarChart3 },
     { to: "/report-builder", label: "Report Builder", icon: BarChart3 },
     { to: "/ai", label: "AI Assistant", icon: Sparkles },
+    { to: "/notifications", label: "Notifications", icon: Bell },
     { to: "/permissions", label: "Permissions", icon: Stamp },
     { to: "/audit", label: "Audit Log", icon: History },
     { to: "/audit-summary", label: "Audit Summary", icon: History },

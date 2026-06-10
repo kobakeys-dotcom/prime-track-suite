@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Stamp, Check, X, MessageSquare, Search } from "lucide-react";
+import { Stamp, Check, X, MessageSquare, Search, Download } from "lucide-react";
 import { toast } from "sonner";
 import { listApprovals, updateApprovalStatus } from "@/lib/workflows.functions";
 import { APPROVAL_STATUSES, APPROVAL_STATUS_STYLES, statusLabel } from "@/lib/status";
@@ -57,6 +57,17 @@ function ApprovalsPage() {
     setComment("");
   }
 
+  function exportCsv() {
+    const headers = ["Title", "Type", "Project", "Status", "Comment", "Created"];
+    const rows = filtered.map((r: any) => [r.title, r.entity_type, r.project_name ?? "", r.status, r.comment ?? "", r.created_at]);
+    const csv = [headers, ...rows].map((row) => row.map((c) => `"${String(c ?? "").replace(/"/g, '""')}"`).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = `approvals-${new Date().toISOString().slice(0, 10)}.csv`; a.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div className="p-8 space-y-6">
       <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -83,6 +94,9 @@ function ApprovalsPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
             <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search…" className="pl-9 w-56" />
           </div>
+          <Button variant="outline" size="sm" onClick={exportCsv} disabled={filtered.length === 0}>
+            <Download className="size-4 mr-1" /> Export CSV
+          </Button>
         </div>
       </div>
 
