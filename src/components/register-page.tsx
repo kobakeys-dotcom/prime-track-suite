@@ -121,6 +121,25 @@ export function RegisterPage(props: RegisterPageProps) {
     saveMut.mutate({ id: editing.id, values });
   }
 
+  function submitForApproval(row: any) {
+    if (!APPROVAL_TABLES.has(table)) return;
+    saveMut.mutate({ id: row.id, values: { ...row, status: "submitted" } });
+    toast.success("Submitted for approval");
+  }
+
+  function exportCsv() {
+    const cols = fields.map((f) => f.name);
+    const header = cols.join(",");
+    const escape = (v: any) => v == null ? "" : `"${String(v).replace(/"/g, '""')}"`;
+    const body = (filtered as any[]).map((r) => cols.map((c) => escape(r[c])).join(",")).join("\n");
+    const blob = new Blob([header + "\n" + body], { type: "text/csv" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${table}-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
   return (
     <div className={cn("space-y-4", !fixedProjectId && "p-8")}>
       {!fixedProjectId && (
