@@ -432,7 +432,7 @@ function NcrDetail({ id, onClose, onChanged }: { id: string; onClose: () => void
   const delAtt = useServerFn(deleteNcrAttachment);
   const addComment = useServerFn(addNcrComment);
 
-  const ncr = q.data?.ncr;
+  const ncr: any = q.data?.ncr;
 
   const doStatus = (status: any, label: string, needsReason = false) => setStatusDialog({ status, label, needsReason });
   const confirmStatus = async () => {
