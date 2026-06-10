@@ -71,7 +71,7 @@ export const listCashFlowPlans = createServerFn({ method: "GET" })
   .inputValidator((d: unknown) => z.object({ projectId: z.string().uuid().optional() }).parse(d ?? {}))
   .handler(async ({ context, data }) => {
     const sb = context.supabase as any;
-    let q = sb.from("cash_flow_plans").select("*, projects(name)").eq("is_archived", false).order("created_at", { ascending: false });
+    let q = sb.from("cash_flow_plans").select("*").eq("is_archived", false).order("created_at", { ascending: false });
     if (data.projectId) q = q.eq("project_id", data.projectId);
     const { data: rows, error } = await q;
     if (error) throw error;
@@ -314,7 +314,7 @@ export const listPayables = createServerFn({ method: "GET" })
   .inputValidator((d: unknown) => z.object({ projectId: z.string().uuid().optional() }).parse(d ?? {}))
   .handler(async ({ context, data }) => {
     const sb = context.supabase as any;
-    let q = sb.from("cash_flow_payables").select("*, suppliers(name)").eq("is_archived", false).order("expected_payment_date", { ascending: true });
+    let q = sb.from("cash_flow_payables").select("*").eq("is_archived", false).order("expected_payment_date", { ascending: true });
     if (data.projectId) q = q.eq("project_id", data.projectId);
     const { data: rows, error } = await q;
     if (error) throw error;
