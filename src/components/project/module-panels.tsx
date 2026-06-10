@@ -4,6 +4,7 @@ import { listDocuments } from "@/lib/documents.functions";
 import { RfiRegister } from "@/components/rfi-register";
 import { SubmittalRegister } from "@/components/submittal-register";
 import { BoqRegister } from "@/components/boq-register";
+import { VariationRegister } from "@/components/variation-register";
 
 export function ProjectRfisPanel({ projectId }: { projectId: string }) {
   return <RfiRegister projectId={projectId} variant="compact" />;
@@ -15,6 +16,10 @@ export function ProjectSubmittalsPanel({ projectId }: { projectId: string }) {
 
 export function ProjectBoqPanel({ projectId }: { projectId: string }) {
   return <BoqRegister projectId={projectId} variant="full" />;
+}
+
+export function ProjectVariationsPanel({ projectId }: { projectId: string }) {
+  return <VariationRegister projectId={projectId} variant="compact" />;
 }
 
 export function ProjectDocumentsPanel({ projectId }: { projectId: string }) {
