@@ -462,7 +462,7 @@ function RfqDetail({ rfqId, onClose, onChanged }: { rfqId: string; onClose: () =
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2 flex-wrap">
             <span>{r.rfq_number} — {r.rfq_title}</span>
-            {badge(r.status, STATUS_STYLE)}{badge(r.award_status, AWARD_STYLE)}
+            {badge(r.status ?? "draft", STATUS_STYLE)}{badge(r.award_status ?? "not_awarded", AWARD_STYLE)}
             {r.converted_to_po && <Badge className="bg-violet-100 text-violet-700">Converted to PO</Badge>}
           </SheetTitle>
         </SheetHeader>
