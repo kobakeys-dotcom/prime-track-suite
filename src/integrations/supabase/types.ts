@@ -111,49 +111,122 @@ export type Database = {
       boq_items: {
         Row: {
           category: string | null
+          certified_qty: number
           completed_qty: number
+          cost_code_id: string | null
           created_at: string
+          created_by: string | null
           description: string
+          discipline: string | null
           id: string
+          is_archived: boolean
           item_code: string | null
+          item_number: string | null
+          location: string | null
+          milestone_id: string | null
           project_id: string
           quantity: number
+          remarks: string | null
+          section: string | null
+          status: string
+          task_id: string | null
+          trade: string | null
           unit: string | null
           unit_rate: number
           updated_at: string
+          variation_qty: number
+          wbs_id: string | null
         }
         Insert: {
           category?: string | null
+          certified_qty?: number
           completed_qty?: number
+          cost_code_id?: string | null
           created_at?: string
+          created_by?: string | null
           description: string
+          discipline?: string | null
           id?: string
+          is_archived?: boolean
           item_code?: string | null
+          item_number?: string | null
+          location?: string | null
+          milestone_id?: string | null
           project_id: string
           quantity?: number
+          remarks?: string | null
+          section?: string | null
+          status?: string
+          task_id?: string | null
+          trade?: string | null
           unit?: string | null
           unit_rate?: number
           updated_at?: string
+          variation_qty?: number
+          wbs_id?: string | null
         }
         Update: {
           category?: string | null
+          certified_qty?: number
           completed_qty?: number
+          cost_code_id?: string | null
           created_at?: string
+          created_by?: string | null
           description?: string
+          discipline?: string | null
           id?: string
+          is_archived?: boolean
           item_code?: string | null
+          item_number?: string | null
+          location?: string | null
+          milestone_id?: string | null
           project_id?: string
           quantity?: number
+          remarks?: string | null
+          section?: string | null
+          status?: string
+          task_id?: string | null
+          trade?: string | null
           unit?: string | null
           unit_rate?: number
           updated_at?: string
+          variation_qty?: number
+          wbs_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "boq_items_cost_code_id_fkey"
+            columns: ["cost_code_id"]
+            isOneToOne: false
+            referencedRelation: "cost_codes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "boq_items_milestone_id_fkey"
+            columns: ["milestone_id"]
+            isOneToOne: false
+            referencedRelation: "milestones"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "boq_items_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "boq_items_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "boq_items_wbs_id_fkey"
+            columns: ["wbs_id"]
+            isOneToOne: false
+            referencedRelation: "wbs_items"
             referencedColumns: ["id"]
           },
         ]
