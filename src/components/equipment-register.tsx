@@ -180,7 +180,7 @@ export function EquipmentRegister({ projectId: fixedProjectId }: { projectId?: s
     <div className="space-y-4">
       {!fixedProjectId && (
         <div className="flex items-center gap-2 flex-wrap">
-          <ProjectPicker value={projectId} onChange={setProjectId} />
+          <ProjectPicker value={projectId || ""} onChange={(v) => setProjectId(v || null)} />
           <div className="ml-auto flex gap-2">
             <Button size="sm" variant="outline" onClick={() => { setEditUsage({ project_id: projectId || "" }); setOpenUsage(true); }} disabled={!projectId}><Plus className="h-4 w-4 mr-1" />Usage Log</Button>
             <Button size="sm" variant="outline" onClick={() => setOpenAssign(true)} disabled={!projectId}><Plus className="h-4 w-4 mr-1" />Assign</Button>
