@@ -49,6 +49,7 @@ export const upsertRegister = createServerFn({ method: "POST" })
       return { ok: true, id: data.id };
     }
     values.created_by = context.userId;
+    if (data.table === "timesheets" && !values.user_id) values.user_id = context.userId;
     let r = await sb.from(data.table).insert(values).select("id").single();
     if (r.error && /created_by/.test(r.error.message)) {
       delete values.created_by;
