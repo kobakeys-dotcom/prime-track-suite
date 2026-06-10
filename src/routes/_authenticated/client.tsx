@@ -88,10 +88,12 @@ function ClientPortal() {
                   {summary.milestones.map((m: any) => (
                     <li key={m.id} className="py-2 flex items-center justify-between">
                       <div>
-                        <div className="font-medium">{m.title}</div>
+                        <div className="font-medium">{m.name}</div>
                         <div className="text-xs text-muted-foreground">Due {m.due_date ?? "—"}</div>
                       </div>
-                      <span className="text-xs font-mono">{m.completion_percentage ?? 0}%</span>
+                      <span className={cn("text-[10px] font-bold uppercase px-2 py-0.5 rounded", m.completed_at ? "bg-emerald-100 text-emerald-700" : "bg-zinc-100 text-zinc-700")}>
+                        {m.completed_at ? "Done" : "Pending"}
+                      </span>
                     </li>
                   ))}
                 </ul>

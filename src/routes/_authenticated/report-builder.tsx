@@ -110,9 +110,9 @@ function ReportBuilder() {
           {report.sections.stakeholder && (
             <Section title="Milestones & Approvals">
               <table className="w-full text-sm mt-2">
-                <thead><tr className="text-left text-xs text-zinc-500"><th>Milestone</th><th>Due</th><th className="text-right">%</th></tr></thead>
+                <thead><tr className="text-left text-xs text-zinc-500"><th>Milestone</th><th>Due</th><th className="text-right">Status</th></tr></thead>
                 <tbody>{report.sections.stakeholder.milestones.map((m: any, i: number) => (
-                  <tr key={i} className="border-t"><td className="py-1">{m.title}</td><td className="py-1 text-xs">{m.due_date ?? "—"}</td><td className="py-1 text-right font-mono">{m.completion_percentage ?? 0}%</td></tr>
+                  <tr key={i} className="border-t"><td className="py-1">{m.name}</td><td className="py-1 text-xs">{m.due_date ?? "—"}</td><td className="py-1 text-right text-xs">{m.completed_at ? "Done" : "Pending"}</td></tr>
                 ))}</tbody>
               </table>
             </Section>
