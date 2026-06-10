@@ -439,7 +439,7 @@ function RfqDetail({ rfqId, onClose, onChanged }: { rfqId: string; onClose: () =
   const delQM = useMutation({ mutationFn: (id: string) => delQ({ data: { id } }),
     onSuccess: () => { toast.success("Quotation removed"); refresh(); }, onError: (e: any) => toast.error(e?.message ?? "Failed") });
 
-  if (q.isLoading || !q.data) return (
+  if (q.isLoading || !q.data || !q.data.rfq) return (
     <Sheet open onOpenChange={onClose}><SheetContent className="sm:max-w-4xl"><Skeleton className="h-40" /></SheetContent></Sheet>
   );
 
