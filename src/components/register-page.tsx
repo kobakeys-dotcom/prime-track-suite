@@ -44,6 +44,7 @@ export function RegisterPage(props: RegisterPageProps) {
 
   const [projectId, setProjectId] = useState<string>(fixedProjectId ?? "");
   const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("__all");
   const [editing, setEditing] = useState<any | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -75,14 +76,21 @@ export function RegisterPage(props: RegisterPageProps) {
   });
 
   const tableFields = useMemo(() => fields.filter((f) => !f.hideInTable).slice(0, 6), [fields]);
+  const statusOptions = useMemo(() => {
+    if (!statusField) return [] as string[];
+    const f = fields.find((x) => x.name === statusField);
+    return f?.options?.map((o) => o.value) ?? Array.from(new Set((rows as any[]).map((r) => r[statusField]).filter(Boolean)));
+  }, [fields, statusField, rows]);
 
   const filtered = useMemo(() => {
-    if (!search) return rows;
-    const q = search.toLowerCase();
-    return (rows as any[]).filter((r) =>
-      Object.values(r).some((v) => v != null && String(v).toLowerCase().includes(q)),
-    );
-  }, [rows, search]);
+    let out = rows as any[];
+    if (statusField && statusFilter !== "__all") out = out.filter((r) => r[statusField] === statusFilter);
+    if (search) {
+      const q = search.toLowerCase();
+      out = out.filter((r) => Object.values(r).some((v) => v != null && String(v).toLowerCase().includes(q)));
+    }
+    return out;
+  }, [rows, search, statusFilter, statusField]);
 
   function openCreate() {
     const base: Record<string, any> = { ...(defaultValues ?? {}) };
