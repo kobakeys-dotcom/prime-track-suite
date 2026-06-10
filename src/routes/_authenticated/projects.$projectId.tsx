@@ -87,6 +87,7 @@ function ProjectDetail() {
           <TabsTrigger value="budget">Budget vs Actual</TabsTrigger>
           <TabsTrigger value="cash-flow">Cash Flow</TabsTrigger>
           <TabsTrigger value="material-requests">Material Requests</TabsTrigger>
+          <TabsTrigger value="rfqs">RFQs</TabsTrigger>
           <TabsTrigger value="quality">Quality</TabsTrigger>
           <TabsTrigger value="safety">Safety</TabsTrigger>
           <TabsTrigger value="snags">Snags</TabsTrigger>
