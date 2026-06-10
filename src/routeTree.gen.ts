@@ -42,6 +42,7 @@ import { Route as AuthenticatedDeliveriesRouteImport } from './routes/_authentic
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDailyReportsRouteImport } from './routes/_authenticated/daily-reports'
 import { Route as AuthenticatedCostCodesRouteImport } from './routes/_authenticated/cost-codes'
+import { Route as AuthenticatedClientRouteImport } from './routes/_authenticated/client'
 import { Route as AuthenticatedBoqRouteImport } from './routes/_authenticated/boq'
 import { Route as AuthenticatedAuditRouteImport } from './routes/_authenticated/audit'
 import { Route as AuthenticatedApprovalsRouteImport } from './routes/_authenticated/approvals'
@@ -217,6 +218,11 @@ const AuthenticatedCostCodesRoute = AuthenticatedCostCodesRouteImport.update({
   path: '/cost-codes',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedClientRoute = AuthenticatedClientRouteImport.update({
+  id: '/client',
+  path: '/client',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedBoqRoute = AuthenticatedBoqRouteImport.update({
   id: '/boq',
   path: '/boq',
@@ -256,6 +262,7 @@ export interface FileRoutesByFullPath {
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/audit': typeof AuthenticatedAuditRoute
   '/boq': typeof AuthenticatedBoqRoute
+  '/client': typeof AuthenticatedClientRoute
   '/cost-codes': typeof AuthenticatedCostCodesRoute
   '/daily-reports': typeof AuthenticatedDailyReportsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -296,6 +303,7 @@ export interface FileRoutesByTo {
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/audit': typeof AuthenticatedAuditRoute
   '/boq': typeof AuthenticatedBoqRoute
+  '/client': typeof AuthenticatedClientRoute
   '/cost-codes': typeof AuthenticatedCostCodesRoute
   '/daily-reports': typeof AuthenticatedDailyReportsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -338,6 +346,7 @@ export interface FileRoutesById {
   '/_authenticated/approvals': typeof AuthenticatedApprovalsRoute
   '/_authenticated/audit': typeof AuthenticatedAuditRoute
   '/_authenticated/boq': typeof AuthenticatedBoqRoute
+  '/_authenticated/client': typeof AuthenticatedClientRoute
   '/_authenticated/cost-codes': typeof AuthenticatedCostCodesRoute
   '/_authenticated/daily-reports': typeof AuthenticatedDailyReportsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -380,6 +389,7 @@ export interface FileRouteTypes {
     | '/approvals'
     | '/audit'
     | '/boq'
+    | '/client'
     | '/cost-codes'
     | '/daily-reports'
     | '/dashboard'
@@ -420,6 +430,7 @@ export interface FileRouteTypes {
     | '/approvals'
     | '/audit'
     | '/boq'
+    | '/client'
     | '/cost-codes'
     | '/daily-reports'
     | '/dashboard'
@@ -461,6 +472,7 @@ export interface FileRouteTypes {
     | '/_authenticated/approvals'
     | '/_authenticated/audit'
     | '/_authenticated/boq'
+    | '/_authenticated/client'
     | '/_authenticated/cost-codes'
     | '/_authenticated/daily-reports'
     | '/_authenticated/dashboard'
@@ -735,6 +747,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCostCodesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/client': {
+      id: '/_authenticated/client'
+      path: '/client'
+      fullPath: '/client'
+      preLoaderRoute: typeof AuthenticatedClientRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/boq': {
       id: '/_authenticated/boq'
       path: '/boq'
@@ -798,6 +817,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedApprovalsRoute: typeof AuthenticatedApprovalsRoute
   AuthenticatedAuditRoute: typeof AuthenticatedAuditRoute
   AuthenticatedBoqRoute: typeof AuthenticatedBoqRoute
+  AuthenticatedClientRoute: typeof AuthenticatedClientRoute
   AuthenticatedCostCodesRoute: typeof AuthenticatedCostCodesRoute
   AuthenticatedDailyReportsRoute: typeof AuthenticatedDailyReportsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
@@ -835,6 +855,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedApprovalsRoute: AuthenticatedApprovalsRoute,
   AuthenticatedAuditRoute: AuthenticatedAuditRoute,
   AuthenticatedBoqRoute: AuthenticatedBoqRoute,
+  AuthenticatedClientRoute: AuthenticatedClientRoute,
   AuthenticatedCostCodesRoute: AuthenticatedCostCodesRoute,
   AuthenticatedDailyReportsRoute: AuthenticatedDailyReportsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
