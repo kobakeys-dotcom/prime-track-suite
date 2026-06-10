@@ -205,7 +205,7 @@ export function RfqRegister({ projectId: pinnedProject }: Props) {
       {openCreate && (
         <RfqDialog
           open={openCreate} onOpenChange={setOpenCreate}
-          rfqId={editId} projectId={effectiveProject!}
+          rfqId={editId} projectId={effectiveProject ?? ""}
           onSaved={() => { qc.invalidateQueries({ queryKey: ["rfqs"] }); qc.invalidateQueries({ queryKey: ["rfq-stats"] }); }}
         />
       )}
