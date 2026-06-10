@@ -107,11 +107,13 @@ export const listApprovals = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase
       .from("approvals")
-      .select("id, title, entity_type, status, project_id, created_at, projects(name)")
+      .select("id, title, entity_type, entity_id, status, project_id, created_at, comment, projects(name)")
       .order("created_at", { ascending: false });
     if (error) throw error;
     return (data ?? []).map((r: any) => ({ ...r, project_name: r.projects?.name ?? "—" }));
   });
+
+const SYNCABLE_ENTITIES = new Set(["variations", "payment_claims", "procurement_requests", "purchase_orders", "submittals", "rfis"]);
 
 export const updateApprovalStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -129,7 +131,14 @@ export const updateApprovalStatus = createServerFn({ method: "POST" })
       patch.decided_at = new Date().toISOString();
       patch.approver_id = context.userId;
     }
-    const { error } = await context.supabase.from("approvals").update(patch).eq("id", data.id);
+    const { data: appr, error } = await context.supabase.from("approvals").update(patch).eq("id", data.id).select("entity_type, entity_id").maybeSingle();
     if (error) throw error;
+
+    // Sync status back to source record where possible
+    if (appr && appr.entity_id && SYNCABLE_ENTITIES.has(appr.entity_type)) {
+      const sb = context.supabase as any;
+      await sb.from(appr.entity_type).update({ status: data.status }).eq("id", appr.entity_id);
+    }
     return { ok: true };
   });
+
