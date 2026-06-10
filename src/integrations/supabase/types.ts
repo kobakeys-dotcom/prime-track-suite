@@ -2646,57 +2646,303 @@ export type Database = {
           },
         ]
       }
-      variations: {
+      variation_attachments: {
         Row: {
-          approved_amount: number | null
-          approved_days: number | null
-          attachments: Json
-          cost_impact: number | null
+          attachment_type: string | null
           created_at: string
           description: string | null
+          file_name: string
+          file_type: string | null
+          file_url: string
           id: string
+          is_client_visible: boolean | null
           project_id: string
-          reason: string | null
-          status: string
-          submitted_by: string | null
-          time_impact_days: number | null
-          title: string
-          updated_at: string
-          variation_number: string
+          uploaded_by: string | null
+          variation_id: string
         }
         Insert: {
-          approved_amount?: number | null
-          approved_days?: number | null
-          attachments?: Json
-          cost_impact?: number | null
+          attachment_type?: string | null
           created_at?: string
           description?: string | null
+          file_name: string
+          file_type?: string | null
+          file_url: string
           id?: string
+          is_client_visible?: boolean | null
           project_id: string
-          reason?: string | null
-          status?: string
-          submitted_by?: string | null
-          time_impact_days?: number | null
-          title: string
-          updated_at?: string
-          variation_number: string
+          uploaded_by?: string | null
+          variation_id: string
         }
         Update: {
-          approved_amount?: number | null
-          approved_days?: number | null
-          attachments?: Json
-          cost_impact?: number | null
+          attachment_type?: string | null
           created_at?: string
           description?: string | null
+          file_name?: string
+          file_type?: string | null
+          file_url?: string
           id?: string
+          is_client_visible?: boolean | null
+          project_id?: string
+          uploaded_by?: string | null
+          variation_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "variation_attachments_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "variation_attachments_variation_id_fkey"
+            columns: ["variation_id"]
+            isOneToOne: false
+            referencedRelation: "variations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      variation_line_items: {
+        Row: {
+          amount: number | null
+          approved_amount: number | null
+          approved_quantity: number | null
+          approved_rate: number | null
+          boq_item_id: string | null
+          cost_code_id: string | null
+          created_at: string
+          created_by: string | null
+          description: string
+          id: string
+          is_archived: boolean | null
+          item_type: string | null
+          project_id: string
+          quantity: number | null
+          rate: number | null
+          remarks: string | null
+          sort_order: number | null
+          unit: string | null
+          updated_at: string
+          variation_id: string
+        }
+        Insert: {
+          amount?: number | null
+          approved_amount?: number | null
+          approved_quantity?: number | null
+          approved_rate?: number | null
+          boq_item_id?: string | null
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          description: string
+          id?: string
+          is_archived?: boolean | null
+          item_type?: string | null
+          project_id: string
+          quantity?: number | null
+          rate?: number | null
+          remarks?: string | null
+          sort_order?: number | null
+          unit?: string | null
+          updated_at?: string
+          variation_id: string
+        }
+        Update: {
+          amount?: number | null
+          approved_amount?: number | null
+          approved_quantity?: number | null
+          approved_rate?: number | null
+          boq_item_id?: string | null
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          id?: string
+          is_archived?: boolean | null
+          item_type?: string | null
+          project_id?: string
+          quantity?: number | null
+          rate?: number | null
+          remarks?: string | null
+          sort_order?: number | null
+          unit?: string | null
+          updated_at?: string
+          variation_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "variation_line_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "variation_line_items_variation_id_fkey"
+            columns: ["variation_id"]
+            isOneToOne: false
+            referencedRelation: "variations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      variations: {
+        Row: {
+          approval_comments: string | null
+          approved_amount: number | null
+          approved_at: string | null
+          approved_by: string | null
+          approved_days: number | null
+          assigned_to: string | null
+          attachments: Json
+          category: string | null
+          client_approved_at: string | null
+          client_approved_by: string | null
+          cost_impact: number | null
+          cost_impact_description: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          due_date: string | null
+          id: string
+          included_in_payment_claim: boolean | null
+          instruction_reference: string | null
+          is_archived: boolean | null
+          is_client_visible: boolean | null
+          linked_boq_item_id: string | null
+          linked_document_id: string | null
+          linked_drawing_id: string | null
+          linked_rfi_id: string | null
+          linked_task_id: string | null
+          linked_wbs_id: string | null
+          payment_claim_id: string | null
+          pending_amount: number | null
+          priority: string | null
+          project_id: string
+          reason: string | null
+          rejected_amount: number | null
+          rejected_at: string | null
+          rejection_reason: string | null
+          review_comments: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          revision_notes: string | null
+          status: string
+          submitted_amount: number | null
+          submitted_at: string | null
+          submitted_by: string | null
+          submitted_days: number | null
+          time_impact_days: number | null
+          time_impact_description: string | null
+          title: string
+          updated_at: string
+          variation_number: string | null
+          variation_type: string | null
+        }
+        Insert: {
+          approval_comments?: string | null
+          approved_amount?: number | null
+          approved_at?: string | null
+          approved_by?: string | null
+          approved_days?: number | null
+          assigned_to?: string | null
+          attachments?: Json
+          category?: string | null
+          client_approved_at?: string | null
+          client_approved_by?: string | null
+          cost_impact?: number | null
+          cost_impact_description?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          included_in_payment_claim?: boolean | null
+          instruction_reference?: string | null
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          linked_boq_item_id?: string | null
+          linked_document_id?: string | null
+          linked_drawing_id?: string | null
+          linked_rfi_id?: string | null
+          linked_task_id?: string | null
+          linked_wbs_id?: string | null
+          payment_claim_id?: string | null
+          pending_amount?: number | null
+          priority?: string | null
+          project_id: string
+          reason?: string | null
+          rejected_amount?: number | null
+          rejected_at?: string | null
+          rejection_reason?: string | null
+          review_comments?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
+          status?: string
+          submitted_amount?: number | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          submitted_days?: number | null
+          time_impact_days?: number | null
+          time_impact_description?: string | null
+          title: string
+          updated_at?: string
+          variation_number?: string | null
+          variation_type?: string | null
+        }
+        Update: {
+          approval_comments?: string | null
+          approved_amount?: number | null
+          approved_at?: string | null
+          approved_by?: string | null
+          approved_days?: number | null
+          assigned_to?: string | null
+          attachments?: Json
+          category?: string | null
+          client_approved_at?: string | null
+          client_approved_by?: string | null
+          cost_impact?: number | null
+          cost_impact_description?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          included_in_payment_claim?: boolean | null
+          instruction_reference?: string | null
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          linked_boq_item_id?: string | null
+          linked_document_id?: string | null
+          linked_drawing_id?: string | null
+          linked_rfi_id?: string | null
+          linked_task_id?: string | null
+          linked_wbs_id?: string | null
+          payment_claim_id?: string | null
+          pending_amount?: number | null
+          priority?: string | null
           project_id?: string
           reason?: string | null
+          rejected_amount?: number | null
+          rejected_at?: string | null
+          rejection_reason?: string | null
+          review_comments?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
           status?: string
+          submitted_amount?: number | null
+          submitted_at?: string | null
           submitted_by?: string | null
+          submitted_days?: number | null
           time_impact_days?: number | null
+          time_impact_description?: string | null
           title?: string
           updated_at?: string
-          variation_number?: string
+          variation_number?: string | null
+          variation_type?: string | null
         }
         Relationships: [
           {
