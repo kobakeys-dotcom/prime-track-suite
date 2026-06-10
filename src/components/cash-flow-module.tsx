@@ -409,23 +409,40 @@ function PlanDialog({ open, onOpenChange, projectId, onSaved, upsertFn }: any) {
   );
 }
 
+function defaultEntryForm() {
+  const today = new Date().toISOString().slice(0, 10);
+  const monthEnd = new Date(); monthEnd.setMonth(monthEnd.getMonth() + 1); monthEnd.setDate(0);
+  return {
+    period_label: today.slice(0, 7),
+    period_start: today.slice(0, 8) + "01",
+    period_end: monthEnd.toISOString().slice(0, 10),
+    entry_type: "Both", category: "General", description: "",
+    planned_inflow: 0, actual_inflow: 0, forecast_inflow: 0,
+    planned_outflow: 0, actual_outflow: 0, forecast_outflow: 0,
+    status: "Active", remarks: "",
+  };
+}
+
 function EntryDialog({ open, onOpenChange, projectId, planId, editing, onSaved, upsertFn }: any) {
-  const init = editing ?? { period_label: "", period_start: "", period_end: "", entry_type: "Both", category: "General", description: "", planned_inflow: 0, actual_inflow: 0, forecast_inflow: 0, planned_outflow: 0, actual_outflow: 0, forecast_outflow: 0, status: "Active", remarks: "" };
-  const [f, setF] = useState<any>(init);
-  // reset when opened
-  useMemo(() => setF(editing ?? init), [editing, open]);
+  const [f, setF] = useState<any>(defaultEntryForm());
+  const [saving, setSaving] = useState(false);
+  useEffect(() => { if (open) setF(editing ?? defaultEntryForm()); }, [open, editing]);
   const save = async () => {
-    if (!f.period_label || !f.period_start || !f.period_end) return toast.error("Period fields required");
+    if (!f.period_label?.trim()) return toast.error("Period label is required");
+    if (!f.period_start || !f.period_end) return toast.error("Period start and end dates are required");
+    if (f.period_end < f.period_start) return toast.error("Period end before start");
+    setSaving(true);
     try {
       const payload: any = { ...f, project_id: projectId, cash_flow_plan_id: f.cash_flow_plan_id ?? planId ?? null };
       ["planned_inflow", "actual_inflow", "forecast_inflow", "planned_outflow", "actual_outflow", "forecast_outflow"].forEach((k) => payload[k] = Number(payload[k]) || 0);
       await upsertFn({ data: payload });
-      toast.success("Saved"); onSaved();
-    } catch (e: any) { toast.error(e?.message ?? "Failed"); }
+      toast.success(editing ? "Entry updated" : "Entry created"); onSaved();
+    } catch (e: any) { toast.error(e?.message ?? e?.toString?.() ?? "Failed to save entry"); }
+    finally { setSaving(false); }
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader><DialogTitle>{editing ? "Edit" : "New"} Cash Flow Entry</DialogTitle></DialogHeader>
         <div className="grid grid-cols-3 gap-3">
           <div><Label>Period Label</Label><Input value={f.period_label} onChange={(e) => setF({ ...f, period_label: e.target.value })} /></div>
@@ -452,24 +469,32 @@ function EntryDialog({ open, onOpenChange, projectId, planId, editing, onSaved, 
           <div className="col-span-3"><Label>Description</Label><Input value={f.description ?? ""} onChange={(e) => setF({ ...f, description: e.target.value })} /></div>
           <div className="col-span-3"><Label>Remarks</Label><Textarea value={f.remarks ?? ""} onChange={(e) => setF({ ...f, remarks: e.target.value })} /></div>
         </div>
-        <DialogFooter><Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button><Button onClick={save}>Save</Button></DialogFooter>
+        <DialogFooter><Button variant="outline" onClick={() => onOpenChange(false)} disabled={saving}>Cancel</Button><Button onClick={save} disabled={saving}>{saving ? "Saving..." : "Save"}</Button></DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
 
+function defaultRecvForm() {
+  return { invoice_number: "", claim_number: "", description: "", expected_receipt_date: "", actual_receipt_date: "", claimed_amount: 0, certified_amount: 0, received_amount: 0, status: "Expected" };
+}
+
 function RecvDialog({ open, onOpenChange, projectId, planId, editing, onSaved, upsertFn }: any) {
-  const init = editing ?? { invoice_number: "", claim_number: "", description: "", expected_receipt_date: "", actual_receipt_date: "", claimed_amount: 0, certified_amount: 0, received_amount: 0, status: "Expected" };
-  const [f, setF] = useState<any>(init);
-  useMemo(() => setF(editing ?? init), [editing, open]);
+  const [f, setF] = useState<any>(defaultRecvForm());
+  const [saving, setSaving] = useState(false);
+  useEffect(() => { if (open) setF(editing ?? defaultRecvForm()); }, [open, editing]);
   const save = async () => {
+    if (!f.claim_number && !f.invoice_number && !f.description) return toast.error("Provide a claim number, invoice number, or description");
+    if (Number(f.claimed_amount) <= 0 && Number(f.certified_amount) <= 0) return toast.error("Enter a claimed or certified amount");
+    setSaving(true);
     try {
       const payload: any = { ...f, project_id: projectId, cash_flow_plan_id: f.cash_flow_plan_id ?? planId ?? null };
       ["claimed_amount","certified_amount","received_amount"].forEach((k) => payload[k] = Number(payload[k]) || 0);
       ["expected_receipt_date","actual_receipt_date"].forEach((k) => { if (!payload[k]) payload[k] = null; });
       await upsertFn({ data: payload });
-      toast.success("Saved"); onSaved();
-    } catch (e: any) { toast.error(e?.message ?? "Failed"); }
+      toast.success(editing ? "Receivable updated" : "Receivable created"); onSaved();
+    } catch (e: any) { toast.error(e?.message ?? e?.toString?.() ?? "Failed to save receivable"); }
+    finally { setSaving(false); }
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -491,25 +516,33 @@ function RecvDialog({ open, onOpenChange, projectId, planId, editing, onSaved, u
           </div>
           <div className="col-span-2"><Label>Description</Label><Input value={f.description ?? ""} onChange={(e) => setF({ ...f, description: e.target.value })} /></div>
         </div>
-        <DialogFooter><Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button><Button onClick={save}>Save</Button></DialogFooter>
+        <DialogFooter><Button variant="outline" onClick={() => onOpenChange(false)} disabled={saving}>Cancel</Button><Button onClick={save} disabled={saving}>{saving ? "Saving..." : "Save"}</Button></DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
 
+function defaultPayForm() {
+  return { payment_reference: "", description: "", expected_payment_date: "", actual_payment_date: "", committed_amount: 0, paid_amount: 0, status: "Expected" };
+}
+
 function PayDialog({ open, onOpenChange, projectId, planId, editing, onSaved, upsertFn }: any) {
-  const init = editing ?? { payment_reference: "", description: "", expected_payment_date: "", actual_payment_date: "", committed_amount: 0, paid_amount: 0, status: "Expected" };
-  const [f, setF] = useState<any>(init);
-  useMemo(() => setF(editing ?? init), [editing, open]);
+  const [f, setF] = useState<any>(defaultPayForm());
+  const [saving, setSaving] = useState(false);
+  useEffect(() => { if (open) setF(editing ?? defaultPayForm()); }, [open, editing]);
   const save = async () => {
+    if (!f.payment_reference && !f.description) return toast.error("Provide a reference or description");
+    if (Number(f.committed_amount) <= 0) return toast.error("Enter a committed amount");
+    setSaving(true);
     try {
       const payload: any = { ...f, project_id: projectId, cash_flow_plan_id: f.cash_flow_plan_id ?? planId ?? null };
       ["committed_amount","paid_amount"].forEach((k) => payload[k] = Number(payload[k]) || 0);
       ["expected_payment_date","actual_payment_date"].forEach((k) => { if (!payload[k]) payload[k] = null; });
       delete payload.suppliers;
       await upsertFn({ data: payload });
-      toast.success("Saved"); onSaved();
-    } catch (e: any) { toast.error(e?.message ?? "Failed"); }
+      toast.success(editing ? "Payable updated" : "Payable created"); onSaved();
+    } catch (e: any) { toast.error(e?.message ?? e?.toString?.() ?? "Failed to save payable"); }
+    finally { setSaving(false); }
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -529,7 +562,7 @@ function PayDialog({ open, onOpenChange, projectId, planId, editing, onSaved, up
           </div>
           <div className="col-span-2"><Label>Description</Label><Input value={f.description ?? ""} onChange={(e) => setF({ ...f, description: e.target.value })} /></div>
         </div>
-        <DialogFooter><Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button><Button onClick={save}>Save</Button></DialogFooter>
+        <DialogFooter><Button variant="outline" onClick={() => onOpenChange(false)} disabled={saving}>Cancel</Button><Button onClick={save} disabled={saving}>{saving ? "Saving..." : "Save"}</Button></DialogFooter>
       </DialogContent>
     </Dialog>
   );
