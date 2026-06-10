@@ -122,9 +122,9 @@ export const saveMaterialRequest = createServerFn({ method: "POST" })
     const { data: proj } = await sb.from("projects").select("company_id").eq("id", rest.project_id).maybeSingle();
     if (!proj) throw new Error("Project not found");
 
-    let recordId = id;
+    let recordId: string | undefined = id;
     if (id) {
-      const { error } = await sb.from("procurement_requests").update({ ...rest, updated_at: new Date().toISOString() }).eq("id", id);
+      const { error } = await sb.from("procurement_requests").update({ ...(rest as any), updated_at: new Date().toISOString() } as any).eq("id", id);
       if (error) throw error;
     } else {
       const request_number = rest.request_number || (await nextMrNumber(sb, rest.project_id));
@@ -325,7 +325,8 @@ export const materialRequestStats = createServerFn({ method: "GET" })
   .handler(async ({ context, data }) => {
     let q = context.supabase.from("procurement_requests").select("id,status,procurement_status,delivery_status,required_date,is_archived,priority").eq("is_archived", false);
     if (data.projectId) q = q.eq("project_id", data.projectId);
-    const { data: rows = [] } = await q;
+    const { data } = await q;
+    const rows: any[] = data ?? [];
     const today = new Date().toISOString().slice(0,10);
     const by = (k: string, v: string) => rows.filter((r: any) => r[k] === v).length;
     const overdue = rows.filter((r: any) => r.required_date && r.required_date < today && !["delivered","closed","rejected","cancelled","archived"].includes(r.status)).length;
