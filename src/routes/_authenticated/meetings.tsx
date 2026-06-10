@@ -393,7 +393,7 @@ function MeetingDialog({
               <div key={i} className="grid grid-cols-12 gap-2">
                 <div className="col-span-3"><UserSel value={a.user_id ?? ""} onChange={(v) => {
                   const arr = [...form.attendees];
-                  const m = members.find((mm: any) => mm.user_id === v);
+                  const m = members.find((mm: any) => (mm.user_id ?? mm.id) === v);
                   arr[i] = { ...arr[i], user_id: v || null, name: m?.full_name ?? arr[i].name, email: m?.email ?? arr[i].email };
                   set("attendees", arr);
                 }} members={members} placeholder="Team member" /></div>
