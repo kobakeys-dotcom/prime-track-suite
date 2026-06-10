@@ -194,12 +194,13 @@ export const setSupplierFlags = createServerFn({ method: "POST" })
     if (data.status) payload.status = data.status;
     const { data: row, error } = await supabase.from("suppliers").update(payload).eq("id", data.id).select(SUP_COLS).maybeSingle();
     if (error) throw new Error(error.message);
-    if (row && oldStatus && row.status && oldStatus !== row.status) {
+    const r: any = row;
+    if (r && oldStatus && r.status && oldStatus !== r.status) {
       await supabase.from("supplier_status_history").insert({
-        company_id: companyId, supplier_id: data.id, old_status: oldStatus, new_status: row.status, changed_by: userId,
+        company_id: companyId, supplier_id: data.id, old_status: oldStatus, new_status: r.status, changed_by: userId,
       });
     }
-    return { supplier: row };
+    return { supplier: r };
   });
 
 // Contacts
