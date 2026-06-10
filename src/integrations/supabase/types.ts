@@ -1636,47 +1636,179 @@ export type Database = {
           },
         ]
       }
+      rfi_attachments: {
+        Row: {
+          created_at: string
+          description: string | null
+          file_name: string
+          file_type: string | null
+          file_url: string
+          id: string
+          is_client_visible: boolean
+          project_id: string
+          rfi_id: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          file_name: string
+          file_type?: string | null
+          file_url: string
+          id?: string
+          is_client_visible?: boolean
+          project_id: string
+          rfi_id: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          file_name?: string
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          is_client_visible?: boolean
+          project_id?: string
+          rfi_id?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rfi_attachments_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rfi_attachments_rfi_id_fkey"
+            columns: ["rfi_id"]
+            isOneToOne: false
+            referencedRelation: "rfis"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       rfis: {
         Row: {
           answer: string | null
           assigned_to: string | null
+          category: string | null
+          closed_at: string | null
+          cost_impact: boolean
+          cost_impact_description: string | null
           created_at: string
+          created_by: string | null
+          description: string | null
+          discipline: string | null
           due_date: string | null
           id: string
+          is_archived: boolean
+          is_client_visible: boolean
+          linked_document_id: string | null
+          linked_drawing_id: string | null
+          linked_issue_id: string | null
+          linked_submittal_id: string | null
+          linked_task_id: string | null
+          location: string | null
           number: string | null
+          priority: string | null
           project_id: string
           question: string | null
           raised_by: string | null
+          reference_drawing: string | null
+          responded_at: string | null
+          responded_by: string | null
+          response: string | null
+          reviewer_id: string | null
+          rfi_number: string | null
           status: Database["public"]["Enums"]["approval_status"]
           subject: string
+          submitted_at: string | null
+          time_impact: boolean
+          time_impact_days: number
+          time_impact_description: string | null
           updated_at: string
         }
         Insert: {
           answer?: string | null
           assigned_to?: string | null
+          category?: string | null
+          closed_at?: string | null
+          cost_impact?: boolean
+          cost_impact_description?: string | null
           created_at?: string
+          created_by?: string | null
+          description?: string | null
+          discipline?: string | null
           due_date?: string | null
           id?: string
+          is_archived?: boolean
+          is_client_visible?: boolean
+          linked_document_id?: string | null
+          linked_drawing_id?: string | null
+          linked_issue_id?: string | null
+          linked_submittal_id?: string | null
+          linked_task_id?: string | null
+          location?: string | null
           number?: string | null
+          priority?: string | null
           project_id: string
           question?: string | null
           raised_by?: string | null
+          reference_drawing?: string | null
+          responded_at?: string | null
+          responded_by?: string | null
+          response?: string | null
+          reviewer_id?: string | null
+          rfi_number?: string | null
           status?: Database["public"]["Enums"]["approval_status"]
           subject: string
+          submitted_at?: string | null
+          time_impact?: boolean
+          time_impact_days?: number
+          time_impact_description?: string | null
           updated_at?: string
         }
         Update: {
           answer?: string | null
           assigned_to?: string | null
+          category?: string | null
+          closed_at?: string | null
+          cost_impact?: boolean
+          cost_impact_description?: string | null
           created_at?: string
+          created_by?: string | null
+          description?: string | null
+          discipline?: string | null
           due_date?: string | null
           id?: string
+          is_archived?: boolean
+          is_client_visible?: boolean
+          linked_document_id?: string | null
+          linked_drawing_id?: string | null
+          linked_issue_id?: string | null
+          linked_submittal_id?: string | null
+          linked_task_id?: string | null
+          location?: string | null
           number?: string | null
+          priority?: string | null
           project_id?: string
           question?: string | null
           raised_by?: string | null
+          reference_drawing?: string | null
+          responded_at?: string | null
+          responded_by?: string | null
+          response?: string | null
+          reviewer_id?: string | null
+          rfi_number?: string | null
           status?: Database["public"]["Enums"]["approval_status"]
           subject?: string
+          submitted_at?: string | null
+          time_impact?: boolean
+          time_impact_days?: number
+          time_impact_description?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -2405,6 +2537,8 @@ export type Database = {
         | "rejected"
         | "revise_resubmit"
         | "closed"
+        | "reopened"
+        | "cancelled"
       project_status:
         | "planning"
         | "active"
@@ -2573,6 +2707,8 @@ export const Constants = {
         "rejected",
         "revise_resubmit",
         "closed",
+        "reopened",
+        "cancelled",
       ],
       project_status: [
         "planning",
