@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedWbsRouteImport } from './routes/_authenticated/wbs'
 import { Route as AuthenticatedVariationsRouteImport } from './routes/_authenticated/variations'
 import { Route as AuthenticatedTimesheetsRouteImport } from './routes/_authenticated/timesheets'
 import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/tasks'
@@ -70,6 +71,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedWbsRoute = AuthenticatedWbsRouteImport.update({
+  id: '/wbs',
+  path: '/wbs',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedVariationsRoute = AuthenticatedVariationsRouteImport.update({
   id: '/variations',
@@ -347,6 +353,7 @@ export interface FileRoutesByFullPath {
   '/tasks': typeof AuthenticatedTasksRoute
   '/timesheets': typeof AuthenticatedTimesheetsRoute
   '/variations': typeof AuthenticatedVariationsRoute
+  '/wbs': typeof AuthenticatedWbsRoute
   '/projects/$projectId': typeof AuthenticatedProjectsProjectIdRoute
   '/api/public/cron/daily': typeof ApiPublicCronDailyRoute
 }
@@ -395,6 +402,7 @@ export interface FileRoutesByTo {
   '/tasks': typeof AuthenticatedTasksRoute
   '/timesheets': typeof AuthenticatedTimesheetsRoute
   '/variations': typeof AuthenticatedVariationsRoute
+  '/wbs': typeof AuthenticatedWbsRoute
   '/projects/$projectId': typeof AuthenticatedProjectsProjectIdRoute
   '/api/public/cron/daily': typeof ApiPublicCronDailyRoute
 }
@@ -445,6 +453,7 @@ export interface FileRoutesById {
   '/_authenticated/tasks': typeof AuthenticatedTasksRoute
   '/_authenticated/timesheets': typeof AuthenticatedTimesheetsRoute
   '/_authenticated/variations': typeof AuthenticatedVariationsRoute
+  '/_authenticated/wbs': typeof AuthenticatedWbsRoute
   '/_authenticated/projects/$projectId': typeof AuthenticatedProjectsProjectIdRoute
   '/api/public/cron/daily': typeof ApiPublicCronDailyRoute
 }
@@ -495,6 +504,7 @@ export interface FileRouteTypes {
     | '/tasks'
     | '/timesheets'
     | '/variations'
+    | '/wbs'
     | '/projects/$projectId'
     | '/api/public/cron/daily'
   fileRoutesByTo: FileRoutesByTo
@@ -543,6 +553,7 @@ export interface FileRouteTypes {
     | '/tasks'
     | '/timesheets'
     | '/variations'
+    | '/wbs'
     | '/projects/$projectId'
     | '/api/public/cron/daily'
   id:
@@ -592,6 +603,7 @@ export interface FileRouteTypes {
     | '/_authenticated/tasks'
     | '/_authenticated/timesheets'
     | '/_authenticated/variations'
+    | '/_authenticated/wbs'
     | '/_authenticated/projects/$projectId'
     | '/api/public/cron/daily'
   fileRoutesById: FileRoutesById
@@ -625,6 +637,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/wbs': {
+      id: '/_authenticated/wbs'
+      path: '/wbs'
+      fullPath: '/wbs'
+      preLoaderRoute: typeof AuthenticatedWbsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/variations': {
       id: '/_authenticated/variations'
@@ -993,6 +1012,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedTasksRoute: typeof AuthenticatedTasksRoute
   AuthenticatedTimesheetsRoute: typeof AuthenticatedTimesheetsRoute
   AuthenticatedVariationsRoute: typeof AuthenticatedVariationsRoute
+  AuthenticatedWbsRoute: typeof AuthenticatedWbsRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -1038,6 +1058,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedTasksRoute: AuthenticatedTasksRoute,
   AuthenticatedTimesheetsRoute: AuthenticatedTimesheetsRoute,
   AuthenticatedVariationsRoute: AuthenticatedVariationsRoute,
+  AuthenticatedWbsRoute: AuthenticatedWbsRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
