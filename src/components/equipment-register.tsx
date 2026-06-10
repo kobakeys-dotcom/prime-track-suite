@@ -338,9 +338,9 @@ export function EquipmentRegister({ projectId: fixedProjectId }: { projectId?: s
         </TabsContent>
       </Tabs>
 
-      <EquipmentForm open={openForm} onClose={() => { setOpenForm(false); setEditing(null); }} initial={editing} projectId={projectId || fixedProjectId} onSave={(input) => saveMut.mutate(input)} saving={saveMut.isPending} />
-      <UsageForm open={openUsage} onClose={() => { setOpenUsage(false); setEditUsage(null); }} initial={editUsage} projectId={projectId || fixedProjectId} equipment={list.data || []} onSave={(input) => saveUsageMut.mutate(input)} saving={saveUsageMut.isPending} />
-      <AssignForm open={openAssign} onClose={() => setOpenAssign(false)} projectId={projectId || fixedProjectId} equipment={list.data || []} onSave={(input) => saveAssignMut.mutate(input)} saving={saveAssignMut.isPending} />
+      <EquipmentForm open={openForm} onClose={() => { setOpenForm(false); setEditing(null); }} initial={editing} projectId={projectId || fixedProjectId} onSave={(input: any) => saveMut.mutate(input)} saving={saveMut.isPending} />
+      <UsageForm open={openUsage} onClose={() => { setOpenUsage(false); setEditUsage(null); }} initial={editUsage} projectId={projectId || fixedProjectId} equipment={list.data || []} onSave={(input: any) => saveUsageMut.mutate(input)} saving={saveUsageMut.isPending} />
+      <AssignForm open={openAssign} onClose={() => setOpenAssign(false)} projectId={projectId || fixedProjectId} equipment={list.data || []} onSave={(input: any) => saveAssignMut.mutate(input)} saving={saveAssignMut.isPending} />
       <EquipmentDetail id={openDetail} onClose={() => setOpenDetail(null)} onChanged={invalidate} />
     </div>
   );
@@ -365,34 +365,34 @@ function EquipmentForm({ open, onClose, initial, projectId, onSave, saving }: an
       <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
         <DialogHeader><DialogTitle>{initial?.id ? "Edit Equipment" : "New Equipment"}</DialogTitle></DialogHeader>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          <Field label="Code (auto)" value={f.equipment_code || ""} onChange={(v) => upd("equipment_code", v)} />
-          <Field label="Name *" value={f.equipment_name || ""} onChange={(v) => upd("equipment_name", v)} />
-          <SelectField label="Type" value={f.equipment_type} onChange={(v) => upd("equipment_type", v)} options={EQ_TYPES} />
-          <SelectField label="Category" value={f.category} onChange={(v) => upd("category", v)} options={EQ_CATEGORIES} />
-          <Field label="Make / Brand" value={f.make_brand || ""} onChange={(v) => upd("make_brand", v)} />
-          <Field label="Model" value={f.model || ""} onChange={(v) => upd("model", v)} />
-          <Field label="Serial No." value={f.serial_number || ""} onChange={(v) => upd("serial_number", v)} />
-          <Field label="Reg. No." value={f.registration_number || ""} onChange={(v) => upd("registration_number", v)} />
-          <Field label="Asset No." value={f.asset_number || ""} onChange={(v) => upd("asset_number", v)} />
-          <SelectField label="Ownership" value={f.ownership_type} onChange={(v) => upd("ownership_type", v)} options={OWNERSHIP} />
-          <Field label="Current Location" value={f.current_location || ""} onChange={(v) => upd("current_location", v)} />
-          <Field label="Operator Name" value={f.operator_name || ""} onChange={(v) => upd("operator_name", v)} />
-          <Field label="Operator Phone" value={f.operator_phone || ""} onChange={(v) => upd("operator_phone", v)} />
-          <Field label="Fuel Type" value={f.fuel_type || ""} onChange={(v) => upd("fuel_type", v)} />
-          <NumField label="Fuel Capacity" value={f.fuel_capacity} onChange={(v) => upd("fuel_capacity", v)} />
-          <NumField label="Meter Reading" value={f.current_meter_reading} onChange={(v) => upd("current_meter_reading", v)} />
-          <NumField label="Purchase Cost" value={f.purchase_cost} onChange={(v) => upd("purchase_cost", v)} />
-          <NumField label="Rental / hour" value={f.rental_rate_hourly} onChange={(v) => upd("rental_rate_hourly", v)} />
-          <NumField label="Rental / day" value={f.rental_rate_daily} onChange={(v) => upd("rental_rate_daily", v)} />
-          <Field label="Purchase Date" type="date" value={f.purchase_date || ""} onChange={(v) => upd("purchase_date", v)} />
-          <Field label="Last Maintenance" type="date" value={f.last_maintenance_date || ""} onChange={(v) => upd("last_maintenance_date", v)} />
-          <Field label="Next Maintenance" type="date" value={f.next_maintenance_date || ""} onChange={(v) => upd("next_maintenance_date", v)} />
-          <Field label="Insurance Expiry" type="date" value={f.insurance_expiry_date || ""} onChange={(v) => upd("insurance_expiry_date", v)} />
-          <Field label="Reg. Expiry" type="date" value={f.registration_expiry_date || ""} onChange={(v) => upd("registration_expiry_date", v)} />
-          <Field label="Inspection Expiry" type="date" value={f.inspection_expiry_date || ""} onChange={(v) => upd("inspection_expiry_date", v)} />
-          <SelectField label="Status" value={f.current_status} onChange={(v) => upd("current_status", v)} options={EQ_STATUSES} />
-          <SelectField label="Availability" value={f.availability_status} onChange={(v) => upd("availability_status", v)} options={AVAILABILITY} />
-          <SelectField label="Condition" value={f.condition_status} onChange={(v) => upd("condition_status", v)} options={CONDITIONS} />
+          <Field label="Code (auto)" value={f.equipment_code || ""} onChange={(v: any) => upd("equipment_code", v)} />
+          <Field label="Name *" value={f.equipment_name || ""} onChange={(v: any) => upd("equipment_name", v)} />
+          <SelectField label="Type" value={f.equipment_type} onChange={(v: any) => upd("equipment_type", v)} options={EQ_TYPES} />
+          <SelectField label="Category" value={f.category} onChange={(v: any) => upd("category", v)} options={EQ_CATEGORIES} />
+          <Field label="Make / Brand" value={f.make_brand || ""} onChange={(v: any) => upd("make_brand", v)} />
+          <Field label="Model" value={f.model || ""} onChange={(v: any) => upd("model", v)} />
+          <Field label="Serial No." value={f.serial_number || ""} onChange={(v: any) => upd("serial_number", v)} />
+          <Field label="Reg. No." value={f.registration_number || ""} onChange={(v: any) => upd("registration_number", v)} />
+          <Field label="Asset No." value={f.asset_number || ""} onChange={(v: any) => upd("asset_number", v)} />
+          <SelectField label="Ownership" value={f.ownership_type} onChange={(v: any) => upd("ownership_type", v)} options={OWNERSHIP} />
+          <Field label="Current Location" value={f.current_location || ""} onChange={(v: any) => upd("current_location", v)} />
+          <Field label="Operator Name" value={f.operator_name || ""} onChange={(v: any) => upd("operator_name", v)} />
+          <Field label="Operator Phone" value={f.operator_phone || ""} onChange={(v: any) => upd("operator_phone", v)} />
+          <Field label="Fuel Type" value={f.fuel_type || ""} onChange={(v: any) => upd("fuel_type", v)} />
+          <NumField label="Fuel Capacity" value={f.fuel_capacity} onChange={(v: any) => upd("fuel_capacity", v)} />
+          <NumField label="Meter Reading" value={f.current_meter_reading} onChange={(v: any) => upd("current_meter_reading", v)} />
+          <NumField label="Purchase Cost" value={f.purchase_cost} onChange={(v: any) => upd("purchase_cost", v)} />
+          <NumField label="Rental / hour" value={f.rental_rate_hourly} onChange={(v: any) => upd("rental_rate_hourly", v)} />
+          <NumField label="Rental / day" value={f.rental_rate_daily} onChange={(v: any) => upd("rental_rate_daily", v)} />
+          <Field label="Purchase Date" type="date" value={f.purchase_date || ""} onChange={(v: any) => upd("purchase_date", v)} />
+          <Field label="Last Maintenance" type="date" value={f.last_maintenance_date || ""} onChange={(v: any) => upd("last_maintenance_date", v)} />
+          <Field label="Next Maintenance" type="date" value={f.next_maintenance_date || ""} onChange={(v: any) => upd("next_maintenance_date", v)} />
+          <Field label="Insurance Expiry" type="date" value={f.insurance_expiry_date || ""} onChange={(v: any) => upd("insurance_expiry_date", v)} />
+          <Field label="Reg. Expiry" type="date" value={f.registration_expiry_date || ""} onChange={(v: any) => upd("registration_expiry_date", v)} />
+          <Field label="Inspection Expiry" type="date" value={f.inspection_expiry_date || ""} onChange={(v: any) => upd("inspection_expiry_date", v)} />
+          <SelectField label="Status" value={f.current_status} onChange={(v: any) => upd("current_status", v)} options={EQ_STATUSES} />
+          <SelectField label="Availability" value={f.availability_status} onChange={(v: any) => upd("availability_status", v)} options={AVAILABILITY} />
+          <SelectField label="Condition" value={f.condition_status} onChange={(v: any) => upd("condition_status", v)} options={CONDITIONS} />
         </div>
         <div className="space-y-1"><Label>Remarks</Label><Textarea value={f.remarks || ""} onChange={(e) => upd("remarks", e.target.value)} /></div>
         <DialogFooter>
@@ -431,28 +431,28 @@ function UsageForm({ open, onClose, initial, projectId, equipment, onSave, savin
         <DialogHeader><DialogTitle>{initial?.id ? "Edit Usage Log" : "New Usage Log"}</DialogTitle></DialogHeader>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           <div className="space-y-1"><Label>Equipment *</Label>
-            <Select value={f.equipment_id || ""} onValueChange={(v) => upd("equipment_id", v)}>
+            <Select value={f.equipment_id || ""} onValueChange={(v: string) => upd("equipment_id", v)}>
               <SelectTrigger><SelectValue placeholder="Select equipment" /></SelectTrigger>
               <SelectContent>{(equipment || []).map((e: any) => <SelectItem key={e.id} value={e.id}>{e.equipment_code} — {e.equipment_name}</SelectItem>)}</SelectContent>
             </Select>
           </div>
-          <Field label="Date *" type="date" value={f.usage_date || ""} onChange={(v) => upd("usage_date", v)} />
-          <SelectField label="Shift" value={f.shift} onChange={(v) => upd("shift", v)} options={SHIFTS} />
-          <Field label="Work Area" value={f.work_area || ""} onChange={(v) => upd("work_area", v)} />
-          <Field label="Operator" value={f.operator_name || ""} onChange={(v) => upd("operator_name", v)} />
-          <SelectField label="Status" value={f.status} onChange={(v) => upd("status", v)} options={USAGE_STATUSES} />
-          <NumField label="Start Meter" value={f.start_meter_reading} onChange={(v) => upd("start_meter_reading", v)} />
-          <NumField label="End Meter" value={f.end_meter_reading} onChange={(v) => upd("end_meter_reading", v)} />
+          <Field label="Date *" type="date" value={f.usage_date || ""} onChange={(v: any) => upd("usage_date", v)} />
+          <SelectField label="Shift" value={f.shift} onChange={(v: any) => upd("shift", v)} options={SHIFTS} />
+          <Field label="Work Area" value={f.work_area || ""} onChange={(v: any) => upd("work_area", v)} />
+          <Field label="Operator" value={f.operator_name || ""} onChange={(v: any) => upd("operator_name", v)} />
+          <SelectField label="Status" value={f.status} onChange={(v: any) => upd("status", v)} options={USAGE_STATUSES} />
+          <NumField label="Start Meter" value={f.start_meter_reading} onChange={(v: any) => upd("start_meter_reading", v)} />
+          <NumField label="End Meter" value={f.end_meter_reading} onChange={(v: any) => upd("end_meter_reading", v)} />
           <div />
-          <NumField label="Working Hours" value={f.working_hours} onChange={(v) => upd("working_hours", v)} />
-          <NumField label="Idle Hours" value={f.idle_hours} onChange={(v) => upd("idle_hours", v)} />
-          <NumField label="Breakdown Hours" value={f.breakdown_hours} onChange={(v) => upd("breakdown_hours", v)} />
-          <NumField label="Fuel Consumed" value={f.fuel_consumed} onChange={(v) => upd("fuel_consumed", v)} />
-          <Field label="Fuel Unit" value={f.fuel_unit || "Liter"} onChange={(v) => upd("fuel_unit", v)} />
-          <NumField label="Productivity Qty" value={f.productivity_quantity} onChange={(v) => upd("productivity_quantity", v)} />
-          <Field label="Productivity Unit" value={f.productivity_unit || ""} onChange={(v) => upd("productivity_unit", v)} />
-          <NumField label="Hourly Rate" value={f.hourly_rate} onChange={(v) => upd("hourly_rate", v)} />
-          <NumField label="Fuel Cost" value={f.fuel_cost} onChange={(v) => upd("fuel_cost", v)} />
+          <NumField label="Working Hours" value={f.working_hours} onChange={(v: any) => upd("working_hours", v)} />
+          <NumField label="Idle Hours" value={f.idle_hours} onChange={(v: any) => upd("idle_hours", v)} />
+          <NumField label="Breakdown Hours" value={f.breakdown_hours} onChange={(v: any) => upd("breakdown_hours", v)} />
+          <NumField label="Fuel Consumed" value={f.fuel_consumed} onChange={(v: any) => upd("fuel_consumed", v)} />
+          <Field label="Fuel Unit" value={f.fuel_unit || "Liter"} onChange={(v: any) => upd("fuel_unit", v)} />
+          <NumField label="Productivity Qty" value={f.productivity_quantity} onChange={(v: any) => upd("productivity_quantity", v)} />
+          <Field label="Productivity Unit" value={f.productivity_unit || ""} onChange={(v: any) => upd("productivity_unit", v)} />
+          <NumField label="Hourly Rate" value={f.hourly_rate} onChange={(v: any) => upd("hourly_rate", v)} />
+          <NumField label="Fuel Cost" value={f.fuel_cost} onChange={(v: any) => upd("fuel_cost", v)} />
         </div>
         <div className="text-xs text-muted-foreground grid grid-cols-3 gap-2 bg-muted/30 p-2 rounded">
           <div>Total hours: <b>{fmt(total)}</b></div>
@@ -492,15 +492,15 @@ function AssignForm({ open, onClose, projectId, equipment, onSave, saving }: any
         <DialogHeader><DialogTitle>Assign Equipment to Project</DialogTitle></DialogHeader>
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1 col-span-2"><Label>Equipment *</Label>
-            <Select value={f.equipment_id || ""} onValueChange={(v) => upd("equipment_id", v)}>
+            <Select value={f.equipment_id || ""} onValueChange={(v: string) => upd("equipment_id", v)}>
               <SelectTrigger><SelectValue placeholder="Select equipment" /></SelectTrigger>
               <SelectContent>{(equipment || []).filter((e: any) => e.current_status !== "Archived").map((e: any) => <SelectItem key={e.id} value={e.id}>{e.equipment_code} — {e.equipment_name} ({e.current_status})</SelectItem>)}</SelectContent>
             </Select>
           </div>
-          <Field label="Start Date *" type="date" value={f.assignment_start_date || ""} onChange={(v) => upd("assignment_start_date", v)} />
-          <Field label="End Date" type="date" value={f.assignment_end_date || ""} onChange={(v) => upd("assignment_end_date", v)} />
-          <Field label="Operator" value={f.operator_name || ""} onChange={(v) => upd("operator_name", v)} />
-          <Field label="Work Area" value={f.work_area || ""} onChange={(v) => upd("work_area", v)} />
+          <Field label="Start Date *" type="date" value={f.assignment_start_date || ""} onChange={(v: any) => upd("assignment_start_date", v)} />
+          <Field label="End Date" type="date" value={f.assignment_end_date || ""} onChange={(v: any) => upd("assignment_end_date", v)} />
+          <Field label="Operator" value={f.operator_name || ""} onChange={(v: any) => upd("operator_name", v)} />
+          <Field label="Work Area" value={f.work_area || ""} onChange={(v: any) => upd("work_area", v)} />
         </div>
         <div className="space-y-1"><Label>Remarks</Label><Textarea value={f.remarks || ""} onChange={(e) => upd("remarks", e.target.value)} /></div>
         <DialogFooter>
@@ -677,7 +677,7 @@ function EquipmentDetail({ id, onClose, onChanged }: { id: string | null; onClos
               </TabsContent>
             </Tabs>
 
-            <SubForm open={maintOpen} onClose={() => setMaintOpen(false)} title="Maintenance" onSave={(d) => saveMaintMut.mutate({ ...d, equipment_id: id, project_id: eq.project_id })} fields={[
+            <SubForm open={maintOpen} onClose={() => setMaintOpen(false)} title="Maintenance" onSave={(d: any) => saveMaintMut.mutate({ ...d, equipment_id: id, project_id: eq.project_id })} fields={[
               { k: "maintenance_title", label: "Title *" }, { k: "maintenance_type", label: "Type", options: MAINT_TYPES, default: "Preventive" },
               { k: "status", label: "Status", options: MAINT_STATUSES, default: "Scheduled" }, { k: "priority", label: "Priority", options: ["Low","Medium","High","Critical"], default: "Medium" },
               { k: "scheduled_date", label: "Scheduled", type: "date" }, { k: "completed_date", label: "Completed", type: "date" },
@@ -685,7 +685,7 @@ function EquipmentDetail({ id, onClose, onChanged }: { id: string | null; onClos
               { k: "cost", label: "Cost", type: "number", default: 0 }, { k: "next_maintenance_date", label: "Next Date", type: "date" },
               { k: "description", label: "Description", type: "textarea", full: true },
             ]} />
-            <SubForm open={breakOpen} onClose={() => setBreakOpen(false)} title="Breakdown" onSave={(d) => saveBreakMut.mutate({ ...d, equipment_id: id, project_id: eq.project_id })} fields={[
+            <SubForm open={breakOpen} onClose={() => setBreakOpen(false)} title="Breakdown" onSave={(d: any) => saveBreakMut.mutate({ ...d, equipment_id: id, project_id: eq.project_id })} fields={[
               { k: "breakdown_date", label: "Date *", type: "date", default: new Date().toISOString().slice(0, 10) },
               { k: "severity", label: "Severity", options: BREAKDOWN_SEVERITY, default: "Medium" },
               { k: "status", label: "Status", options: BREAKDOWN_STATUSES, default: "Open" },
@@ -696,7 +696,7 @@ function EquipmentDetail({ id, onClose, onChanged }: { id: string | null; onClos
               { k: "problem_description", label: "Problem *", type: "textarea", full: true },
               { k: "repair_action", label: "Repair Action", type: "textarea", full: true },
             ]} />
-            <SubForm open={inspOpen} onClose={() => setInspOpen(false)} title="Inspection" onSave={(d) => saveInspMut.mutate({ ...d, equipment_id: id, project_id: eq.project_id })} fields={[
+            <SubForm open={inspOpen} onClose={() => setInspOpen(false)} title="Inspection" onSave={(d: any) => saveInspMut.mutate({ ...d, equipment_id: id, project_id: eq.project_id })} fields={[
               { k: "inspection_date", label: "Date *", type: "date", default: new Date().toISOString().slice(0, 10) },
               { k: "inspection_type", label: "Type", options: INSPECTION_TYPES, default: "Daily Check" },
               { k: "result", label: "Result", options: INSPECTION_RESULTS, default: "Pass" },
@@ -705,7 +705,7 @@ function EquipmentDetail({ id, onClose, onChanged }: { id: string | null; onClos
               { k: "findings", label: "Findings", type: "textarea", full: true },
               { k: "corrective_action", label: "Corrective Action", type: "textarea", full: true },
             ]} />
-            <SubForm open={docOpen} onClose={() => setDocOpen(false)} title="Document" onSave={(d) => saveDocMut.mutate({ ...d, equipment_id: id })} fields={[
+            <SubForm open={docOpen} onClose={() => setDocOpen(false)} title="Document" onSave={(d: any) => saveDocMut.mutate({ ...d, equipment_id: id })} fields={[
               { k: "document_name", label: "Name *" }, { k: "document_type", label: "Type", options: DOC_TYPES, default: "Registration" },
               { k: "document_number", label: "Number" }, { k: "issue_date", label: "Issue Date", type: "date" },
               { k: "expiry_date", label: "Expiry Date", type: "date" }, { k: "file_url", label: "File URL" },
@@ -730,7 +730,7 @@ function SubForm({ open, onClose, title, onSave, fields }: any) {
             <div key={x.k} className={`space-y-1 ${x.full ? "col-span-2" : ""}`}>
               <Label>{x.label}</Label>
               {x.options ? (
-                <Select value={f[x.k] || ""} onValueChange={(v) => upd(x.k, v)}>
+                <Select value={f[x.k] || ""} onValueChange={(v: string) => upd(x.k, v)}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>{x.options.map((o: string) => <SelectItem key={o} value={o}>{o}</SelectItem>)}</SelectContent>
                 </Select>
