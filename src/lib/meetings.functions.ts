@@ -163,15 +163,17 @@ export const upsertMeeting = createServerFn({ method: "POST" })
     const attendees: any[] = Array.isArray(values.attendees) ? values.attendees : [];
     const notify = attendees.map((a) => a.user_id).filter((u) => u && u !== context.userId);
     if (notify.length) {
-      await sb.from("notifications").insert(
-        notify.map((u: string) => ({
-          user_id: u,
-          title: `Meeting scheduled: ${values.title}`,
-          body: `You were invited to ${values.meeting_number}.`,
-          severity: "info",
-          link: `/meetings?id=${ins.id}`,
-        })),
-      );
+      try {
+        await sb.from("notifications").insert(
+          notify.map((u: string) => ({
+            user_id: u,
+            title: `Meeting scheduled: ${values.title}`,
+            body: `You were invited to ${values.meeting_number}.`,
+            severity: "info",
+            link: `/meetings?id=${ins.id}`,
+          })),
+        );
+      } catch { /* notifications best-effort */ }
     }
     return { ok: true, id: ins.id };
   });
