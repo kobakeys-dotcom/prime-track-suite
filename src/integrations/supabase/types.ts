@@ -2067,46 +2067,187 @@ export type Database = {
           },
         ]
       }
+      submittal_attachments: {
+        Row: {
+          attachment_type: string | null
+          created_at: string
+          description: string | null
+          file_name: string
+          file_type: string | null
+          file_url: string
+          id: string
+          is_client_visible: boolean
+          project_id: string
+          submittal_id: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          attachment_type?: string | null
+          created_at?: string
+          description?: string | null
+          file_name: string
+          file_type?: string | null
+          file_url: string
+          id?: string
+          is_client_visible?: boolean
+          project_id: string
+          submittal_id: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          attachment_type?: string | null
+          created_at?: string
+          description?: string | null
+          file_name?: string
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          is_client_visible?: boolean
+          project_id?: string
+          submittal_id?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "submittal_attachments_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submittal_attachments_submittal_id_fkey"
+            columns: ["submittal_id"]
+            isOneToOne: false
+            referencedRelation: "submittals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       submittals: {
         Row: {
+          approved_at: string | null
+          approved_by: string | null
+          assigned_to: string | null
+          boq_item_id: string | null
+          category: string | null
+          closed_at: string | null
           created_at: string
+          created_by: string | null
+          description: string | null
+          discipline: string | null
           due_date: string | null
           id: string
+          is_archived: boolean | null
+          is_client_visible: boolean | null
+          is_current_revision: boolean | null
+          linked_document_id: string | null
+          linked_drawing_id: string | null
+          linked_issue_id: string | null
+          linked_rfi_id: string | null
+          linked_task_id: string | null
+          material_id: string | null
           number: string | null
+          previous_revision_id: string | null
+          priority: string | null
           project_id: string
+          rejected_at: string | null
+          rejection_reason: string | null
+          review_comments: string | null
+          reviewed_at: string | null
           reviewer_id: string | null
+          revision: string | null
+          revision_notes: string | null
           spec_section: string | null
           status: Database["public"]["Enums"]["approval_status"]
+          submittal_type: string | null
           submitted_at: string | null
           submitted_by: string | null
+          superseded_by: string | null
           title: string
           updated_at: string
         }
         Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          assigned_to?: string | null
+          boq_item_id?: string | null
+          category?: string | null
+          closed_at?: string | null
           created_at?: string
+          created_by?: string | null
+          description?: string | null
+          discipline?: string | null
           due_date?: string | null
           id?: string
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          is_current_revision?: boolean | null
+          linked_document_id?: string | null
+          linked_drawing_id?: string | null
+          linked_issue_id?: string | null
+          linked_rfi_id?: string | null
+          linked_task_id?: string | null
+          material_id?: string | null
           number?: string | null
+          previous_revision_id?: string | null
+          priority?: string | null
           project_id: string
+          rejected_at?: string | null
+          rejection_reason?: string | null
+          review_comments?: string | null
+          reviewed_at?: string | null
           reviewer_id?: string | null
+          revision?: string | null
+          revision_notes?: string | null
           spec_section?: string | null
           status?: Database["public"]["Enums"]["approval_status"]
+          submittal_type?: string | null
           submitted_at?: string | null
           submitted_by?: string | null
+          superseded_by?: string | null
           title: string
           updated_at?: string
         }
         Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          assigned_to?: string | null
+          boq_item_id?: string | null
+          category?: string | null
+          closed_at?: string | null
           created_at?: string
+          created_by?: string | null
+          description?: string | null
+          discipline?: string | null
           due_date?: string | null
           id?: string
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          is_current_revision?: boolean | null
+          linked_document_id?: string | null
+          linked_drawing_id?: string | null
+          linked_issue_id?: string | null
+          linked_rfi_id?: string | null
+          linked_task_id?: string | null
+          material_id?: string | null
           number?: string | null
+          previous_revision_id?: string | null
+          priority?: string | null
           project_id?: string
+          rejected_at?: string | null
+          rejection_reason?: string | null
+          review_comments?: string | null
+          reviewed_at?: string | null
           reviewer_id?: string | null
+          revision?: string | null
+          revision_notes?: string | null
           spec_section?: string | null
           status?: Database["public"]["Enums"]["approval_status"]
+          submittal_type?: string | null
           submitted_at?: string | null
           submitted_by?: string | null
+          superseded_by?: string | null
           title?: string
           updated_at?: string
         }
@@ -2539,6 +2680,8 @@ export type Database = {
         | "closed"
         | "reopened"
         | "cancelled"
+        | "approved_with_comments"
+        | "superseded"
       project_status:
         | "planning"
         | "active"
@@ -2709,6 +2852,8 @@ export const Constants = {
         "closed",
         "reopened",
         "cancelled",
+        "approved_with_comments",
+        "superseded",
       ],
       project_status: [
         "planning",
