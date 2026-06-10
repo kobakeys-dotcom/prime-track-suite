@@ -305,7 +305,7 @@ export const createReinspection = createServerFn({ method: "POST" })
       .select("*").eq("quality_inspection_id", src.id).eq("result", "Fail");
     if (failed?.length) {
       const copies = failed.map((c: any, i: number) => ({
-        company_id: src.company_id, project_id: src.project_id, quality_inspection_id: ins.id,
+        company_id: src.company_id as string, project_id: src.project_id, quality_inspection_id: ins.id,
         item_number: c.item_number, checklist_item: c.checklist_item,
         specification_reference: c.specification_reference, acceptance_criteria: c.acceptance_criteria,
         result: "Pending", photo_required: c.photo_required, sort_order: i, created_by: context.userId,
