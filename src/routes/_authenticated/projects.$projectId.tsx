@@ -14,6 +14,7 @@ import { DeliveryRegister } from "@/components/delivery-register";
 import { QualityInspectionRegister } from "@/components/quality-inspection-register";
 import { SafetyInspectionRegister } from "@/components/safety-inspection-register";
 import { NcrRegister } from "@/components/ncr-register";
+import { RiskRegister } from "@/components/risk-register";
 
 import { RegisterPage } from "@/components/register-page";
 import { REGISTERS, STATUS_STYLES_GENERIC } from "@/lib/register-configs";
