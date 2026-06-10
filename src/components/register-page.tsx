@@ -269,6 +269,11 @@ export function RegisterPage(props: RegisterPageProps) {
               ))}
             </div>
           )}
+          {editing?.id && (
+            <div className="border-t border-border pt-4 mt-2">
+              <CommentsThread entityType={table} entityId={editing.id} />
+            </div>
+          )}
           <DialogFooter>
             <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
             <Button onClick={handleSave} disabled={saveMut.isPending} className="bg-accent text-white hover:bg-accent/90">
