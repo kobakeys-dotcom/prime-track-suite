@@ -1949,6 +1949,616 @@ export type Database = {
           },
         ]
       }
+      manpower_attachments: {
+        Row: {
+          attachment_type: string | null
+          company_id: string | null
+          created_at: string
+          description: string | null
+          file_name: string | null
+          file_type: string | null
+          file_url: string | null
+          id: string
+          manpower_record_id: string | null
+          project_id: string | null
+          uploaded_by: string | null
+        }
+        Insert: {
+          attachment_type?: string | null
+          company_id?: string | null
+          created_at?: string
+          description?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          manpower_record_id?: string | null
+          project_id?: string | null
+          uploaded_by?: string | null
+        }
+        Update: {
+          attachment_type?: string | null
+          company_id?: string | null
+          created_at?: string
+          description?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          manpower_record_id?: string | null
+          project_id?: string | null
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "manpower_attachments_manpower_record_id_fkey"
+            columns: ["manpower_record_id"]
+            isOneToOne: false
+            referencedRelation: "manpower_records"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      manpower_attendance: {
+        Row: {
+          attendance_date: string
+          check_in_time: string | null
+          check_out_time: string | null
+          company_id: string
+          created_at: string
+          created_by: string | null
+          employee_id: string | null
+          id: string
+          idle_hours: number | null
+          is_archived: boolean | null
+          manpower_record_id: string | null
+          overtime_hours: number | null
+          project_id: string
+          regular_hours: number | null
+          remarks: string | null
+          shift: string | null
+          source: string | null
+          status: string | null
+          total_hours: number | null
+          trade: string | null
+          updated_at: string
+          work_area: string | null
+          worker_id: string | null
+        }
+        Insert: {
+          attendance_date?: string
+          check_in_time?: string | null
+          check_out_time?: string | null
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          employee_id?: string | null
+          id?: string
+          idle_hours?: number | null
+          is_archived?: boolean | null
+          manpower_record_id?: string | null
+          overtime_hours?: number | null
+          project_id: string
+          regular_hours?: number | null
+          remarks?: string | null
+          shift?: string | null
+          source?: string | null
+          status?: string | null
+          total_hours?: number | null
+          trade?: string | null
+          updated_at?: string
+          work_area?: string | null
+          worker_id?: string | null
+        }
+        Update: {
+          attendance_date?: string
+          check_in_time?: string | null
+          check_out_time?: string | null
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          employee_id?: string | null
+          id?: string
+          idle_hours?: number | null
+          is_archived?: boolean | null
+          manpower_record_id?: string | null
+          overtime_hours?: number | null
+          project_id?: string
+          regular_hours?: number | null
+          remarks?: string | null
+          shift?: string | null
+          source?: string | null
+          status?: string | null
+          total_hours?: number | null
+          trade?: string | null
+          updated_at?: string
+          work_area?: string | null
+          worker_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "manpower_attendance_manpower_record_id_fkey"
+            columns: ["manpower_record_id"]
+            isOneToOne: false
+            referencedRelation: "manpower_records"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "manpower_attendance_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "manpower_attendance_worker_id_fkey"
+            columns: ["worker_id"]
+            isOneToOne: false
+            referencedRelation: "manpower_workers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      manpower_comments: {
+        Row: {
+          comment: string
+          company_id: string | null
+          created_at: string
+          id: string
+          manpower_record_id: string | null
+          project_id: string | null
+          user_id: string | null
+          visibility: string | null
+        }
+        Insert: {
+          comment: string
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          manpower_record_id?: string | null
+          project_id?: string | null
+          user_id?: string | null
+          visibility?: string | null
+        }
+        Update: {
+          comment?: string
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          manpower_record_id?: string | null
+          project_id?: string | null
+          user_id?: string | null
+          visibility?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "manpower_comments_manpower_record_id_fkey"
+            columns: ["manpower_record_id"]
+            isOneToOne: false
+            referencedRelation: "manpower_records"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      manpower_plans: {
+        Row: {
+          company_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_archived: boolean | null
+          manpower_category: string | null
+          month: string | null
+          plan_date: string
+          plan_name: string | null
+          planned_cost: number | null
+          planned_count: number | null
+          planned_hours: number | null
+          planned_overtime_hours: number | null
+          project_id: string
+          remarks: string | null
+          status: string | null
+          trade: string | null
+          updated_at: string
+          week_end: string | null
+          week_start: string | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_archived?: boolean | null
+          manpower_category?: string | null
+          month?: string | null
+          plan_date?: string
+          plan_name?: string | null
+          planned_cost?: number | null
+          planned_count?: number | null
+          planned_hours?: number | null
+          planned_overtime_hours?: number | null
+          project_id: string
+          remarks?: string | null
+          status?: string | null
+          trade?: string | null
+          updated_at?: string
+          week_end?: string | null
+          week_start?: string | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_archived?: boolean | null
+          manpower_category?: string | null
+          month?: string | null
+          plan_date?: string
+          plan_name?: string | null
+          planned_cost?: number | null
+          planned_count?: number | null
+          planned_hours?: number | null
+          planned_overtime_hours?: number | null
+          project_id?: string
+          remarks?: string | null
+          status?: string | null
+          trade?: string | null
+          updated_at?: string
+          week_end?: string | null
+          week_start?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "manpower_plans_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      manpower_productivity: {
+        Row: {
+          company_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_archived: boolean | null
+          labour_hours: number | null
+          manpower_record_id: string | null
+          output_quantity: number | null
+          output_unit: string | null
+          productivity_rate: number | null
+          project_id: string
+          record_date: string
+          remarks: string | null
+          trade: string | null
+          updated_at: string
+          work_activity: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_archived?: boolean | null
+          labour_hours?: number | null
+          manpower_record_id?: string | null
+          output_quantity?: number | null
+          output_unit?: string | null
+          productivity_rate?: number | null
+          project_id: string
+          record_date?: string
+          remarks?: string | null
+          trade?: string | null
+          updated_at?: string
+          work_activity: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_archived?: boolean | null
+          labour_hours?: number | null
+          manpower_record_id?: string | null
+          output_quantity?: number | null
+          output_unit?: string | null
+          productivity_rate?: number | null
+          project_id?: string
+          record_date?: string
+          remarks?: string | null
+          trade?: string | null
+          updated_at?: string
+          work_activity?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "manpower_productivity_manpower_record_id_fkey"
+            columns: ["manpower_record_id"]
+            isOneToOne: false
+            referencedRelation: "manpower_records"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "manpower_productivity_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      manpower_records: {
+        Row: {
+          absent_count: number | null
+          actual_count: number | null
+          approved_at: string | null
+          approved_by: string | null
+          boq_item_id: string | null
+          company_id: string
+          cost_code_id: string | null
+          created_at: string
+          created_by: string | null
+          daily_report_id: string | null
+          hourly_rate: number | null
+          id: string
+          idle_count: number | null
+          idle_hours: number | null
+          is_archived: boolean | null
+          location: string | null
+          manpower_category: string | null
+          manpower_source: string | null
+          milestone_id: string | null
+          overtime_cost: number | null
+          overtime_hours: number | null
+          overtime_rate: number | null
+          planned_count: number | null
+          present_count: number | null
+          productivity_quantity: number | null
+          productivity_rate: number | null
+          productivity_unit: string | null
+          project_id: string
+          record_date: string
+          record_number: string | null
+          regular_cost: number | null
+          regular_hours: number | null
+          remarks: string | null
+          shift: string | null
+          status: string | null
+          subcontractor_id: string | null
+          task_id: string | null
+          total_cost: number | null
+          total_hours: number | null
+          trade: string
+          updated_at: string
+          wbs_id: string | null
+          work_area: string | null
+        }
+        Insert: {
+          absent_count?: number | null
+          actual_count?: number | null
+          approved_at?: string | null
+          approved_by?: string | null
+          boq_item_id?: string | null
+          company_id: string
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          daily_report_id?: string | null
+          hourly_rate?: number | null
+          id?: string
+          idle_count?: number | null
+          idle_hours?: number | null
+          is_archived?: boolean | null
+          location?: string | null
+          manpower_category?: string | null
+          manpower_source?: string | null
+          milestone_id?: string | null
+          overtime_cost?: number | null
+          overtime_hours?: number | null
+          overtime_rate?: number | null
+          planned_count?: number | null
+          present_count?: number | null
+          productivity_quantity?: number | null
+          productivity_rate?: number | null
+          productivity_unit?: string | null
+          project_id: string
+          record_date?: string
+          record_number?: string | null
+          regular_cost?: number | null
+          regular_hours?: number | null
+          remarks?: string | null
+          shift?: string | null
+          status?: string | null
+          subcontractor_id?: string | null
+          task_id?: string | null
+          total_cost?: number | null
+          total_hours?: number | null
+          trade?: string
+          updated_at?: string
+          wbs_id?: string | null
+          work_area?: string | null
+        }
+        Update: {
+          absent_count?: number | null
+          actual_count?: number | null
+          approved_at?: string | null
+          approved_by?: string | null
+          boq_item_id?: string | null
+          company_id?: string
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          daily_report_id?: string | null
+          hourly_rate?: number | null
+          id?: string
+          idle_count?: number | null
+          idle_hours?: number | null
+          is_archived?: boolean | null
+          location?: string | null
+          manpower_category?: string | null
+          manpower_source?: string | null
+          milestone_id?: string | null
+          overtime_cost?: number | null
+          overtime_hours?: number | null
+          overtime_rate?: number | null
+          planned_count?: number | null
+          present_count?: number | null
+          productivity_quantity?: number | null
+          productivity_rate?: number | null
+          productivity_unit?: string | null
+          project_id?: string
+          record_date?: string
+          record_number?: string | null
+          regular_cost?: number | null
+          regular_hours?: number | null
+          remarks?: string | null
+          shift?: string | null
+          status?: string | null
+          subcontractor_id?: string | null
+          task_id?: string | null
+          total_cost?: number | null
+          total_hours?: number | null
+          trade?: string
+          updated_at?: string
+          wbs_id?: string | null
+          work_area?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "manpower_records_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      manpower_status_history: {
+        Row: {
+          changed_by: string | null
+          company_id: string | null
+          created_at: string
+          id: string
+          manpower_record_id: string | null
+          new_status: string | null
+          old_status: string | null
+          project_id: string | null
+          remarks: string | null
+        }
+        Insert: {
+          changed_by?: string | null
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          manpower_record_id?: string | null
+          new_status?: string | null
+          old_status?: string | null
+          project_id?: string | null
+          remarks?: string | null
+        }
+        Update: {
+          changed_by?: string | null
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          manpower_record_id?: string | null
+          new_status?: string | null
+          old_status?: string | null
+          project_id?: string | null
+          remarks?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "manpower_status_history_manpower_record_id_fkey"
+            columns: ["manpower_record_id"]
+            isOneToOne: false
+            referencedRelation: "manpower_records"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      manpower_workers: {
+        Row: {
+          company_id: string
+          created_at: string
+          created_by: string | null
+          designation: string | null
+          employee_id: string | null
+          hourly_rate: number | null
+          id: string
+          id_number: string | null
+          is_archived: boolean | null
+          joining_date: string | null
+          overtime_rate: number | null
+          phone: string | null
+          project_id: string | null
+          skill_level: string | null
+          status: string | null
+          subcontractor_id: string | null
+          trade: string | null
+          updated_at: string
+          worker_code: string | null
+          worker_name: string
+          worker_type: string | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          designation?: string | null
+          employee_id?: string | null
+          hourly_rate?: number | null
+          id?: string
+          id_number?: string | null
+          is_archived?: boolean | null
+          joining_date?: string | null
+          overtime_rate?: number | null
+          phone?: string | null
+          project_id?: string | null
+          skill_level?: string | null
+          status?: string | null
+          subcontractor_id?: string | null
+          trade?: string | null
+          updated_at?: string
+          worker_code?: string | null
+          worker_name: string
+          worker_type?: string | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          designation?: string | null
+          employee_id?: string | null
+          hourly_rate?: number | null
+          id?: string
+          id_number?: string | null
+          is_archived?: boolean | null
+          joining_date?: string | null
+          overtime_rate?: number | null
+          phone?: string | null
+          project_id?: string | null
+          skill_level?: string | null
+          status?: string | null
+          subcontractor_id?: string | null
+          trade?: string | null
+          updated_at?: string
+          worker_code?: string | null
+          worker_name?: string
+          worker_type?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "manpower_workers_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       material_request_attachments: {
         Row: {
           attachment_type: string
