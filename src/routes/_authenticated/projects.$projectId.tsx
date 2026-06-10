@@ -10,6 +10,7 @@ import { DailyReportsPanel } from "@/components/project/daily-reports-panel";
 import { ProjectRfisPanel, ProjectSubmittalsPanel, ProjectDocumentsPanel, ProjectBoqPanel } from "@/components/project/module-panels";
 import { RegisterPage } from "@/components/register-page";
 import { REGISTERS, STATUS_STYLES_GENERIC } from "@/lib/register-configs";
+import { MeetingActionItems } from "@/components/meeting-action-items";
 
 export const Route = createFileRoute("/_authenticated/projects/$projectId")({
   head: () => ({ meta: [{ title: "Project — ProjectCore" }] }),
