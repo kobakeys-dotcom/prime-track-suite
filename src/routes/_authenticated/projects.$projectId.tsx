@@ -116,6 +116,7 @@ function ProjectDetail() {
           </div>
         </TabsContent>
         <TabsContent value="tasks" className="pt-4"><TasksPanel projectId={projectId} /></TabsContent>
+        <TabsContent value="planning" className="pt-4"><GanttView projectId={projectId} hideProjectPicker /></TabsContent>
         <TabsContent value="reports" className="pt-4"><DailyReportsPanel projectId={projectId} /></TabsContent>
         <TabsContent value="boq" className="pt-4"><ProjectBoqPanel projectId={projectId} /></TabsContent>
         <TabsContent value="rfis" className="pt-4"><ProjectRfisPanel projectId={projectId} /></TabsContent>
