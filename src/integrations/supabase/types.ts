@@ -1149,52 +1149,88 @@ export type Database = {
       }
       projects: {
         Row: {
+          budget_amount: number | null
           client: string | null
           code: string | null
           company_id: string
+          consultant_name: string | null
+          contract_number: string | null
           contract_value: number | null
+          contractor_name: string | null
           created_at: string
           created_by: string | null
+          currency: string
           description: string | null
           end_date: string | null
           id: string
+          is_archived: boolean
           location: string | null
           name: string
+          planned_end_date: string | null
+          priority: string
           progress: number
+          project_manager_id: string | null
+          project_type: string | null
+          revised_end_date: string | null
+          risk_level: string
           start_date: string | null
           status: Database["public"]["Enums"]["project_status"]
           updated_at: string
         }
         Insert: {
+          budget_amount?: number | null
           client?: string | null
           code?: string | null
           company_id: string
+          consultant_name?: string | null
+          contract_number?: string | null
           contract_value?: number | null
+          contractor_name?: string | null
           created_at?: string
           created_by?: string | null
+          currency?: string
           description?: string | null
           end_date?: string | null
           id?: string
+          is_archived?: boolean
           location?: string | null
           name: string
+          planned_end_date?: string | null
+          priority?: string
           progress?: number
+          project_manager_id?: string | null
+          project_type?: string | null
+          revised_end_date?: string | null
+          risk_level?: string
           start_date?: string | null
           status?: Database["public"]["Enums"]["project_status"]
           updated_at?: string
         }
         Update: {
+          budget_amount?: number | null
           client?: string | null
           code?: string | null
           company_id?: string
+          consultant_name?: string | null
+          contract_number?: string | null
           contract_value?: number | null
+          contractor_name?: string | null
           created_at?: string
           created_by?: string | null
+          currency?: string
           description?: string | null
           end_date?: string | null
           id?: string
+          is_archived?: boolean
           location?: string | null
           name?: string
+          planned_end_date?: string | null
+          priority?: string
           progress?: number
+          project_manager_id?: string | null
+          project_type?: string | null
+          revised_end_date?: string | null
+          risk_level?: string
           start_date?: string | null
           status?: Database["public"]["Enums"]["project_status"]
           updated_at?: string
@@ -1205,6 +1241,13 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "projects_project_manager_id_fkey"
+            columns: ["project_manager_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
