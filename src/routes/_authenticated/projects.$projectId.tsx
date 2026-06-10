@@ -7,7 +7,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { TasksPanel } from "@/components/project/tasks-panel";
 import { GanttView } from "@/components/project/gantt-view";
 import { DailyReportsPanel } from "@/components/project/daily-reports-panel";
-import { ProjectRfisPanel, ProjectSubmittalsPanel, ProjectDocumentsPanel, ProjectBoqPanel, ProjectVariationsPanel } from "@/components/project/module-panels";
+import { ProjectRfisPanel, ProjectSubmittalsPanel, ProjectDocumentsPanel, ProjectBoqPanel, ProjectVariationsPanel, ProjectPaymentClaimsPanel } from "@/components/project/module-panels";
 import { RegisterPage } from "@/components/register-page";
 import { REGISTERS, STATUS_STYLES_GENERIC } from "@/lib/register-configs";
 import { MeetingActionItems } from "@/components/meeting-action-items";
@@ -126,9 +126,10 @@ function ProjectDetail() {
         <TabsContent value="documents" className="pt-4"><ProjectDocumentsPanel projectId={projectId} /></TabsContent>
         <TabsContent value="action-items" className="pt-4"><MeetingActionItems projectId={projectId} variant="compact" /></TabsContent>
         <TabsContent value="variations" className="pt-4"><ProjectVariationsPanel projectId={projectId} /></TabsContent>
-        {(["payment_claims", "procurement_requests", "quality_inspections", "safety_inspections", "snags", "risks", "issues", "meetings"] as const).map((k) => {
+        <TabsContent value="claims" className="pt-4"><ProjectPaymentClaimsPanel projectId={projectId} /></TabsContent>
+        {(["procurement_requests", "quality_inspections", "safety_inspections", "snags", "risks", "issues", "meetings"] as const).map((k) => {
           const cfg = REGISTERS[k];
-          const tabValue = ({ payment_claims: "claims", procurement_requests: "procurement", quality_inspections: "quality", safety_inspections: "safety", snags: "snags", risks: "risks", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
+          const tabValue = ({ procurement_requests: "procurement", quality_inspections: "quality", safety_inspections: "safety", snags: "snags", risks: "risks", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
           if (!cfg) return null;
           return (
             <TabsContent key={k} value={tabValue} className="pt-4">
