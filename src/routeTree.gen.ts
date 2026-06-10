@@ -16,6 +16,7 @@ import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedSubmittalsRouteImport } from './routes/_authenticated/submittals'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedRfisRouteImport } from './routes/_authenticated/rfis'
+import { Route as AuthenticatedResourcesRouteImport } from './routes/_authenticated/resources'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticated/projects'
 import { Route as AuthenticatedPlanningRouteImport } from './routes/_authenticated/planning'
@@ -61,6 +62,11 @@ const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
 const AuthenticatedRfisRoute = AuthenticatedRfisRouteImport.update({
   id: '/rfis',
   path: '/rfis',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedResourcesRoute = AuthenticatedResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/planning': typeof AuthenticatedPlanningRoute
   '/projects': typeof AuthenticatedProjectsRouteWithChildren
   '/reports': typeof AuthenticatedReportsRoute
+  '/resources': typeof AuthenticatedResourcesRoute
   '/rfis': typeof AuthenticatedRfisRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/submittals': typeof AuthenticatedSubmittalsRoute
@@ -159,6 +166,7 @@ export interface FileRoutesByTo {
   '/planning': typeof AuthenticatedPlanningRoute
   '/projects': typeof AuthenticatedProjectsRouteWithChildren
   '/reports': typeof AuthenticatedReportsRoute
+  '/resources': typeof AuthenticatedResourcesRoute
   '/rfis': typeof AuthenticatedRfisRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/submittals': typeof AuthenticatedSubmittalsRoute
@@ -181,6 +189,7 @@ export interface FileRoutesById {
   '/_authenticated/planning': typeof AuthenticatedPlanningRoute
   '/_authenticated/projects': typeof AuthenticatedProjectsRouteWithChildren
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
+  '/_authenticated/resources': typeof AuthenticatedResourcesRoute
   '/_authenticated/rfis': typeof AuthenticatedRfisRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/submittals': typeof AuthenticatedSubmittalsRoute
@@ -203,6 +212,7 @@ export interface FileRouteTypes {
     | '/planning'
     | '/projects'
     | '/reports'
+    | '/resources'
     | '/rfis'
     | '/settings'
     | '/submittals'
@@ -223,6 +233,7 @@ export interface FileRouteTypes {
     | '/planning'
     | '/projects'
     | '/reports'
+    | '/resources'
     | '/rfis'
     | '/settings'
     | '/submittals'
@@ -244,6 +255,7 @@ export interface FileRouteTypes {
     | '/_authenticated/planning'
     | '/_authenticated/projects'
     | '/_authenticated/reports'
+    | '/_authenticated/resources'
     | '/_authenticated/rfis'
     | '/_authenticated/settings'
     | '/_authenticated/submittals'
@@ -308,6 +320,13 @@ declare module '@tanstack/react-router' {
       path: '/rfis'
       fullPath: '/rfis'
       preLoaderRoute: typeof AuthenticatedRfisRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/resources': {
+      id: '/_authenticated/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof AuthenticatedResourcesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/reports': {
@@ -421,6 +440,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPlanningRoute: typeof AuthenticatedPlanningRoute
   AuthenticatedProjectsRoute: typeof AuthenticatedProjectsRouteWithChildren
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
+  AuthenticatedResourcesRoute: typeof AuthenticatedResourcesRoute
   AuthenticatedRfisRoute: typeof AuthenticatedRfisRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedSubmittalsRoute: typeof AuthenticatedSubmittalsRoute
@@ -438,6 +458,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPlanningRoute: AuthenticatedPlanningRoute,
   AuthenticatedProjectsRoute: AuthenticatedProjectsRouteWithChildren,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
+  AuthenticatedResourcesRoute: AuthenticatedResourcesRoute,
   AuthenticatedRfisRoute: AuthenticatedRfisRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedSubmittalsRoute: AuthenticatedSubmittalsRoute,
@@ -456,3 +477,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
