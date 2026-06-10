@@ -17,7 +17,7 @@ import { ActivityTimeline } from "@/components/activity-timeline";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 
-const APPROVAL_TABLES = new Set(["procurement_requests", "variations", "payment_claims", "purchase_orders"]);
+const APPROVAL_TABLES = new Set(["procurement_requests", "variations", "payment_claims", "purchase_orders", "rfis", "submittals", "quality_inspections", "safety_inspections", "ncrs"]);
 
 export type RegisterField = {
   name: string;
