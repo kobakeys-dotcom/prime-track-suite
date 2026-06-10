@@ -310,7 +310,7 @@ export const setDeliveryStatus = createServerFn({ method: "POST" })
       }
     }
 
-    await logStatus(sb, data.id, cur.project_id, cur.company_id, cur.status, data.status, context.userId, data.rejection_reason || data.remarks);
+    await logStatus(sb, data.id, cur.project_id, cur.company_id!, cur.status, data.status, context.userId, data.rejection_reason || data.remarks);
     return { ok: true };
   });
 
