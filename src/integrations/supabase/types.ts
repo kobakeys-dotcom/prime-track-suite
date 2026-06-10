@@ -1747,47 +1747,820 @@ export type Database = {
       }
       equipment: {
         Row: {
+          asset_number: string | null
+          assigned_operator_id: string | null
+          assigned_to_project_id: string | null
+          availability_status: string | null
+          category: string | null
           code: string | null
+          company_id: string | null
+          condition_status: string | null
           created_at: string
+          created_by: string | null
+          current_location: string | null
+          current_meter_reading: number | null
+          current_status: string | null
+          equipment_code: string | null
+          equipment_name: string
+          equipment_type: string | null
+          fuel_capacity: number | null
+          fuel_type: string | null
           id: string
+          inspection_expiry_date: string | null
+          insurance_expiry_date: string | null
+          is_archived: boolean | null
+          last_maintenance_date: string | null
           maintenance_due_date: string | null
+          make_brand: string | null
+          model: string | null
           name: string
+          next_maintenance_date: string | null
           notes: string | null
           operator: string | null
-          project_id: string
+          operator_name: string | null
+          operator_phone: string | null
+          ownership_type: string | null
+          project_id: string | null
+          purchase_cost: number | null
+          purchase_date: string | null
+          registration_expiry_date: string | null
+          registration_number: string | null
+          remarks: string | null
+          rental_rate_daily: number | null
+          rental_rate_hourly: number | null
+          serial_number: string | null
           status: string
+          subcontractor_id: string | null
+          supplier_id: string | null
           updated_at: string
           usage_hours: number | null
         }
         Insert: {
+          asset_number?: string | null
+          assigned_operator_id?: string | null
+          assigned_to_project_id?: string | null
+          availability_status?: string | null
+          category?: string | null
           code?: string | null
+          company_id?: string | null
+          condition_status?: string | null
           created_at?: string
+          created_by?: string | null
+          current_location?: string | null
+          current_meter_reading?: number | null
+          current_status?: string | null
+          equipment_code?: string | null
+          equipment_name: string
+          equipment_type?: string | null
+          fuel_capacity?: number | null
+          fuel_type?: string | null
           id?: string
+          inspection_expiry_date?: string | null
+          insurance_expiry_date?: string | null
+          is_archived?: boolean | null
+          last_maintenance_date?: string | null
           maintenance_due_date?: string | null
+          make_brand?: string | null
+          model?: string | null
           name: string
+          next_maintenance_date?: string | null
           notes?: string | null
           operator?: string | null
-          project_id: string
+          operator_name?: string | null
+          operator_phone?: string | null
+          ownership_type?: string | null
+          project_id?: string | null
+          purchase_cost?: number | null
+          purchase_date?: string | null
+          registration_expiry_date?: string | null
+          registration_number?: string | null
+          remarks?: string | null
+          rental_rate_daily?: number | null
+          rental_rate_hourly?: number | null
+          serial_number?: string | null
           status?: string
+          subcontractor_id?: string | null
+          supplier_id?: string | null
           updated_at?: string
           usage_hours?: number | null
         }
         Update: {
+          asset_number?: string | null
+          assigned_operator_id?: string | null
+          assigned_to_project_id?: string | null
+          availability_status?: string | null
+          category?: string | null
           code?: string | null
+          company_id?: string | null
+          condition_status?: string | null
           created_at?: string
+          created_by?: string | null
+          current_location?: string | null
+          current_meter_reading?: number | null
+          current_status?: string | null
+          equipment_code?: string | null
+          equipment_name?: string
+          equipment_type?: string | null
+          fuel_capacity?: number | null
+          fuel_type?: string | null
           id?: string
+          inspection_expiry_date?: string | null
+          insurance_expiry_date?: string | null
+          is_archived?: boolean | null
+          last_maintenance_date?: string | null
           maintenance_due_date?: string | null
+          make_brand?: string | null
+          model?: string | null
           name?: string
+          next_maintenance_date?: string | null
           notes?: string | null
           operator?: string | null
-          project_id?: string
+          operator_name?: string | null
+          operator_phone?: string | null
+          ownership_type?: string | null
+          project_id?: string | null
+          purchase_cost?: number | null
+          purchase_date?: string | null
+          registration_expiry_date?: string | null
+          registration_number?: string | null
+          remarks?: string | null
+          rental_rate_daily?: number | null
+          rental_rate_hourly?: number | null
+          serial_number?: string | null
           status?: string
+          subcontractor_id?: string | null
+          supplier_id?: string | null
           updated_at?: string
           usage_hours?: number | null
         }
         Relationships: [
           {
             foreignKeyName: "equipment_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      equipment_assignments: {
+        Row: {
+          assigned_by: string | null
+          assigned_operator_id: string | null
+          assignment_end_date: string | null
+          assignment_start_date: string
+          company_id: string
+          created_at: string
+          created_by: string | null
+          equipment_id: string
+          id: string
+          is_archived: boolean | null
+          milestone_id: string | null
+          operator_name: string | null
+          project_id: string
+          released_at: string | null
+          released_by: string | null
+          remarks: string | null
+          status: string | null
+          task_id: string | null
+          updated_at: string
+          wbs_id: string | null
+          work_area: string | null
+        }
+        Insert: {
+          assigned_by?: string | null
+          assigned_operator_id?: string | null
+          assignment_end_date?: string | null
+          assignment_start_date: string
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          equipment_id: string
+          id?: string
+          is_archived?: boolean | null
+          milestone_id?: string | null
+          operator_name?: string | null
+          project_id: string
+          released_at?: string | null
+          released_by?: string | null
+          remarks?: string | null
+          status?: string | null
+          task_id?: string | null
+          updated_at?: string
+          wbs_id?: string | null
+          work_area?: string | null
+        }
+        Update: {
+          assigned_by?: string | null
+          assigned_operator_id?: string | null
+          assignment_end_date?: string | null
+          assignment_start_date?: string
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          equipment_id?: string
+          id?: string
+          is_archived?: boolean | null
+          milestone_id?: string | null
+          operator_name?: string | null
+          project_id?: string
+          released_at?: string | null
+          released_by?: string | null
+          remarks?: string | null
+          status?: string | null
+          task_id?: string | null
+          updated_at?: string
+          wbs_id?: string | null
+          work_area?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipment_assignments_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipment"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "equipment_assignments_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      equipment_attachments: {
+        Row: {
+          attachment_type: string | null
+          company_id: string | null
+          created_at: string
+          description: string | null
+          equipment_id: string | null
+          file_name: string | null
+          file_type: string | null
+          file_url: string | null
+          id: string
+          project_id: string | null
+          uploaded_by: string | null
+        }
+        Insert: {
+          attachment_type?: string | null
+          company_id?: string | null
+          created_at?: string
+          description?: string | null
+          equipment_id?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          project_id?: string | null
+          uploaded_by?: string | null
+        }
+        Update: {
+          attachment_type?: string | null
+          company_id?: string | null
+          created_at?: string
+          description?: string | null
+          equipment_id?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          project_id?: string | null
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipment_attachments_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipment"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      equipment_breakdowns: {
+        Row: {
+          breakdown_date: string
+          breakdown_number: string | null
+          breakdown_time: string | null
+          company_id: string
+          created_at: string
+          created_by: string | null
+          downtime_hours: number | null
+          equipment_id: string
+          id: string
+          is_archived: boolean | null
+          location: string | null
+          operator_name: string | null
+          problem_description: string
+          project_id: string | null
+          remarks: string | null
+          repair_action: string | null
+          repair_cost: number | null
+          repaired_by: string | null
+          reported_by: string | null
+          resolved_date: string | null
+          resolved_time: string | null
+          severity: string | null
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          breakdown_date: string
+          breakdown_number?: string | null
+          breakdown_time?: string | null
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          downtime_hours?: number | null
+          equipment_id: string
+          id?: string
+          is_archived?: boolean | null
+          location?: string | null
+          operator_name?: string | null
+          problem_description: string
+          project_id?: string | null
+          remarks?: string | null
+          repair_action?: string | null
+          repair_cost?: number | null
+          repaired_by?: string | null
+          reported_by?: string | null
+          resolved_date?: string | null
+          resolved_time?: string | null
+          severity?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          breakdown_date?: string
+          breakdown_number?: string | null
+          breakdown_time?: string | null
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          downtime_hours?: number | null
+          equipment_id?: string
+          id?: string
+          is_archived?: boolean | null
+          location?: string | null
+          operator_name?: string | null
+          problem_description?: string
+          project_id?: string | null
+          remarks?: string | null
+          repair_action?: string | null
+          repair_cost?: number | null
+          repaired_by?: string | null
+          reported_by?: string | null
+          resolved_date?: string | null
+          resolved_time?: string | null
+          severity?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipment_breakdowns_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipment"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      equipment_comments: {
+        Row: {
+          comment: string | null
+          company_id: string | null
+          created_at: string
+          equipment_id: string | null
+          id: string
+          project_id: string | null
+          user_id: string | null
+          visibility: string | null
+        }
+        Insert: {
+          comment?: string | null
+          company_id?: string | null
+          created_at?: string
+          equipment_id?: string | null
+          id?: string
+          project_id?: string | null
+          user_id?: string | null
+          visibility?: string | null
+        }
+        Update: {
+          comment?: string | null
+          company_id?: string | null
+          created_at?: string
+          equipment_id?: string | null
+          id?: string
+          project_id?: string | null
+          user_id?: string | null
+          visibility?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipment_comments_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipment"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      equipment_documents: {
+        Row: {
+          company_id: string
+          created_at: string
+          document_name: string
+          document_number: string | null
+          document_type: string | null
+          equipment_id: string
+          expiry_date: string | null
+          file_name: string | null
+          file_type: string | null
+          file_url: string | null
+          id: string
+          is_archived: boolean | null
+          issue_date: string | null
+          remarks: string | null
+          status: string | null
+          updated_at: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          document_name: string
+          document_number?: string | null
+          document_type?: string | null
+          equipment_id: string
+          expiry_date?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          is_archived?: boolean | null
+          issue_date?: string | null
+          remarks?: string | null
+          status?: string | null
+          updated_at?: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          document_name?: string
+          document_number?: string | null
+          document_type?: string | null
+          equipment_id?: string
+          expiry_date?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          is_archived?: boolean | null
+          issue_date?: string | null
+          remarks?: string | null
+          status?: string | null
+          updated_at?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipment_documents_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipment"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      equipment_inspections: {
+        Row: {
+          company_id: string
+          condition_status: string | null
+          corrective_action: string | null
+          created_at: string
+          created_by: string | null
+          equipment_id: string
+          findings: string | null
+          id: string
+          inspected_by: string | null
+          inspection_date: string
+          inspection_number: string | null
+          inspection_type: string | null
+          is_archived: boolean | null
+          next_inspection_date: string | null
+          project_id: string | null
+          result: string | null
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          company_id: string
+          condition_status?: string | null
+          corrective_action?: string | null
+          created_at?: string
+          created_by?: string | null
+          equipment_id: string
+          findings?: string | null
+          id?: string
+          inspected_by?: string | null
+          inspection_date: string
+          inspection_number?: string | null
+          inspection_type?: string | null
+          is_archived?: boolean | null
+          next_inspection_date?: string | null
+          project_id?: string | null
+          result?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string
+          condition_status?: string | null
+          corrective_action?: string | null
+          created_at?: string
+          created_by?: string | null
+          equipment_id?: string
+          findings?: string | null
+          id?: string
+          inspected_by?: string | null
+          inspection_date?: string
+          inspection_number?: string | null
+          inspection_type?: string | null
+          is_archived?: boolean | null
+          next_inspection_date?: string | null
+          project_id?: string | null
+          result?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipment_inspections_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipment"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      equipment_maintenance: {
+        Row: {
+          action_taken: string | null
+          company_id: string
+          completed_date: string | null
+          cost: number | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          equipment_id: string
+          findings: string | null
+          id: string
+          is_archived: boolean | null
+          maintenance_number: string | null
+          maintenance_title: string
+          maintenance_type: string | null
+          meter_reading: number | null
+          next_maintenance_date: string | null
+          performed_by: string | null
+          priority: string | null
+          project_id: string | null
+          scheduled_date: string | null
+          service_provider: string | null
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          action_taken?: string | null
+          company_id: string
+          completed_date?: string | null
+          cost?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          equipment_id: string
+          findings?: string | null
+          id?: string
+          is_archived?: boolean | null
+          maintenance_number?: string | null
+          maintenance_title: string
+          maintenance_type?: string | null
+          meter_reading?: number | null
+          next_maintenance_date?: string | null
+          performed_by?: string | null
+          priority?: string | null
+          project_id?: string | null
+          scheduled_date?: string | null
+          service_provider?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          action_taken?: string | null
+          company_id?: string
+          completed_date?: string | null
+          cost?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          equipment_id?: string
+          findings?: string | null
+          id?: string
+          is_archived?: boolean | null
+          maintenance_number?: string | null
+          maintenance_title?: string
+          maintenance_type?: string | null
+          meter_reading?: number | null
+          next_maintenance_date?: string | null
+          performed_by?: string | null
+          priority?: string | null
+          project_id?: string | null
+          scheduled_date?: string | null
+          service_provider?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipment_maintenance_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipment"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      equipment_status_history: {
+        Row: {
+          changed_by: string | null
+          company_id: string | null
+          created_at: string
+          equipment_id: string | null
+          id: string
+          new_status: string | null
+          old_status: string | null
+          project_id: string | null
+          remarks: string | null
+        }
+        Insert: {
+          changed_by?: string | null
+          company_id?: string | null
+          created_at?: string
+          equipment_id?: string | null
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id?: string | null
+          remarks?: string | null
+        }
+        Update: {
+          changed_by?: string | null
+          company_id?: string | null
+          created_at?: string
+          equipment_id?: string | null
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id?: string | null
+          remarks?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipment_status_history_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipment"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      equipment_usage_logs: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          assignment_id: string | null
+          breakdown_hours: number | null
+          company_id: string
+          created_at: string
+          created_by: string | null
+          daily_report_id: string | null
+          end_meter_reading: number | null
+          equipment_id: string
+          fuel_consumed: number | null
+          fuel_cost: number | null
+          fuel_unit: string | null
+          hourly_rate: number | null
+          id: string
+          idle_hours: number | null
+          is_archived: boolean | null
+          operator_name: string | null
+          productivity_quantity: number | null
+          productivity_rate: number | null
+          productivity_unit: string | null
+          project_id: string
+          remarks: string | null
+          rental_cost: number | null
+          shift: string | null
+          start_meter_reading: number | null
+          status: string | null
+          task_id: string | null
+          total_cost: number | null
+          total_hours: number | null
+          updated_at: string
+          usage_date: string
+          wbs_id: string | null
+          work_area: string | null
+          working_hours: number | null
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          assignment_id?: string | null
+          breakdown_hours?: number | null
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          daily_report_id?: string | null
+          end_meter_reading?: number | null
+          equipment_id: string
+          fuel_consumed?: number | null
+          fuel_cost?: number | null
+          fuel_unit?: string | null
+          hourly_rate?: number | null
+          id?: string
+          idle_hours?: number | null
+          is_archived?: boolean | null
+          operator_name?: string | null
+          productivity_quantity?: number | null
+          productivity_rate?: number | null
+          productivity_unit?: string | null
+          project_id: string
+          remarks?: string | null
+          rental_cost?: number | null
+          shift?: string | null
+          start_meter_reading?: number | null
+          status?: string | null
+          task_id?: string | null
+          total_cost?: number | null
+          total_hours?: number | null
+          updated_at?: string
+          usage_date: string
+          wbs_id?: string | null
+          work_area?: string | null
+          working_hours?: number | null
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          assignment_id?: string | null
+          breakdown_hours?: number | null
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          daily_report_id?: string | null
+          end_meter_reading?: number | null
+          equipment_id?: string
+          fuel_consumed?: number | null
+          fuel_cost?: number | null
+          fuel_unit?: string | null
+          hourly_rate?: number | null
+          id?: string
+          idle_hours?: number | null
+          is_archived?: boolean | null
+          operator_name?: string | null
+          productivity_quantity?: number | null
+          productivity_rate?: number | null
+          productivity_unit?: string | null
+          project_id?: string
+          remarks?: string | null
+          rental_cost?: number | null
+          shift?: string | null
+          start_meter_reading?: number | null
+          status?: string | null
+          task_id?: string | null
+          total_cost?: number | null
+          total_hours?: number | null
+          updated_at?: string
+          usage_date?: string
+          wbs_id?: string | null
+          work_area?: string | null
+          working_hours?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipment_usage_logs_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipment"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "equipment_usage_logs_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
