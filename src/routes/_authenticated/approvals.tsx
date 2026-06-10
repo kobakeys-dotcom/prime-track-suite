@@ -50,7 +50,7 @@ function ApprovalsPage() {
   const update = useServerFn(updateApprovalStatus);
   const qc = useQueryClient();
   const [me, setMe] = useState<string | null>(null);
-  useState(() => { supabase.auth.getUser().then(({ data }) => setMe(data.user?.id ?? null)); return null; });
+  useEffect(() => { supabase.auth.getUser().then(({ data }) => setMe(data.user?.id ?? null)); }, []);
   const { data: rows = [], isLoading } = useQuery({ queryKey: ["approvals"], queryFn: () => fetcher() });
   const [tab, setTab] = useState<TabKey>("mine");
   const [statusFilter, setStatusFilter] = useState("__all");
