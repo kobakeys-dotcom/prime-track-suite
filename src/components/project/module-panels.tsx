@@ -23,6 +23,11 @@ export function ProjectVariationsPanel({ projectId }: { projectId: string }) {
   return <VariationRegister projectId={projectId} variant="compact" />;
 }
 
+export function ProjectPaymentClaimsPanel({ projectId }: { projectId: string }) {
+  return <PaymentClaimRegister projectId={projectId} variant="compact" />;
+}
+
+
 export function ProjectDocumentsPanel({ projectId }: { projectId: string }) {
   const fetcher = useServerFn(listDocuments);
   const { data: rows = [] } = useQuery({ queryKey: ["documents", projectId], queryFn: () => fetcher({ data: { projectId } }) });
