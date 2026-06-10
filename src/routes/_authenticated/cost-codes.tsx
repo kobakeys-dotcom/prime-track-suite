@@ -247,7 +247,7 @@ function UpsertDialog({ open, onOpenChange, parents, onSaved, initial }:
   } : empty);
 
   const mut = useMutation({
-    mutationFn: () => {
+    mutationFn: async () => {
       const payload: any = {
         code: f.code.trim(), name: f.name.trim(),
         description: f.description || null, category: f.category, cost_type: f.cost_type,
@@ -257,7 +257,8 @@ function UpsertDialog({ open, onOpenChange, parents, onSaved, initial }:
         committed_amount: Number(f.committed_amount) || 0, forecast_amount: Number(f.forecast_amount) || 0,
         status: f.status, sort_order: Number(f.sort_order) || 0,
       };
-      return initial ? update({ data: { ...payload, id: initial.id } }) : create({ data: payload });
+      if (initial) { await update({ data: { ...payload, id: initial.id } }); }
+      else { await create({ data: payload }); }
     },
     onSuccess: () => { toast.success(initial ? "Updated" : "Created"); onSaved(); onOpenChange(false); },
     onError: (e: any) => toast.error(e?.message ?? "Failed"),
