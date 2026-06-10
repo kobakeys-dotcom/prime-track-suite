@@ -95,8 +95,19 @@ function ProjectDetail() {
               <p className="text-sm whitespace-pre-wrap">{project.description ?? "—"}</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+              <Field label="Contract #" value={(project as any).contract_number ?? "—"} />
+              <Field label="Type" value={(project as any).project_type ?? "—"} />
+              <Field label="Consultant" value={(project as any).consultant_name ?? "—"} />
+              <Field label="Contractor" value={(project as any).contractor_name ?? "—"} />
+              <Field label="Priority" value={(project as any).priority ?? "—"} />
+              <Field label="Risk level" value={(project as any).risk_level ?? "—"} />
+              <Field label="Currency" value={(project as any).currency ?? "—"} />
+              <Field label="Budget" value={(project as any).budget_amount ? `${(project as any).currency ?? ""} ${Number((project as any).budget_amount).toLocaleString()}` : "—"} />
+              <Field label="Project manager" value={(project as any).project_manager?.full_name ?? (project as any).project_manager?.email ?? "—"} />
               <Field label="Start date" value={project.start_date ?? "—"} />
               <Field label="End date" value={project.end_date ?? "—"} />
+              <Field label="Planned end" value={(project as any).planned_end_date ?? "—"} />
+              <Field label="Revised end" value={(project as any).revised_end_date ?? "—"} />
               <Field label="Created" value={new Date(project.created_at).toLocaleDateString()} />
               <Field label="Updated" value={new Date(project.updated_at).toLocaleDateString()} />
             </div>
