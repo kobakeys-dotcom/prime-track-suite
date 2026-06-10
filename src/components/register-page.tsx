@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
-import { Plus, Pencil, Trash2, Loader2, Search } from "lucide-react";
+import { Plus, Pencil, Trash2, Loader2, Search, Download, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,7 +12,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { ProjectPicker } from "@/components/project-picker";
 import { listRegister, upsertRegister, deleteRegister } from "@/lib/registers.functions";
 import { PhotoUploader } from "@/components/photo-uploader";
+import { CommentsThread } from "@/components/comments-thread";
 import { cn } from "@/lib/utils";
+
+const APPROVAL_TABLES = new Set(["procurement_requests", "variations", "payment_claims", "purchase_orders"]);
 
 export type RegisterField = {
   name: string;
@@ -41,6 +44,7 @@ export function RegisterPage(props: RegisterPageProps) {
 
   const [projectId, setProjectId] = useState<string>(fixedProjectId ?? "");
   const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("__all");
   const [editing, setEditing] = useState<any | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -72,14 +76,21 @@ export function RegisterPage(props: RegisterPageProps) {
   });
 
   const tableFields = useMemo(() => fields.filter((f) => !f.hideInTable).slice(0, 6), [fields]);
+  const statusOptions = useMemo(() => {
+    if (!statusField) return [] as string[];
+    const f = fields.find((x) => x.name === statusField);
+    return f?.options?.map((o) => o.value) ?? Array.from(new Set((rows as any[]).map((r) => r[statusField]).filter(Boolean)));
+  }, [fields, statusField, rows]);
 
   const filtered = useMemo(() => {
-    if (!search) return rows;
-    const q = search.toLowerCase();
-    return (rows as any[]).filter((r) =>
-      Object.values(r).some((v) => v != null && String(v).toLowerCase().includes(q)),
-    );
-  }, [rows, search]);
+    let out = rows as any[];
+    if (statusField && statusFilter !== "__all") out = out.filter((r) => r[statusField] === statusFilter);
+    if (search) {
+      const q = search.toLowerCase();
+      out = out.filter((r) => Object.values(r).some((v) => v != null && String(v).toLowerCase().includes(q)));
+    }
+    return out;
+  }, [rows, search, statusFilter, statusField]);
 
   function openCreate() {
     const base: Record<string, any> = { ...(defaultValues ?? {}) };
@@ -110,6 +121,25 @@ export function RegisterPage(props: RegisterPageProps) {
     saveMut.mutate({ id: editing.id, values });
   }
 
+  function submitForApproval(row: any) {
+    if (!APPROVAL_TABLES.has(table)) return;
+    saveMut.mutate({ id: row.id, values: { ...row, status: "submitted" } });
+    toast.success("Submitted for approval");
+  }
+
+  function exportCsv() {
+    const cols = fields.map((f) => f.name);
+    const header = cols.join(",");
+    const escape = (v: any) => v == null ? "" : `"${String(v).replace(/"/g, '""')}"`;
+    const body = (filtered as any[]).map((r) => cols.map((c) => escape(r[c])).join(",")).join("\n");
+    const blob = new Blob([header + "\n" + body], { type: "text/csv" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${table}-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
   return (
     <div className={cn("space-y-4", !fixedProjectId && "p-8")}>
       {!fixedProjectId && (
@@ -118,12 +148,22 @@ export function RegisterPage(props: RegisterPageProps) {
             <h1 className="font-display text-2xl font-bold">{title}</h1>
             {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             {projectScoped && <div className="w-56"><ProjectPicker value={projectId} onChange={setProjectId} placeholder="All projects" /></div>}
+            {statusField && statusOptions.length > 0 && (
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-40"><SelectValue placeholder="Status" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__all">All statuses</SelectItem>
+                  {statusOptions.map((s) => <SelectItem key={s} value={s}>{s.replace(/_/g, " ")}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            )}
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
               <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search…" className="pl-9 w-56" />
             </div>
+            <Button variant="outline" onClick={exportCsv} title="Export CSV"><Download className="size-4" /> CSV</Button>
             <Button onClick={openCreate} className="bg-accent text-white hover:bg-accent/90" disabled={projectScoped && !effectiveProjectId}>
               <Plus className="size-4" /> New
             </Button>
@@ -132,12 +172,26 @@ export function RegisterPage(props: RegisterPageProps) {
       )}
 
       {fixedProjectId && (
-        <div className="flex items-center justify-between gap-2">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
-            <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search…" className="pl-9 w-56" />
+        <div className="flex items-center justify-between gap-2 flex-wrap">
+          <div className="flex items-center gap-2">
+            {statusField && statusOptions.length > 0 && (
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-40"><SelectValue placeholder="Status" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__all">All statuses</SelectItem>
+                  {statusOptions.map((s) => <SelectItem key={s} value={s}>{s.replace(/_/g, " ")}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            )}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
+              <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search…" className="pl-9 w-56" />
+            </div>
           </div>
-          <Button onClick={openCreate} className="bg-accent text-white hover:bg-accent/90"><Plus className="size-4" /> New</Button>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" onClick={exportCsv}><Download className="size-4" /> CSV</Button>
+            <Button onClick={openCreate} className="bg-accent text-white hover:bg-accent/90"><Plus className="size-4" /> New</Button>
+          </div>
         </div>
       )}
 
@@ -173,7 +227,10 @@ export function RegisterPage(props: RegisterPageProps) {
                       )}
                     </td>
                   ))}
-                  <td className="px-2 py-2 text-right">
+                  <td className="px-2 py-2 text-right whitespace-nowrap">
+                    {APPROVAL_TABLES.has(table) && (r.status === "draft" || !r.status) && (
+                      <button onClick={() => submitForApproval(r)} className="p-1.5 hover:bg-blue-100 text-blue-600 rounded" title="Submit for approval"><Send className="size-3.5" /></button>
+                    )}
                     <button onClick={() => openEdit(r)} className="p-1.5 hover:bg-muted rounded" title="Edit"><Pencil className="size-3.5" /></button>
                     <button onClick={() => confirm("Delete?") && delMut.mutate(r.id)} className="p-1.5 hover:bg-rose-100 text-rose-600 rounded" title="Delete"><Trash2 className="size-3.5" /></button>
                   </td>
@@ -210,6 +267,11 @@ export function RegisterPage(props: RegisterPageProps) {
                   )}
                 </div>
               ))}
+            </div>
+          )}
+          {editing?.id && (
+            <div className="border-t border-border pt-4 mt-2">
+              <CommentsThread entityType={table} entityId={editing.id} />
             </div>
           )}
           <DialogFooter>

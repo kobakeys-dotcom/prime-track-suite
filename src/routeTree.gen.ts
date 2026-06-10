@@ -48,6 +48,7 @@ import { Route as AuthenticatedClientRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedCashFlowRouteImport } from './routes/_authenticated/cash-flow'
 import { Route as AuthenticatedBudgetRouteImport } from './routes/_authenticated/budget'
 import { Route as AuthenticatedBoqRouteImport } from './routes/_authenticated/boq'
+import { Route as AuthenticatedAuditSummaryRouteImport } from './routes/_authenticated/audit-summary'
 import { Route as AuthenticatedAuditRouteImport } from './routes/_authenticated/audit'
 import { Route as AuthenticatedApprovalsRouteImport } from './routes/_authenticated/approvals'
 import { Route as AuthenticatedAiRouteImport } from './routes/_authenticated/ai'
@@ -255,6 +256,12 @@ const AuthenticatedBoqRoute = AuthenticatedBoqRouteImport.update({
   path: '/boq',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAuditSummaryRoute =
+  AuthenticatedAuditSummaryRouteImport.update({
+    id: '/audit-summary',
+    path: '/audit-summary',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAuditRoute = AuthenticatedAuditRouteImport.update({
   id: '/audit',
   path: '/audit',
@@ -295,6 +302,7 @@ export interface FileRoutesByFullPath {
   '/ai': typeof AuthenticatedAiRoute
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/audit': typeof AuthenticatedAuditRoute
+  '/audit-summary': typeof AuthenticatedAuditSummaryRoute
   '/boq': typeof AuthenticatedBoqRoute
   '/budget': typeof AuthenticatedBudgetRoute
   '/cash-flow': typeof AuthenticatedCashFlowRoute
@@ -341,6 +349,7 @@ export interface FileRoutesByTo {
   '/ai': typeof AuthenticatedAiRoute
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/audit': typeof AuthenticatedAuditRoute
+  '/audit-summary': typeof AuthenticatedAuditSummaryRoute
   '/boq': typeof AuthenticatedBoqRoute
   '/budget': typeof AuthenticatedBudgetRoute
   '/cash-flow': typeof AuthenticatedCashFlowRoute
@@ -389,6 +398,7 @@ export interface FileRoutesById {
   '/_authenticated/ai': typeof AuthenticatedAiRoute
   '/_authenticated/approvals': typeof AuthenticatedApprovalsRoute
   '/_authenticated/audit': typeof AuthenticatedAuditRoute
+  '/_authenticated/audit-summary': typeof AuthenticatedAuditSummaryRoute
   '/_authenticated/boq': typeof AuthenticatedBoqRoute
   '/_authenticated/budget': typeof AuthenticatedBudgetRoute
   '/_authenticated/cash-flow': typeof AuthenticatedCashFlowRoute
@@ -437,6 +447,7 @@ export interface FileRouteTypes {
     | '/ai'
     | '/approvals'
     | '/audit'
+    | '/audit-summary'
     | '/boq'
     | '/budget'
     | '/cash-flow'
@@ -483,6 +494,7 @@ export interface FileRouteTypes {
     | '/ai'
     | '/approvals'
     | '/audit'
+    | '/audit-summary'
     | '/boq'
     | '/budget'
     | '/cash-flow'
@@ -530,6 +542,7 @@ export interface FileRouteTypes {
     | '/_authenticated/ai'
     | '/_authenticated/approvals'
     | '/_authenticated/audit'
+    | '/_authenticated/audit-summary'
     | '/_authenticated/boq'
     | '/_authenticated/budget'
     | '/_authenticated/cash-flow'
@@ -852,6 +865,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBoqRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/audit-summary': {
+      id: '/_authenticated/audit-summary'
+      path: '/audit-summary'
+      fullPath: '/audit-summary'
+      preLoaderRoute: typeof AuthenticatedAuditSummaryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/audit': {
       id: '/_authenticated/audit'
       path: '/audit'
@@ -915,6 +935,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAiRoute: typeof AuthenticatedAiRoute
   AuthenticatedApprovalsRoute: typeof AuthenticatedApprovalsRoute
   AuthenticatedAuditRoute: typeof AuthenticatedAuditRoute
+  AuthenticatedAuditSummaryRoute: typeof AuthenticatedAuditSummaryRoute
   AuthenticatedBoqRoute: typeof AuthenticatedBoqRoute
   AuthenticatedBudgetRoute: typeof AuthenticatedBudgetRoute
   AuthenticatedCashFlowRoute: typeof AuthenticatedCashFlowRoute
@@ -958,6 +979,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAiRoute: AuthenticatedAiRoute,
   AuthenticatedApprovalsRoute: AuthenticatedApprovalsRoute,
   AuthenticatedAuditRoute: AuthenticatedAuditRoute,
+  AuthenticatedAuditSummaryRoute: AuthenticatedAuditSummaryRoute,
   AuthenticatedBoqRoute: AuthenticatedBoqRoute,
   AuthenticatedBudgetRoute: AuthenticatedBudgetRoute,
   AuthenticatedCashFlowRoute: AuthenticatedCashFlowRoute,

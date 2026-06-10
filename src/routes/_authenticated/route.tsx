@@ -82,6 +82,7 @@ const sections: { label: string; items: { to: string; label: string; icon: any }
     { to: "/ai", label: "AI Assistant", icon: Sparkles },
     { to: "/permissions", label: "Permissions", icon: Stamp },
     { to: "/audit", label: "Audit Log", icon: History },
+    { to: "/audit-summary", label: "Audit Summary", icon: History },
   ]},
 ];
 
