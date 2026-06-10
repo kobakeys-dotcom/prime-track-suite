@@ -83,6 +83,7 @@ function ProjectDetail() {
           <TabsTrigger value="documents">Documents</TabsTrigger>
           <TabsTrigger value="variations">Variations</TabsTrigger>
           <TabsTrigger value="claims">Payment Claims</TabsTrigger>
+          <TabsTrigger value="budget">Budget vs Actual</TabsTrigger>
           <TabsTrigger value="procurement">Procurement</TabsTrigger>
           <TabsTrigger value="quality">Quality</TabsTrigger>
           <TabsTrigger value="safety">Safety</TabsTrigger>
