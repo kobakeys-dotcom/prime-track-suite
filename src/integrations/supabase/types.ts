@@ -1646,6 +1646,262 @@ export type Database = {
           },
         ]
       }
+      material_request_attachments: {
+        Row: {
+          attachment_type: string
+          company_id: string | null
+          created_at: string
+          description: string | null
+          file_name: string
+          file_type: string | null
+          file_url: string
+          id: string
+          is_client_visible: boolean
+          material_request_id: string
+          project_id: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          attachment_type?: string
+          company_id?: string | null
+          created_at?: string
+          description?: string | null
+          file_name: string
+          file_type?: string | null
+          file_url: string
+          id?: string
+          is_client_visible?: boolean
+          material_request_id: string
+          project_id: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          attachment_type?: string
+          company_id?: string | null
+          created_at?: string
+          description?: string | null
+          file_name?: string
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          is_client_visible?: boolean
+          material_request_id?: string
+          project_id?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "material_request_attachments_material_request_id_fkey"
+            columns: ["material_request_id"]
+            isOneToOne: false
+            referencedRelation: "procurement_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "material_request_attachments_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      material_request_items: {
+        Row: {
+          approved_amount: number
+          approved_quantity: number
+          approved_rate: number
+          balance_quantity: number
+          boq_item_id: string | null
+          company_id: string
+          cost_code_id: string | null
+          created_at: string
+          created_by: string | null
+          delivered_quantity: number
+          description: string | null
+          estimated_amount: number
+          estimated_rate: number
+          id: string
+          is_archived: boolean
+          item_code: string | null
+          material_name: string
+          material_request_id: string
+          ordered_quantity: number
+          priority: string
+          project_id: string
+          remarks: string | null
+          requested_quantity: number
+          required_date: string | null
+          specification: string | null
+          status: string
+          supplier_suggestion: string | null
+          task_id: string | null
+          unit: string
+          updated_at: string
+          wbs_id: string | null
+        }
+        Insert: {
+          approved_amount?: number
+          approved_quantity?: number
+          approved_rate?: number
+          balance_quantity?: number
+          boq_item_id?: string | null
+          company_id: string
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          delivered_quantity?: number
+          description?: string | null
+          estimated_amount?: number
+          estimated_rate?: number
+          id?: string
+          is_archived?: boolean
+          item_code?: string | null
+          material_name: string
+          material_request_id: string
+          ordered_quantity?: number
+          priority?: string
+          project_id: string
+          remarks?: string | null
+          requested_quantity?: number
+          required_date?: string | null
+          specification?: string | null
+          status?: string
+          supplier_suggestion?: string | null
+          task_id?: string | null
+          unit?: string
+          updated_at?: string
+          wbs_id?: string | null
+        }
+        Update: {
+          approved_amount?: number
+          approved_quantity?: number
+          approved_rate?: number
+          balance_quantity?: number
+          boq_item_id?: string | null
+          company_id?: string
+          cost_code_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          delivered_quantity?: number
+          description?: string | null
+          estimated_amount?: number
+          estimated_rate?: number
+          id?: string
+          is_archived?: boolean
+          item_code?: string | null
+          material_name?: string
+          material_request_id?: string
+          ordered_quantity?: number
+          priority?: string
+          project_id?: string
+          remarks?: string | null
+          requested_quantity?: number
+          required_date?: string | null
+          specification?: string | null
+          status?: string
+          supplier_suggestion?: string | null
+          task_id?: string | null
+          unit?: string
+          updated_at?: string
+          wbs_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "material_request_items_boq_item_id_fkey"
+            columns: ["boq_item_id"]
+            isOneToOne: false
+            referencedRelation: "boq_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "material_request_items_cost_code_id_fkey"
+            columns: ["cost_code_id"]
+            isOneToOne: false
+            referencedRelation: "cost_codes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "material_request_items_material_request_id_fkey"
+            columns: ["material_request_id"]
+            isOneToOne: false
+            referencedRelation: "procurement_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "material_request_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "material_request_items_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "material_request_items_wbs_id_fkey"
+            columns: ["wbs_id"]
+            isOneToOne: false
+            referencedRelation: "wbs_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      material_request_status_history: {
+        Row: {
+          changed_by: string | null
+          company_id: string | null
+          created_at: string
+          id: string
+          material_request_id: string
+          new_status: string | null
+          old_status: string | null
+          project_id: string
+          remarks: string | null
+        }
+        Insert: {
+          changed_by?: string | null
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          material_request_id: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id: string
+          remarks?: string | null
+        }
+        Update: {
+          changed_by?: string | null
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          material_request_id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id?: string
+          remarks?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "material_request_status_history_material_request_id_fkey"
+            columns: ["material_request_id"]
+            isOneToOne: false
+            referencedRelation: "procurement_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "material_request_status_history_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       meeting_action_items: {
         Row: {
           action_number: string | null
@@ -2448,57 +2704,120 @@ export type Database = {
         Row: {
           approved_at: string | null
           approved_by: string | null
+          company_id: string | null
+          converted_to_po: boolean
+          converted_to_rfq: boolean
           cost_code_id: string | null
           created_at: string
+          created_by: string | null
+          delivery_status: string
+          department: string | null
           id: string
+          is_archived: boolean
+          is_client_visible: boolean
           material_name: string
           notes: string | null
           priority: string
+          procurement_status: string
           project_id: string
+          purchase_order_id: string | null
           quantity: number
           reason: string | null
+          rejected_at: string | null
+          rejected_by: string | null
+          rejection_reason: string | null
+          remarks: string | null
           request_number: string
+          request_title: string | null
           requested_by: string | null
           required_date: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          revision_notes: string | null
+          rfq_id: string | null
+          site_location: string | null
           status: string
+          submitted_at: string | null
           unit: string | null
           updated_at: string
         }
         Insert: {
           approved_at?: string | null
           approved_by?: string | null
+          company_id?: string | null
+          converted_to_po?: boolean
+          converted_to_rfq?: boolean
           cost_code_id?: string | null
           created_at?: string
+          created_by?: string | null
+          delivery_status?: string
+          department?: string | null
           id?: string
+          is_archived?: boolean
+          is_client_visible?: boolean
           material_name: string
           notes?: string | null
           priority?: string
+          procurement_status?: string
           project_id: string
+          purchase_order_id?: string | null
           quantity?: number
           reason?: string | null
+          rejected_at?: string | null
+          rejected_by?: string | null
+          rejection_reason?: string | null
+          remarks?: string | null
           request_number: string
+          request_title?: string | null
           requested_by?: string | null
           required_date?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
+          rfq_id?: string | null
+          site_location?: string | null
           status?: string
+          submitted_at?: string | null
           unit?: string | null
           updated_at?: string
         }
         Update: {
           approved_at?: string | null
           approved_by?: string | null
+          company_id?: string | null
+          converted_to_po?: boolean
+          converted_to_rfq?: boolean
           cost_code_id?: string | null
           created_at?: string
+          created_by?: string | null
+          delivery_status?: string
+          department?: string | null
           id?: string
+          is_archived?: boolean
+          is_client_visible?: boolean
           material_name?: string
           notes?: string | null
           priority?: string
+          procurement_status?: string
           project_id?: string
+          purchase_order_id?: string | null
           quantity?: number
           reason?: string | null
+          rejected_at?: string | null
+          rejected_by?: string | null
+          rejection_reason?: string | null
+          remarks?: string | null
           request_number?: string
+          request_title?: string | null
           requested_by?: string | null
           required_date?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_notes?: string | null
+          rfq_id?: string | null
+          site_location?: string | null
           status?: string
+          submitted_at?: string | null
           unit?: string | null
           updated_at?: string
         }
@@ -2515,6 +2834,20 @@ export type Database = {
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "procurement_requests_purchase_order_id_fkey"
+            columns: ["purchase_order_id"]
+            isOneToOne: false
+            referencedRelation: "purchase_orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "procurement_requests_rfq_id_fkey"
+            columns: ["rfq_id"]
+            isOneToOne: false
+            referencedRelation: "rfqs"
             referencedColumns: ["id"]
           },
         ]
