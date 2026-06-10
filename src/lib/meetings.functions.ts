@@ -276,13 +276,15 @@ export const upsertActionItem = createServerFn({ method: "POST" })
     if (error) throw error;
 
     if (values.responsible_person && values.responsible_person !== context.userId) {
-      await sb.from("notifications").insert({
-        user_id: values.responsible_person,
-        title: `Action assigned: ${values.title}`,
-        body: `You were assigned action ${values.action_number}${values.due_date ? ` (due ${values.due_date})` : ""}.`,
-        severity: values.priority === "Critical" || values.priority === "High" ? "warning" : "info",
-        link: `/action-items`,
-      });
+      try {
+        await sb.from("notifications").insert({
+          user_id: values.responsible_person,
+          title: `Action assigned: ${values.title}`,
+          body: `You were assigned action ${values.action_number}${values.due_date ? ` (due ${values.due_date})` : ""}.`,
+          severity: values.priority === "Critical" || values.priority === "High" ? "warning" : "info",
+          link: `/action-items`,
+        });
+      } catch { /* best-effort */ }
     }
     return { ok: true, id: ins.id };
   });
