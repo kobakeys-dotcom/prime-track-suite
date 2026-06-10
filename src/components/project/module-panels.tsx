@@ -5,6 +5,7 @@ import { RfiRegister } from "@/components/rfi-register";
 import { SubmittalRegister } from "@/components/submittal-register";
 import { BoqRegister } from "@/components/boq-register";
 import { VariationRegister } from "@/components/variation-register";
+import { PaymentClaimRegister } from "@/components/payment-claim-register";
 
 export function ProjectRfisPanel({ projectId }: { projectId: string }) {
   return <RfiRegister projectId={projectId} variant="compact" />;
