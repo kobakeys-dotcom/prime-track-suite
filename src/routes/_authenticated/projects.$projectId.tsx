@@ -11,6 +11,8 @@ import { ProjectRfisPanel, ProjectSubmittalsPanel, ProjectDocumentsPanel, Projec
 import { RfqRegister } from "@/components/rfq-register";
 import { PurchaseOrderRegister } from "@/components/purchase-order-register";
 import { DeliveryRegister } from "@/components/delivery-register";
+import { QualityInspectionRegister } from "@/components/quality-inspection-register";
+
 import { RegisterPage } from "@/components/register-page";
 import { REGISTERS, STATUS_STYLES_GENERIC } from "@/lib/register-configs";
 import { MeetingActionItems } from "@/components/meeting-action-items";
