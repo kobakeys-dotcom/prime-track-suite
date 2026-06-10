@@ -51,7 +51,7 @@ export const buildReportData = createServerFn({ method: "POST" })
       const [{ data: pr }, { data: po }, { data: del }] = await Promise.all([
         filt(sb.from("procurement_requests").select("id, request_number, status, estimated_cost")),
         filt(sb.from("purchase_orders").select("id, po_number, status, total_amount")),
-        filt(sb.from("deliveries").select("id, delivery_number, status")),
+        filt(sb.from("deliveries").select("id, delivery_note, status")),
       ]);
       out.sections.procurement = { requests: pr ?? [], orders: po ?? [], deliveries: del ?? [] };
     }
