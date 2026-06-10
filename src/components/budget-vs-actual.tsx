@@ -380,10 +380,10 @@ export function BudgetVsActual({ projectId, variant = "full" }: Props) {
       </Sheet>
 
       {/* Line dialog */}
-      <LineDialog open={lineDialog} onOpenChange={setLineDialog} initial={editingLine} projectId={projectId} budgets={budgets} costCodes={ccQ.data ?? []} onSave={(d) => saveLine.mutate(d)} saving={saveLine.isPending} />
-      <BudgetDialog open={budgetDialog} onOpenChange={setBudgetDialog} initial={editingBudget} projectId={projectId} onSave={(d) => saveBudget.mutate(d)} saving={saveBudget.isPending} />
-      <EntryDialog open={actualDialog} onOpenChange={setActualDialog} kind="actual" projectId={projectId} lines={lines} costCodes={ccQ.data ?? []} onSave={(d) => saveActual.mutate(d)} saving={saveActual.isPending} />
-      <EntryDialog open={commitDialog} onOpenChange={setCommitDialog} kind="commit" projectId={projectId} lines={lines} costCodes={ccQ.data ?? []} onSave={(d) => saveCommit.mutate(d)} saving={saveCommit.isPending} />
+      <LineDialog open={lineDialog} onOpenChange={setLineDialog} initial={editingLine} projectId={projectId} budgets={budgets} costCodes={ccQ.data ?? []} onSave={(d: any) => saveLine.mutate(d)} saving={saveLine.isPending} />
+      <BudgetDialog open={budgetDialog} onOpenChange={setBudgetDialog} initial={editingBudget} projectId={projectId} onSave={(d: any) => saveBudget.mutate(d)} saving={saveBudget.isPending} />
+      <EntryDialog open={actualDialog} onOpenChange={setActualDialog} kind="actual" projectId={projectId} lines={lines} costCodes={ccQ.data ?? []} onSave={(d: any) => saveActual.mutate(d)} saving={saveActual.isPending} />
+      <EntryDialog open={commitDialog} onOpenChange={setCommitDialog} kind="commit" projectId={projectId} lines={lines} costCodes={ccQ.data ?? []} onSave={(d: any) => saveCommit.mutate(d)} saving={saveCommit.isPending} />
     </div>
   );
 }
