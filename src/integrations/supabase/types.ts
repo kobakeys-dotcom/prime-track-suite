@@ -634,46 +634,100 @@ export type Database = {
       issues: {
         Row: {
           assigned_to: string | null
+          category: string | null
+          corrective_action: string | null
           created_at: string
           created_by: string | null
           description: string | null
+          discipline: string | null
           due_date: string | null
+          escalation_level: number
           id: string
+          is_archived: boolean
+          is_client_visible: boolean
+          is_escalated: boolean
+          issue_number: string | null
+          issue_type: string
+          linked_daily_report_id: string | null
+          linked_risk_id: string | null
+          linked_task_id: string | null
+          location: string | null
           photos: Json
           priority: string
           project_id: string
           resolution: string | null
+          resolution_notes: string | null
+          resolved_date: string | null
+          root_cause: string | null
+          severity: string
           status: string
+          target_resolution_date: string | null
           title: string
           updated_at: string
         }
         Insert: {
           assigned_to?: string | null
+          category?: string | null
+          corrective_action?: string | null
           created_at?: string
           created_by?: string | null
           description?: string | null
+          discipline?: string | null
           due_date?: string | null
+          escalation_level?: number
           id?: string
+          is_archived?: boolean
+          is_client_visible?: boolean
+          is_escalated?: boolean
+          issue_number?: string | null
+          issue_type?: string
+          linked_daily_report_id?: string | null
+          linked_risk_id?: string | null
+          linked_task_id?: string | null
+          location?: string | null
           photos?: Json
           priority?: string
           project_id: string
           resolution?: string | null
+          resolution_notes?: string | null
+          resolved_date?: string | null
+          root_cause?: string | null
+          severity?: string
           status?: string
+          target_resolution_date?: string | null
           title: string
           updated_at?: string
         }
         Update: {
           assigned_to?: string | null
+          category?: string | null
+          corrective_action?: string | null
           created_at?: string
           created_by?: string | null
           description?: string | null
+          discipline?: string | null
           due_date?: string | null
+          escalation_level?: number
           id?: string
+          is_archived?: boolean
+          is_client_visible?: boolean
+          is_escalated?: boolean
+          issue_number?: string | null
+          issue_type?: string
+          linked_daily_report_id?: string | null
+          linked_risk_id?: string | null
+          linked_task_id?: string | null
+          location?: string | null
           photos?: Json
           priority?: string
           project_id?: string
           resolution?: string | null
+          resolution_notes?: string | null
+          resolved_date?: string | null
+          root_cause?: string | null
+          severity?: string
           status?: string
+          target_resolution_date?: string | null
           title?: string
           updated_at?: string
         }
