@@ -111,32 +111,35 @@ export const seedDemoData = createServerFn({ method: "POST" })
     if (e1) throw e1;
 
     const tasks = [
-      { name: "Site mobilization", status: "completed", progress: 100, start_date: iso(addDays(-30)), due_date: iso(addDays(-20)) },
-      { name: "Excavation works", status: "in_progress", progress: 60, start_date: iso(addDays(-20)), due_date: iso(addDays(10)) },
-      { name: "Foundation rebar", status: "todo", progress: 0, start_date: iso(addDays(5)), due_date: iso(addDays(25)) },
-      { name: "Concrete pour - raft", status: "todo", progress: 0, start_date: iso(addDays(25)), due_date: iso(addDays(40)) },
+      { title: "Site mobilization", status: "completed" as const, progress: 100, start_date: iso(addDays(-30)), due_date: iso(addDays(-20)) },
+      { title: "Excavation works", status: "in_progress" as const, progress: 60, start_date: iso(addDays(-20)), due_date: iso(addDays(10)) },
+      { title: "Foundation rebar", status: "todo" as const, progress: 0, start_date: iso(addDays(5)), due_date: iso(addDays(25)) },
+      { title: "Concrete pour - raft", status: "todo" as const, progress: 0, start_date: iso(addDays(25)), due_date: iso(addDays(40)) },
     ];
     await context.supabase.from("tasks").insert(tasks.map((t) => ({
-      ...t, project_id: proj.id, company_id: companyId, created_by: context.userId,
+      ...t, project_id: proj.id, created_by: context.userId,
     })));
 
     await context.supabase.from("boq_items").insert([
-      { project_id: proj.id, company_id: companyId, code: "01.01", description: "Site clearance", unit: "m2", quantity: 5000, unit_rate: 12, amount: 60000, created_by: context.userId },
-      { project_id: proj.id, company_id: companyId, code: "02.01", description: "Excavation in ordinary soil", unit: "m3", quantity: 3500, unit_rate: 45, amount: 157500, created_by: context.userId },
-      { project_id: proj.id, company_id: companyId, code: "03.01", description: "Reinforced concrete C40", unit: "m3", quantity: 1200, unit_rate: 850, amount: 1020000, created_by: context.userId },
+      { project_id: proj.id, item_code: "01.01", description: "Site clearance", unit: "m2", quantity: 5000, unit_rate: 12 },
+      { project_id: proj.id, item_code: "02.01", description: "Excavation in ordinary soil", unit: "m3", quantity: 3500, unit_rate: 45 },
+      { project_id: proj.id, item_code: "03.01", description: "Reinforced concrete C40", unit: "m3", quantity: 1200, unit_rate: 850 },
     ]);
 
     await context.supabase.from("rfis").insert({
-      project_id: proj.id, company_id: companyId, number: "RFI-001",
-      subject: "Confirmation of column locations on Grid C", status: "open", priority: "high",
-      due_date: iso(addDays(7)), created_by: context.userId,
+      project_id: proj.id, number: "RFI-001",
+      subject: "Confirmation of column locations on Grid C",
+      question: "Please confirm column centerlines on Grid C between levels B1 and G.",
+      status: "submitted" as const,
+      due_date: iso(addDays(7)), raised_by: context.userId,
     });
 
     await context.supabase.from("daily_reports").insert({
-      project_id: proj.id, company_id: companyId, report_date: iso(today),
-      weather: "Sunny, 32°C", manpower_count: 42, work_done: "Continued excavation along Grid 1-5. Rebar prep for raft foundation.",
-      delays: "None", visitors: "Client representative inspected site at 10:00", status: "submitted",
-      created_by: context.userId,
+      project_id: proj.id, report_date: iso(today),
+      weather: "Sunny, 32°C",
+      work_completed: "Continued excavation along Grid 1-5. Rebar prep for raft foundation.",
+      status: "submitted" as const,
+      author_id: context.userId,
     });
 
     return { ok: true, projectId: proj.id };
