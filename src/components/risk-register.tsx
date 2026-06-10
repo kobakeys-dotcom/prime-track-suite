@@ -330,8 +330,8 @@ function RiskFormDialog({ open, onOpenChange, projectId, editing, onSaved }: {
 }) {
   const e = editing;
   const [form, setForm] = useState<any>(() => initForm(e, projectId));
-  const sb = useServerFn(saveRisk);
-  const members = useQuery({ queryKey: ["risk-members", projectId], queryFn: () => useServerFnCall(listRiskProjectMembers, { projectId: projectId ?? null }) });
+  const fetchMembers = useServerFn(listRiskProjectMembers);
+  const members = useQuery({ queryKey: ["risk-members", projectId], queryFn: () => fetchMembers({ data: { projectId: projectId ?? null } }) });
 
   // reset form when opening with new editing
   const formKey = `${editing?.id ?? "new"}-${projectId ?? ""}`;
