@@ -1,22 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RegisterPage } from "@/components/register-page";
-import { REGISTERS } from "@/lib/register-configs";
-
-const cfg = REGISTERS["procurement_requests"];
+import { MaterialRequestRegister } from "@/components/material-request-register";
 
 export const Route = createFileRoute("/_authenticated/procurement")({
-  head: () => ({ meta: [{ title: `${cfg.title} — ProjectCore` }] }),
-  component: () => (
-    <RegisterPage
-      table="procurement_requests"
-      title={cfg.title}
-      description={cfg.description}
-      fields={cfg.fields}
-      projectScoped={cfg.projectScoped}
-      statusField={cfg.statusField}
-      statusStyles={STATUS_STYLES_GENERIC}
-    />
-  ),
+  head: () => ({ meta: [{ title: "Material Requests — ProjectCore" }] }),
+  component: () => <div className="p-8"><MaterialRequestRegister /></div>,
 });
-
-import { STATUS_STYLES_GENERIC } from "@/lib/register-configs";
