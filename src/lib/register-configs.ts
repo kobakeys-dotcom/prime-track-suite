@@ -240,10 +240,14 @@ export const REGISTERS: Record<string, { title: string; description: string; pro
   },
   milestones: {
     title: "Milestones", description: "Project milestones and dates.", projectScoped: true,
+    statusField: "status",
     fields: [
       { name: "name", label: "Name", required: true },
+      { name: "description", label: "Description", type: "textarea", hideInTable: true },
       { name: "due_date", label: "Planned", type: "date" },
       { name: "completed_at", label: "Completed", type: "date" },
+      { name: "status", label: "Status", type: "select", options: ["not_started","in_progress","completed","delayed","on_hold"] },
+      { name: "progress", label: "Progress %", type: "number" },
     ],
   },
 };
