@@ -26,6 +26,7 @@ import { Route as AuthenticatedDailyReportsRouteImport } from './routes/_authent
 import { Route as AuthenticatedBoqRouteImport } from './routes/_authenticated/boq'
 import { Route as AuthenticatedApprovalsRouteImport } from './routes/_authenticated/approvals'
 import { Route as AuthenticatedProjectsProjectIdRouteImport } from './routes/_authenticated/projects.$projectId'
+import { Route as ApiPublicCronDailyRouteImport } from './routes/api/public/cron/daily'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -113,6 +114,11 @@ const AuthenticatedProjectsProjectIdRoute =
     path: '/$projectId',
     getParentRoute: () => AuthenticatedProjectsRoute,
   } as any)
+const ApiPublicCronDailyRoute = ApiPublicCronDailyRouteImport.update({
+  id: '/api/public/cron/daily',
+  path: '/api/public/cron/daily',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -131,6 +137,7 @@ export interface FileRoutesByFullPath {
   '/submittals': typeof AuthenticatedSubmittalsRoute
   '/tasks': typeof AuthenticatedTasksRoute
   '/projects/$projectId': typeof AuthenticatedProjectsProjectIdRoute
+  '/api/public/cron/daily': typeof ApiPublicCronDailyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -149,6 +156,7 @@ export interface FileRoutesByTo {
   '/submittals': typeof AuthenticatedSubmittalsRoute
   '/tasks': typeof AuthenticatedTasksRoute
   '/projects/$projectId': typeof AuthenticatedProjectsProjectIdRoute
+  '/api/public/cron/daily': typeof ApiPublicCronDailyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -169,6 +177,7 @@ export interface FileRoutesById {
   '/_authenticated/submittals': typeof AuthenticatedSubmittalsRoute
   '/_authenticated/tasks': typeof AuthenticatedTasksRoute
   '/_authenticated/projects/$projectId': typeof AuthenticatedProjectsProjectIdRoute
+  '/api/public/cron/daily': typeof ApiPublicCronDailyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -189,6 +198,7 @@ export interface FileRouteTypes {
     | '/submittals'
     | '/tasks'
     | '/projects/$projectId'
+    | '/api/public/cron/daily'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -207,6 +217,7 @@ export interface FileRouteTypes {
     | '/submittals'
     | '/tasks'
     | '/projects/$projectId'
+    | '/api/public/cron/daily'
   id:
     | '__root__'
     | '/'
@@ -226,12 +237,14 @@ export interface FileRouteTypes {
     | '/_authenticated/submittals'
     | '/_authenticated/tasks'
     | '/_authenticated/projects/$projectId'
+    | '/api/public/cron/daily'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ApiPublicCronDailyRoute: typeof ApiPublicCronDailyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -355,6 +368,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProjectsProjectIdRouteImport
       parentRoute: typeof AuthenticatedProjectsRoute
     }
+    '/api/public/cron/daily': {
+      id: '/api/public/cron/daily'
+      path: '/api/public/cron/daily'
+      fullPath: '/api/public/cron/daily'
+      preLoaderRoute: typeof ApiPublicCronDailyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -410,6 +430,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  ApiPublicCronDailyRoute: ApiPublicCronDailyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
