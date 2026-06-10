@@ -1,0 +1,12 @@
+{
+  "name": "ProjectCore",
+  "short_name": "ProjectCore",
+  "description": "Project Control Automation System",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#0b0f17",
+  "theme_color": "#0b0f17",
+  "icons": [
+    { "src": "/favicon.ico", "sizes": "any", "type": "image/x-icon" }
+  ]
+}
