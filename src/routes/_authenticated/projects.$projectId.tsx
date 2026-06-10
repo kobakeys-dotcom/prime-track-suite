@@ -12,6 +12,7 @@ import { RfqRegister } from "@/components/rfq-register";
 import { PurchaseOrderRegister } from "@/components/purchase-order-register";
 import { DeliveryRegister } from "@/components/delivery-register";
 import { QualityInspectionRegister } from "@/components/quality-inspection-register";
+import { SafetyInspectionRegister } from "@/components/safety-inspection-register";
 
 import { RegisterPage } from "@/components/register-page";
 import { REGISTERS, STATUS_STYLES_GENERIC } from "@/lib/register-configs";
@@ -145,9 +146,10 @@ function ProjectDetail() {
         <TabsContent value="purchase-orders" className="pt-4"><PurchaseOrderRegister projectId={projectId} /></TabsContent>
         <TabsContent value="deliveries" className="pt-4"><DeliveryRegister projectId={projectId} /></TabsContent>
         <TabsContent value="quality" className="pt-4"><QualityInspectionRegister projectId={projectId} /></TabsContent>
-        {(["safety_inspections", "snags", "risks", "issues", "meetings"] as const).map((k) => {
+        <TabsContent value="safety" className="pt-4"><SafetyInspectionRegister projectId={projectId} /></TabsContent>
+        {(["snags", "risks", "issues", "meetings"] as const).map((k) => {
           const cfg = REGISTERS[k];
-          const tabValue = ({ safety_inspections: "safety", snags: "snags", risks: "risks", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
+          const tabValue = ({ snags: "snags", risks: "risks", issues: "issues", meetings: "meetings" } as Record<string, string>)[k];
           if (!cfg) return null;
           return (
             <TabsContent key={k} value={tabValue} className="pt-4">
