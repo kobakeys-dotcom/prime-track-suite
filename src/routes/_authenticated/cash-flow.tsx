@@ -26,7 +26,7 @@ function CashFlowPage() {
           <h1 className="font-display text-2xl font-bold">Cash Flow</h1>
           <p className="text-sm text-muted-foreground mt-1">Monthly payment claims: submitted, certified (approved) and paid.</p>
         </div>
-        <div className="w-64"><ProjectPicker value={projectId} onChange={setProjectId} allowAll /></div>
+        <div className="w-64"><ProjectPicker value={projectId} onChange={setProjectId} /></div>
       </div>
       <div className="bg-card border border-border rounded-sm p-6 h-96">
         {isLoading ? (

@@ -27,7 +27,7 @@ function BudgetPage() {
           <h1 className="font-display text-2xl font-bold">Budget vs Actual</h1>
           <p className="text-sm text-muted-foreground mt-1">Original budget from BOQ, revised by approved variations, and certified value from approved payment claims.</p>
         </div>
-        <div className="w-64"><ProjectPicker value={projectId} onChange={setProjectId} allowAll /></div>
+        <div className="w-64"><ProjectPicker value={projectId} onChange={setProjectId} /></div>
       </div>
       <div className="bg-card border border-border rounded-sm overflow-hidden">
         <table className="w-full text-sm">
