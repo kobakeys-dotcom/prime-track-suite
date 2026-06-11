@@ -6260,6 +6260,69 @@ export type Database = {
           },
         ]
       }
+      permission_audit_logs: {
+        Row: {
+          action: string
+          changed_by: string | null
+          company_id: string
+          created_at: string
+          id: string
+          module_name: string | null
+          new_value: string | null
+          old_value: string | null
+          permission_key: string | null
+          project_id: string | null
+          remarks: string | null
+          target_role: string | null
+          target_user_id: string | null
+        }
+        Insert: {
+          action: string
+          changed_by?: string | null
+          company_id: string
+          created_at?: string
+          id?: string
+          module_name?: string | null
+          new_value?: string | null
+          old_value?: string | null
+          permission_key?: string | null
+          project_id?: string | null
+          remarks?: string | null
+          target_role?: string | null
+          target_user_id?: string | null
+        }
+        Update: {
+          action?: string
+          changed_by?: string | null
+          company_id?: string
+          created_at?: string
+          id?: string
+          module_name?: string | null
+          new_value?: string | null
+          old_value?: string | null
+          permission_key?: string | null
+          project_id?: string | null
+          remarks?: string | null
+          target_role?: string | null
+          target_user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "permission_audit_logs_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "permission_audit_logs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       procurement_requests: {
         Row: {
           approved_at: string | null
@@ -6579,24 +6642,51 @@ export type Database = {
       }
       project_members: {
         Row: {
+          access_level: string
+          added_by: string | null
+          can_approve: boolean
+          can_edit: boolean
+          can_export: boolean
+          can_view_cost: boolean
           created_at: string
           id: string
+          is_archived: boolean
           project_id: string
           role: Database["public"]["Enums"]["app_role"]
+          status: string
+          updated_at: string
           user_id: string
         }
         Insert: {
+          access_level?: string
+          added_by?: string | null
+          can_approve?: boolean
+          can_edit?: boolean
+          can_export?: boolean
+          can_view_cost?: boolean
           created_at?: string
           id?: string
+          is_archived?: boolean
           project_id: string
           role?: Database["public"]["Enums"]["app_role"]
+          status?: string
+          updated_at?: string
           user_id: string
         }
         Update: {
+          access_level?: string
+          added_by?: string | null
+          can_approve?: boolean
+          can_edit?: boolean
+          can_export?: boolean
+          can_view_cost?: boolean
           created_at?: string
           id?: string
+          is_archived?: boolean
           project_id?: string
           role?: Database["public"]["Enums"]["app_role"]
+          status?: string
+          updated_at?: string
           user_id?: string
         }
         Relationships: [
@@ -8903,6 +8993,47 @@ export type Database = {
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      role_permissions: {
+        Row: {
+          company_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_allowed: boolean
+          permission_key: string
+          role: Database["public"]["Enums"]["app_role"]
+          updated_at: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_allowed?: boolean
+          permission_key: string
+          role: Database["public"]["Enums"]["app_role"]
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_allowed?: boolean
+          permission_key?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "role_permissions_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
             referencedColumns: ["id"]
           },
         ]
@@ -11619,6 +11750,10 @@ export type Database = {
     }
     Functions: {
       current_company_id: { Args: never; Returns: string }
+      has_permission_override: {
+        Args: { _permission_key: string; _user_id: string }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
