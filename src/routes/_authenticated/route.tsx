@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, redirect, Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import {
   LayoutDashboard, FolderKanban, CalendarRange, ListChecks, FileText, Calculator,
@@ -115,6 +116,15 @@ function AuthedLayout() {
 
 function Sidebar({ companyName }: { companyName?: string | null }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const activeSection = useMemo(() => {
+    const found = sections.find((s) =>
+      s.items.some((i) => pathname === i.to || pathname.startsWith(i.to + "/")),
+    );
+    return found?.label ?? sections[0].label;
+  }, [pathname]);
+  const [openSection, setOpenSection] = useState<string>(activeSection);
+  useEffect(() => { setOpenSection(activeSection); }, [activeSection]);
+
   return (
     <aside className="w-64 bg-sidebar text-sidebar-foreground flex flex-col border-r border-sidebar-border shrink-0">
       <div className="p-6 flex items-center gap-3">
@@ -124,29 +134,42 @@ function Sidebar({ companyName }: { companyName?: string | null }) {
           {companyName && <div className="text-[10px] uppercase tracking-widest text-sidebar-foreground/60 truncate">{companyName}</div>}
         </div>
       </div>
-      <nav className="flex-1 px-3 py-2 space-y-3 overflow-y-auto text-sm">
-        {sections.map((section) => (
-          <div key={section.label} className="space-y-0.5">
-            <div className="px-3 text-[10px] font-bold uppercase tracking-widest text-sidebar-foreground/40 mb-1">{section.label}</div>
-            {section.items.map((item) => {
-              const active = pathname === item.to || pathname.startsWith(item.to + "/");
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-1.5 rounded-md transition-colors text-[13px]",
-                    active ? "bg-sidebar-accent text-white" : "hover:text-white hover:bg-sidebar-accent/50",
-                  )}
-                >
-                  <Icon className="size-4 shrink-0" />
-                  <span className="truncate">{item.label}</span>
-                </Link>
-              );
-            })}
-          </div>
-        ))}
+      <nav className="flex-1 px-3 py-2 space-y-1 overflow-y-auto text-sm">
+        {sections.map((section) => {
+          const isOpen = openSection === section.label;
+          return (
+            <div key={section.label}>
+              <button
+                onClick={() => setOpenSection(isOpen ? "" : section.label)}
+                className="w-full flex items-center justify-between px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest text-sidebar-foreground/60 hover:text-white hover:bg-sidebar-accent/50"
+              >
+                <span>{section.label}</span>
+                <ChevronDown className={cn("size-3 transition-transform", isOpen && "rotate-180")} />
+              </button>
+              {isOpen && (
+                <div className="mt-0.5 space-y-0.5">
+                  {section.items.map((item) => {
+                    const active = pathname === item.to || pathname.startsWith(item.to + "/");
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        className={cn(
+                          "flex items-center gap-3 px-3 py-1.5 rounded-md transition-colors text-[13px]",
+                          active ? "bg-sidebar-accent text-white" : "hover:text-white hover:bg-sidebar-accent/50",
+                        )}
+                      >
+                        <Icon className="size-4 shrink-0" />
+                        <span className="truncate">{item.label}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </nav>
       <div className="p-3 border-t border-sidebar-border space-y-0.5">
         <Link to="/settings" className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover:text-white hover:bg-sidebar-accent/50">
