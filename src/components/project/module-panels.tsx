@@ -1,6 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
-import { listDocuments } from "@/lib/documents.functions";
 import { RfiRegister } from "@/components/rfi-register";
 import { SubmittalRegister } from "@/components/submittal-register";
 import { BoqRegister } from "@/components/boq-register";
@@ -8,6 +5,7 @@ import { VariationRegister } from "@/components/variation-register";
 import { PaymentClaimRegister } from "@/components/payment-claim-register";
 import { BudgetVsActual } from "@/components/budget-vs-actual";
 import { MaterialRequestRegister } from "@/components/material-request-register";
+import { DocumentManager } from "@/components/document-manager";
 
 export function ProjectMaterialRequestsPanel({ projectId }: { projectId: string }) {
   return <MaterialRequestRegister projectId={projectId} variant="compact" />;
