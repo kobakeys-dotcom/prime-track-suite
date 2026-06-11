@@ -57,12 +57,12 @@ export const updateRolePermission = createServerFn({ method: "POST" })
     await assertCompanyAdmin(context.supabase, context.userId);
     const companyId = await getCompanyId(context.supabase, context.userId);
     const { error } = await context.supabase.from("role_permissions").upsert(
-      { company_id: companyId, role: data.role, permission_key: data.permission_key, is_allowed: data.is_allowed, created_by: context.userId },
+      { company_id: companyId, role: data.role as any, permission_key: data.permission_key, is_allowed: data.is_allowed, created_by: context.userId },
       { onConflict: "company_id,role,permission_key" }
     );
     if (error) throw error;
     await context.supabase.from("permission_audit_logs").insert({
-      company_id: companyId, changed_by: context.userId, target_role: data.role,
+      company_id: companyId, changed_by: context.userId, target_role: data.role as any,
       action: data.is_allowed ? "permission_granted" : "permission_revoked",
       permission_key: data.permission_key, new_value: String(data.is_allowed),
     });
@@ -79,13 +79,13 @@ export const bulkUpdateRolePermissions = createServerFn({ method: "POST" })
     await assertCompanyAdmin(context.supabase, context.userId);
     const companyId = await getCompanyId(context.supabase, context.userId);
     const rows = Object.entries(data.permissions).map(([k, v]) => ({
-      company_id: companyId, role: data.role, permission_key: k, is_allowed: v, created_by: context.userId,
+      company_id: companyId, role: data.role as any, permission_key: k, is_allowed: v, created_by: context.userId,
     }));
     if (rows.length === 0) return { ok: true };
     const { error } = await context.supabase.from("role_permissions").upsert(rows, { onConflict: "company_id,role,permission_key" });
     if (error) throw error;
     await context.supabase.from("permission_audit_logs").insert({
-      company_id: companyId, changed_by: context.userId, target_role: data.role,
+      company_id: companyId, changed_by: context.userId, target_role: data.role as any,
       action: "bulk_permissions_updated", remarks: `${rows.length} keys updated`,
     });
     return { ok: true };
@@ -101,7 +101,7 @@ export const resetRolePermissions = createServerFn({ method: "POST" })
       .eq("company_id", companyId).eq("role", data.role);
     if (error) throw error;
     await context.supabase.from("permission_audit_logs").insert({
-      company_id: companyId, changed_by: context.userId, target_role: data.role,
+      company_id: companyId, changed_by: context.userId, target_role: data.role as any,
       action: "role_reset_to_default",
     });
     return { ok: true };
@@ -169,7 +169,7 @@ export const assignRoleToUser = createServerFn({ method: "POST" })
     if (error) throw error;
     await context.supabase.from("permission_audit_logs").insert({
       company_id: companyId, changed_by: context.userId, target_user_id: data.user_id,
-      target_role: data.role, action: "role_assigned",
+      target_role: data.role as any, action: "role_assigned",
     });
     await context.supabase.from("notifications").insert({
       user_id: data.user_id, company_id: companyId, sender_id: context.userId,
@@ -196,7 +196,7 @@ export const removeRoleFromUser = createServerFn({ method: "POST" })
     if (error) throw error;
     await context.supabase.from("permission_audit_logs").insert({
       company_id: companyId, changed_by: context.userId, target_user_id: data.user_id,
-      target_role: data.role, action: "role_removed",
+      target_role: data.role as any, action: "role_removed",
     });
     return { ok: true };
   });
