@@ -229,7 +229,7 @@ export const recordAuditExport = createServerFn({ method: "POST" })
   }).parse(d))
   .handler(async ({ context, data }) => {
     const { data: prof } = await context.supabase.from("profiles").select("company_id, full_name, email").eq("id", context.userId).maybeSingle();
-    if (!prof) throw new Error("Profile not found");
+    if (!prof?.company_id) throw new Error("Profile not found");
     // permission check: company_admin or audit_logs.export override
     const { data: isAdmin } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "company_admin" });
     const { data: hasOverride } = await context.supabase.rpc("has_permission_override", { _user_id: context.userId, _permission_key: "audit_logs.export" });
