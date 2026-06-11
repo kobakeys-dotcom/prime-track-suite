@@ -186,7 +186,7 @@ function Landing() {
             { i: Users, t: "Client portal" },
             { i: Sparkles, t: "AI insights" },
           ].map((b) => (
-            <div key={t} className="flex items-center justify-center gap-2 text-sm font-semibold" style={{ color: "rgba(11,31,26,0.7)" }}>
+            <div key={b.t} className="flex items-center justify-center gap-2 text-sm font-semibold" style={{ color: "rgba(11,31,26,0.7)" }}>
               <b.i className="size-4" style={{ color: C.gold }} /> {b.t}
             </div>
           ))}
