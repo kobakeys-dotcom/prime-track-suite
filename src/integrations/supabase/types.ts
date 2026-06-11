@@ -507,36 +507,162 @@ export type Database = {
           },
         ]
       }
+      audit_log_exports: {
+        Row: {
+          company_id: string
+          created_at: string
+          date_from: string | null
+          date_to: string | null
+          export_name: string | null
+          export_type: string | null
+          exported_by: string | null
+          file_name: string | null
+          file_url: string | null
+          filters: Json | null
+          id: string
+          project_id: string | null
+          status: string | null
+          total_records: number | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          date_from?: string | null
+          date_to?: string | null
+          export_name?: string | null
+          export_type?: string | null
+          exported_by?: string | null
+          file_name?: string | null
+          file_url?: string | null
+          filters?: Json | null
+          id?: string
+          project_id?: string | null
+          status?: string | null
+          total_records?: number | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          date_from?: string | null
+          date_to?: string | null
+          export_name?: string | null
+          export_type?: string | null
+          exported_by?: string | null
+          file_name?: string | null
+          file_url?: string | null
+          filters?: Json | null
+          id?: string
+          project_id?: string | null
+          status?: string | null
+          total_records?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_log_exports_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "audit_log_exports_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       audit_logs: {
         Row: {
           action: string
+          action_type: string | null
           actor_id: string | null
+          changed_fields: Json | null
           company_id: string | null
           created_at: string
+          description: string | null
           entity_id: string | null
           entity_type: string | null
+          error_message: string | null
           id: string
+          ip_address: string | null
+          is_sensitive: boolean | null
           metadata: Json | null
+          module_name: string | null
+          new_values: Json | null
+          old_values: Json | null
+          project_id: string | null
+          record_id: string | null
+          record_number: string | null
+          record_title: string | null
+          session_id: string | null
+          severity: string | null
+          source: string | null
+          status: string | null
+          user_agent: string | null
+          user_email: string | null
+          user_name: string | null
         }
         Insert: {
           action: string
+          action_type?: string | null
           actor_id?: string | null
+          changed_fields?: Json | null
           company_id?: string | null
           created_at?: string
+          description?: string | null
           entity_id?: string | null
           entity_type?: string | null
+          error_message?: string | null
           id?: string
+          ip_address?: string | null
+          is_sensitive?: boolean | null
           metadata?: Json | null
+          module_name?: string | null
+          new_values?: Json | null
+          old_values?: Json | null
+          project_id?: string | null
+          record_id?: string | null
+          record_number?: string | null
+          record_title?: string | null
+          session_id?: string | null
+          severity?: string | null
+          source?: string | null
+          status?: string | null
+          user_agent?: string | null
+          user_email?: string | null
+          user_name?: string | null
         }
         Update: {
           action?: string
+          action_type?: string | null
           actor_id?: string | null
+          changed_fields?: Json | null
           company_id?: string | null
           created_at?: string
+          description?: string | null
           entity_id?: string | null
           entity_type?: string | null
+          error_message?: string | null
           id?: string
+          ip_address?: string | null
+          is_sensitive?: boolean | null
           metadata?: Json | null
+          module_name?: string | null
+          new_values?: Json | null
+          old_values?: Json | null
+          project_id?: string | null
+          record_id?: string | null
+          record_number?: string | null
+          record_title?: string | null
+          session_id?: string | null
+          severity?: string | null
+          source?: string | null
+          status?: string | null
+          user_agent?: string | null
+          user_email?: string | null
+          user_name?: string | null
         }
         Relationships: [
           {
@@ -544,6 +670,13 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "audit_logs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
             referencedColumns: ["id"]
           },
         ]
@@ -9634,6 +9767,56 @@ export type Database = {
             columns: ["report_template_id"]
             isOneToOne: false
             referencedRelation: "report_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      security_events: {
+        Row: {
+          company_id: string | null
+          created_at: string
+          event_description: string | null
+          event_type: string
+          id: string
+          ip_address: string | null
+          metadata: Json | null
+          severity: string | null
+          status: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string
+          event_description?: string | null
+          event_type: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json | null
+          severity?: string | null
+          status?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string
+          event_description?: string | null
+          event_type?: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json | null
+          severity?: string | null
+          status?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "security_events_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
             referencedColumns: ["id"]
           },
         ]
