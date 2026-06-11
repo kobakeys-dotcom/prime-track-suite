@@ -1647,42 +1647,381 @@ export type Database = {
           },
         ]
       }
-      documents: {
+      document_comments: {
         Row: {
-          category: string | null
-          company_id: string | null
-          created_at: string
-          expires_at: string | null
+          comment: string
+          company_id: string
+          created_at: string | null
+          document_id: string
+          id: string
+          project_id: string | null
+          user_id: string | null
+          visibility: string | null
+        }
+        Insert: {
+          comment: string
+          company_id: string
+          created_at?: string | null
+          document_id: string
+          id?: string
+          project_id?: string | null
+          user_id?: string | null
+          visibility?: string | null
+        }
+        Update: {
+          comment?: string
+          company_id?: string
+          created_at?: string | null
+          document_id?: string
+          id?: string
+          project_id?: string | null
+          user_id?: string | null
+          visibility?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "document_comments_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      document_revisions: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          change_summary: string | null
+          company_id: string
+          created_at: string | null
+          document_id: string
+          file_name: string | null
+          file_path: string | null
           file_size: number | null
+          file_type: string | null
           file_url: string | null
           id: string
-          name: string
+          is_current: boolean | null
           project_id: string | null
+          reviewed_by: string | null
+          revision: string
+          revision_date: string | null
+          revision_description: string | null
+          revision_status: string | null
+          revision_title: string | null
+          storage_bucket: string | null
+          storage_path: string | null
+          updated_at: string | null
           uploaded_by: string | null
         }
         Insert: {
-          category?: string | null
-          company_id?: string | null
-          created_at?: string
-          expires_at?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          change_summary?: string | null
+          company_id: string
+          created_at?: string | null
+          document_id: string
+          file_name?: string | null
+          file_path?: string | null
           file_size?: number | null
+          file_type?: string | null
           file_url?: string | null
           id?: string
-          name: string
+          is_current?: boolean | null
           project_id?: string | null
+          reviewed_by?: string | null
+          revision: string
+          revision_date?: string | null
+          revision_description?: string | null
+          revision_status?: string | null
+          revision_title?: string | null
+          storage_bucket?: string | null
+          storage_path?: string | null
+          updated_at?: string | null
           uploaded_by?: string | null
         }
         Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          change_summary?: string | null
+          company_id?: string
+          created_at?: string | null
+          document_id?: string
+          file_name?: string | null
+          file_path?: string | null
+          file_size?: number | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          is_current?: boolean | null
+          project_id?: string | null
+          reviewed_by?: string | null
+          revision?: string
+          revision_date?: string | null
+          revision_description?: string | null
+          revision_status?: string | null
+          revision_title?: string | null
+          storage_bucket?: string | null
+          storage_path?: string | null
+          updated_at?: string | null
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "document_revisions_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      document_status_history: {
+        Row: {
+          changed_by: string | null
+          company_id: string
+          created_at: string | null
+          document_id: string
+          id: string
+          new_status: string | null
+          old_status: string | null
+          project_id: string | null
+          remarks: string | null
+        }
+        Insert: {
+          changed_by?: string | null
+          company_id: string
+          created_at?: string | null
+          document_id: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id?: string | null
+          remarks?: string | null
+        }
+        Update: {
+          changed_by?: string | null
+          company_id?: string
+          created_at?: string | null
+          document_id?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id?: string | null
+          remarks?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "document_status_history_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      documents: {
+        Row: {
+          approval_status: string | null
+          approved_at: string | null
+          approved_by: string | null
+          category: string | null
+          company_id: string | null
+          created_at: string
+          created_by: string | null
+          current_revision_id: string | null
+          delivery_id: string | null
+          discipline: string | null
+          document_category: string | null
+          document_description: string | null
+          document_number: string | null
+          document_owner_id: string | null
+          document_status: string | null
+          document_title: string | null
+          document_type: string | null
+          drawing_id: string | null
+          expires_at: string | null
+          expiry_date: string | null
+          file_name: string | null
+          file_path: string | null
+          file_size: number | null
+          file_type: string | null
+          file_url: string | null
+          folder_path: string | null
+          id: string
+          is_archived: boolean | null
+          is_client_visible: boolean | null
+          is_confidential: boolean | null
+          is_downloadable: boolean | null
+          is_latest_revision: boolean | null
+          issue_date: string | null
+          last_accessed_at: string | null
+          linked_module: string | null
+          linked_record_id: string | null
+          meeting_id: string | null
+          name: string
+          ncr_id: string | null
+          payment_claim_id: string | null
+          prepared_by: string | null
+          project_id: string | null
+          purchase_order_id: string | null
+          quality_inspection_id: string | null
+          rejection_reason: string | null
+          remarks: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          revision: string | null
+          revision_notes: string | null
+          rfi_id: string | null
+          risk_id: string | null
+          safety_inspection_id: string | null
+          storage_bucket: string | null
+          storage_path: string | null
+          submittal_id: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          supplier_id: string | null
+          tags: string[] | null
+          task_id: string | null
+          updated_at: string | null
+          uploaded_by: string | null
+          variation_id: string | null
+          wbs_id: string | null
+        }
+        Insert: {
+          approval_status?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
           category?: string | null
           company_id?: string | null
           created_at?: string
+          created_by?: string | null
+          current_revision_id?: string | null
+          delivery_id?: string | null
+          discipline?: string | null
+          document_category?: string | null
+          document_description?: string | null
+          document_number?: string | null
+          document_owner_id?: string | null
+          document_status?: string | null
+          document_title?: string | null
+          document_type?: string | null
+          drawing_id?: string | null
           expires_at?: string | null
+          expiry_date?: string | null
+          file_name?: string | null
+          file_path?: string | null
           file_size?: number | null
+          file_type?: string | null
           file_url?: string | null
+          folder_path?: string | null
           id?: string
-          name?: string
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          is_confidential?: boolean | null
+          is_downloadable?: boolean | null
+          is_latest_revision?: boolean | null
+          issue_date?: string | null
+          last_accessed_at?: string | null
+          linked_module?: string | null
+          linked_record_id?: string | null
+          meeting_id?: string | null
+          name: string
+          ncr_id?: string | null
+          payment_claim_id?: string | null
+          prepared_by?: string | null
           project_id?: string | null
+          purchase_order_id?: string | null
+          quality_inspection_id?: string | null
+          rejection_reason?: string | null
+          remarks?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision?: string | null
+          revision_notes?: string | null
+          rfi_id?: string | null
+          risk_id?: string | null
+          safety_inspection_id?: string | null
+          storage_bucket?: string | null
+          storage_path?: string | null
+          submittal_id?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          supplier_id?: string | null
+          tags?: string[] | null
+          task_id?: string | null
+          updated_at?: string | null
           uploaded_by?: string | null
+          variation_id?: string | null
+          wbs_id?: string | null
+        }
+        Update: {
+          approval_status?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          category?: string | null
+          company_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          current_revision_id?: string | null
+          delivery_id?: string | null
+          discipline?: string | null
+          document_category?: string | null
+          document_description?: string | null
+          document_number?: string | null
+          document_owner_id?: string | null
+          document_status?: string | null
+          document_title?: string | null
+          document_type?: string | null
+          drawing_id?: string | null
+          expires_at?: string | null
+          expiry_date?: string | null
+          file_name?: string | null
+          file_path?: string | null
+          file_size?: number | null
+          file_type?: string | null
+          file_url?: string | null
+          folder_path?: string | null
+          id?: string
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          is_confidential?: boolean | null
+          is_downloadable?: boolean | null
+          is_latest_revision?: boolean | null
+          issue_date?: string | null
+          last_accessed_at?: string | null
+          linked_module?: string | null
+          linked_record_id?: string | null
+          meeting_id?: string | null
+          name?: string
+          ncr_id?: string | null
+          payment_claim_id?: string | null
+          prepared_by?: string | null
+          project_id?: string | null
+          purchase_order_id?: string | null
+          quality_inspection_id?: string | null
+          rejection_reason?: string | null
+          remarks?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision?: string | null
+          revision_notes?: string | null
+          rfi_id?: string | null
+          risk_id?: string | null
+          safety_inspection_id?: string | null
+          storage_bucket?: string | null
+          storage_path?: string | null
+          submittal_id?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          supplier_id?: string | null
+          tags?: string[] | null
+          task_id?: string | null
+          updated_at?: string | null
+          uploaded_by?: string | null
+          variation_id?: string | null
+          wbs_id?: string | null
         }
         Relationships: [
           {
