@@ -98,7 +98,7 @@ export const resetRolePermissions = createServerFn({ method: "POST" })
     await assertCompanyAdmin(context.supabase, context.userId);
     const companyId = await getCompanyId(context.supabase, context.userId);
     const { error } = await context.supabase.from("role_permissions").delete()
-      .eq("company_id", companyId).eq("role", data.role);
+      .eq("company_id", companyId).eq("role", data.role as any);
     if (error) throw error;
     await context.supabase.from("permission_audit_logs").insert({
       company_id: companyId, changed_by: context.userId, target_role: data.role as any,
@@ -114,7 +114,7 @@ export const copyRolePermissions = createServerFn({ method: "POST" })
     await assertCompanyAdmin(context.supabase, context.userId);
     const companyId = await getCompanyId(context.supabase, context.userId);
     const { data: src } = await context.supabase.from("role_permissions")
-      .select("permission_key, is_allowed").eq("company_id", companyId).eq("role", data.from_role);
+      .select("permission_key, is_allowed").eq("company_id", companyId).eq("role", data.from_role as any);
     // also include defaults from matrix for the source role
     const defaults: Record<string, boolean> = {};
     const m = (MATRIX as any)[data.from_role] ?? {};
