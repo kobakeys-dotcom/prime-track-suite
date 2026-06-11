@@ -559,7 +559,7 @@ function DocumentDetail({ id, onClose, onChanged, onEdit, onArchive }: {
         {showRev && (
           <NewRevisionDialog
             documentId={id}
-            currentRevision={doc.revision}
+            currentRevision={doc.revision ?? "Rev 0"}
             projectId={doc.project_id}
             onClose={() => setShowRev(false)}
             onSaved={() => { setShowRev(false); refresh(); }}
