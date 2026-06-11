@@ -412,7 +412,7 @@ function DocumentDetail({ id, onClose, onChanged, onEdit, onArchive }: {
     );
   }
 
-  const { doc, revisions, comments, history } = detailQ.data;
+  const { doc, revisions, comments, history } = detailQ.data as any;
 
   async function transition(status: string, extra: any = {}) {
     try {
