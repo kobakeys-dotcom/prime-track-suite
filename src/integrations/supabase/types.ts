@@ -2040,39 +2040,510 @@ export type Database = {
           },
         ]
       }
-      drawings: {
+      drawing_access_logs: {
         Row: {
-          created_at: string
-          discipline: string | null
-          file_url: string | null
+          action: string
+          company_id: string
+          created_at: string | null
+          drawing_id: string
           id: string
-          issued_date: string | null
-          number: string
           project_id: string
-          revision: string | null
-          title: string | null
+          user_id: string | null
         }
         Insert: {
-          created_at?: string
-          discipline?: string | null
-          file_url?: string | null
+          action: string
+          company_id: string
+          created_at?: string | null
+          drawing_id: string
           id?: string
-          issued_date?: string | null
-          number: string
           project_id: string
-          revision?: string | null
-          title?: string | null
+          user_id?: string | null
         }
         Update: {
-          created_at?: string
-          discipline?: string | null
+          action?: string
+          company_id?: string
+          created_at?: string | null
+          drawing_id?: string
+          id?: string
+          project_id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "drawing_access_logs_drawing_id_fkey"
+            columns: ["drawing_id"]
+            isOneToOne: false
+            referencedRelation: "drawings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "drawing_access_logs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      drawing_comments: {
+        Row: {
+          comment: string
+          company_id: string
+          created_at: string | null
+          drawing_id: string
+          id: string
+          project_id: string
+          user_id: string | null
+          visibility: string | null
+        }
+        Insert: {
+          comment: string
+          company_id: string
+          created_at?: string | null
+          drawing_id: string
+          id?: string
+          project_id: string
+          user_id?: string | null
+          visibility?: string | null
+        }
+        Update: {
+          comment?: string
+          company_id?: string
+          created_at?: string | null
+          drawing_id?: string
+          id?: string
+          project_id?: string
+          user_id?: string | null
+          visibility?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "drawing_comments_drawing_id_fkey"
+            columns: ["drawing_id"]
+            isOneToOne: false
+            referencedRelation: "drawings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "drawing_comments_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      drawing_distribution_logs: {
+        Row: {
+          company_id: string
+          distributed_at: string | null
+          distributed_by: string | null
+          distributed_to: string | null
+          distributed_to_email: string | null
+          distributed_to_name: string | null
+          distribution_method: string | null
+          drawing_id: string
+          id: string
+          project_id: string
+          remarks: string | null
+          revision_id: string | null
+        }
+        Insert: {
+          company_id: string
+          distributed_at?: string | null
+          distributed_by?: string | null
+          distributed_to?: string | null
+          distributed_to_email?: string | null
+          distributed_to_name?: string | null
+          distribution_method?: string | null
+          drawing_id: string
+          id?: string
+          project_id: string
+          remarks?: string | null
+          revision_id?: string | null
+        }
+        Update: {
+          company_id?: string
+          distributed_at?: string | null
+          distributed_by?: string | null
+          distributed_to?: string | null
+          distributed_to_email?: string | null
+          distributed_to_name?: string | null
+          distribution_method?: string | null
+          drawing_id?: string
+          id?: string
+          project_id?: string
+          remarks?: string | null
+          revision_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "drawing_distribution_logs_drawing_id_fkey"
+            columns: ["drawing_id"]
+            isOneToOne: false
+            referencedRelation: "drawings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "drawing_distribution_logs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      drawing_revisions: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          change_summary: string | null
+          checked_by: string | null
+          company_id: string
+          created_at: string | null
+          drawing_id: string
+          file_name: string | null
+          file_path: string | null
+          file_size: number | null
+          file_type: string | null
+          file_url: string | null
+          id: string
+          is_current: boolean | null
+          issue_purpose: string | null
+          project_id: string
+          reviewed_by: string | null
+          revision: string
+          revision_date: string | null
+          revision_description: string | null
+          revision_status: string | null
+          revision_title: string | null
+          storage_bucket: string | null
+          storage_path: string | null
+          updated_at: string | null
+          uploaded_by: string | null
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          change_summary?: string | null
+          checked_by?: string | null
+          company_id: string
+          created_at?: string | null
+          drawing_id: string
+          file_name?: string | null
+          file_path?: string | null
+          file_size?: number | null
+          file_type?: string | null
           file_url?: string | null
           id?: string
-          issued_date?: string | null
-          number?: string
+          is_current?: boolean | null
+          issue_purpose?: string | null
+          project_id: string
+          reviewed_by?: string | null
+          revision: string
+          revision_date?: string | null
+          revision_description?: string | null
+          revision_status?: string | null
+          revision_title?: string | null
+          storage_bucket?: string | null
+          storage_path?: string | null
+          updated_at?: string | null
+          uploaded_by?: string | null
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          change_summary?: string | null
+          checked_by?: string | null
+          company_id?: string
+          created_at?: string | null
+          drawing_id?: string
+          file_name?: string | null
+          file_path?: string | null
+          file_size?: number | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          is_current?: boolean | null
+          issue_purpose?: string | null
           project_id?: string
+          reviewed_by?: string | null
+          revision?: string
+          revision_date?: string | null
+          revision_description?: string | null
+          revision_status?: string | null
+          revision_title?: string | null
+          storage_bucket?: string | null
+          storage_path?: string | null
+          updated_at?: string | null
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "drawing_revisions_drawing_id_fkey"
+            columns: ["drawing_id"]
+            isOneToOne: false
+            referencedRelation: "drawings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "drawing_revisions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      drawing_status_history: {
+        Row: {
+          changed_by: string | null
+          company_id: string
+          created_at: string | null
+          drawing_id: string
+          id: string
+          new_status: string | null
+          old_status: string | null
+          project_id: string
+          remarks: string | null
+        }
+        Insert: {
+          changed_by?: string | null
+          company_id: string
+          created_at?: string | null
+          drawing_id: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id: string
+          remarks?: string | null
+        }
+        Update: {
+          changed_by?: string | null
+          company_id?: string
+          created_at?: string | null
+          drawing_id?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          project_id?: string
+          remarks?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "drawing_status_history_drawing_id_fkey"
+            columns: ["drawing_id"]
+            isOneToOne: false
+            referencedRelation: "drawings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "drawing_status_history_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      drawings: {
+        Row: {
+          approval_status: string | null
+          approved_by: string | null
+          approved_date: string | null
+          block_section: string | null
+          boq_item_id: string | null
+          checked_by: string | null
+          client_approved_by: string | null
+          company_id: string | null
+          consultant_approved_by: string | null
+          created_at: string
+          created_by: string | null
+          current_revision_id: string | null
+          discipline: string | null
+          document_id: string | null
+          drawing_category: string | null
+          drawing_description: string | null
+          drawing_number: string | null
+          drawing_origin: string | null
+          drawing_status: string | null
+          drawing_title: string | null
+          drawing_type: string | null
+          file_name: string | null
+          file_path: string | null
+          file_size: number | null
+          file_type: string | null
+          file_url: string | null
+          floor_level: string | null
+          id: string
+          is_archived: boolean | null
+          is_client_visible: boolean | null
+          is_confidential: boolean | null
+          is_downloadable: boolean | null
+          is_latest_revision: boolean | null
+          issue_date: string | null
+          issue_purpose: string | null
+          issued_date: string | null
+          issued_to: string | null
+          ncr_id: string | null
+          number: string
+          prepared_by: string | null
+          project_id: string
+          quality_inspection_id: string | null
+          received_date: string | null
+          received_from: string | null
+          rejection_reason: string | null
+          remarks: string | null
+          reviewed_by: string | null
+          revision: string | null
+          revision_notes: string | null
+          rfi_id: string | null
+          safety_inspection_id: string | null
+          scale: string | null
+          sheet_size: string | null
+          storage_bucket: string | null
+          storage_path: string | null
+          submittal_id: string | null
+          superseded_date: string | null
+          tags: string[] | null
+          task_id: string | null
+          title: string | null
+          updated_at: string | null
+          variation_id: string | null
+          wbs_id: string | null
+          zone_area: string | null
+        }
+        Insert: {
+          approval_status?: string | null
+          approved_by?: string | null
+          approved_date?: string | null
+          block_section?: string | null
+          boq_item_id?: string | null
+          checked_by?: string | null
+          client_approved_by?: string | null
+          company_id?: string | null
+          consultant_approved_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          current_revision_id?: string | null
+          discipline?: string | null
+          document_id?: string | null
+          drawing_category?: string | null
+          drawing_description?: string | null
+          drawing_number?: string | null
+          drawing_origin?: string | null
+          drawing_status?: string | null
+          drawing_title?: string | null
+          drawing_type?: string | null
+          file_name?: string | null
+          file_path?: string | null
+          file_size?: number | null
+          file_type?: string | null
+          file_url?: string | null
+          floor_level?: string | null
+          id?: string
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          is_confidential?: boolean | null
+          is_downloadable?: boolean | null
+          is_latest_revision?: boolean | null
+          issue_date?: string | null
+          issue_purpose?: string | null
+          issued_date?: string | null
+          issued_to?: string | null
+          ncr_id?: string | null
+          number: string
+          prepared_by?: string | null
+          project_id: string
+          quality_inspection_id?: string | null
+          received_date?: string | null
+          received_from?: string | null
+          rejection_reason?: string | null
+          remarks?: string | null
+          reviewed_by?: string | null
           revision?: string | null
+          revision_notes?: string | null
+          rfi_id?: string | null
+          safety_inspection_id?: string | null
+          scale?: string | null
+          sheet_size?: string | null
+          storage_bucket?: string | null
+          storage_path?: string | null
+          submittal_id?: string | null
+          superseded_date?: string | null
+          tags?: string[] | null
+          task_id?: string | null
           title?: string | null
+          updated_at?: string | null
+          variation_id?: string | null
+          wbs_id?: string | null
+          zone_area?: string | null
+        }
+        Update: {
+          approval_status?: string | null
+          approved_by?: string | null
+          approved_date?: string | null
+          block_section?: string | null
+          boq_item_id?: string | null
+          checked_by?: string | null
+          client_approved_by?: string | null
+          company_id?: string | null
+          consultant_approved_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          current_revision_id?: string | null
+          discipline?: string | null
+          document_id?: string | null
+          drawing_category?: string | null
+          drawing_description?: string | null
+          drawing_number?: string | null
+          drawing_origin?: string | null
+          drawing_status?: string | null
+          drawing_title?: string | null
+          drawing_type?: string | null
+          file_name?: string | null
+          file_path?: string | null
+          file_size?: number | null
+          file_type?: string | null
+          file_url?: string | null
+          floor_level?: string | null
+          id?: string
+          is_archived?: boolean | null
+          is_client_visible?: boolean | null
+          is_confidential?: boolean | null
+          is_downloadable?: boolean | null
+          is_latest_revision?: boolean | null
+          issue_date?: string | null
+          issue_purpose?: string | null
+          issued_date?: string | null
+          issued_to?: string | null
+          ncr_id?: string | null
+          number?: string
+          prepared_by?: string | null
+          project_id?: string
+          quality_inspection_id?: string | null
+          received_date?: string | null
+          received_from?: string | null
+          rejection_reason?: string | null
+          remarks?: string | null
+          reviewed_by?: string | null
+          revision?: string | null
+          revision_notes?: string | null
+          rfi_id?: string | null
+          safety_inspection_id?: string | null
+          scale?: string | null
+          sheet_size?: string | null
+          storage_bucket?: string | null
+          storage_path?: string | null
+          submittal_id?: string | null
+          superseded_date?: string | null
+          tags?: string[] | null
+          task_id?: string | null
+          title?: string | null
+          updated_at?: string | null
+          variation_id?: string | null
+          wbs_id?: string | null
+          zone_area?: string | null
         }
         Relationships: [
           {
