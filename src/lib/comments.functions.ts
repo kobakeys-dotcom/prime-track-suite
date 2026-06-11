@@ -13,12 +13,21 @@ export const listComments = createServerFn({ method: "GET" })
   .handler(async ({ context, data }) => {
     const { data: rows, error } = await context.supabase
       .from("comments")
-      .select("id, body, created_at, author_id, profiles:author_id(full_name)")
+      .select("id, body, created_at, author_id")
       .eq("entity_type", data.entity_type)
       .eq("entity_id", data.entity_id)
       .order("created_at", { ascending: true });
     if (error) throw error;
-    return (rows ?? []).map((r: any) => ({ ...r, author_name: r.profiles?.full_name ?? "Member" }));
+    const ids = Array.from(new Set((rows ?? []).map((r: any) => r.author_id).filter(Boolean)));
+    let nameMap = new Map<string, string>();
+    if (ids.length) {
+      const { data: profs } = await context.supabase
+        .from("profiles")
+        .select("id, full_name")
+        .in("id", ids as string[]);
+      nameMap = new Map((profs ?? []).map((p: any) => [p.id, p.full_name]));
+    }
+    return (rows ?? []).map((r: any) => ({ ...r, author_name: nameMap.get(r.author_id) ?? "Member" }));
   });
 
 export const addComment = createServerFn({ method: "POST" })
