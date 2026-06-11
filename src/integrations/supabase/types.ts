@@ -5522,65 +5522,291 @@ export type Database = {
       notification_preferences: {
         Row: {
           created_at: string
+          digest_enabled: boolean
+          digest_frequency: string
           email_enabled: boolean
           in_app_enabled: boolean
+          module_preferences: Json
+          push_enabled: boolean
+          quiet_hours_enabled: boolean
+          quiet_hours_end: string | null
+          quiet_hours_start: string | null
           reminder_days: number
+          type_preferences: Json
           updated_at: string
           user_id: string
           whatsapp_enabled: boolean
         }
         Insert: {
           created_at?: string
+          digest_enabled?: boolean
+          digest_frequency?: string
           email_enabled?: boolean
           in_app_enabled?: boolean
+          module_preferences?: Json
+          push_enabled?: boolean
+          quiet_hours_enabled?: boolean
+          quiet_hours_end?: string | null
+          quiet_hours_start?: string | null
           reminder_days?: number
+          type_preferences?: Json
           updated_at?: string
           user_id: string
           whatsapp_enabled?: boolean
         }
         Update: {
           created_at?: string
+          digest_enabled?: boolean
+          digest_frequency?: string
           email_enabled?: boolean
           in_app_enabled?: boolean
+          module_preferences?: Json
+          push_enabled?: boolean
+          quiet_hours_enabled?: boolean
+          quiet_hours_end?: string | null
+          quiet_hours_start?: string | null
           reminder_days?: number
+          type_preferences?: Json
           updated_at?: string
           user_id?: string
           whatsapp_enabled?: boolean
         }
         Relationships: []
       }
-      notifications: {
+      notification_rules: {
         Row: {
-          body: string | null
+          company_id: string
           created_at: string
+          created_by: string | null
+          delay_minutes: number
+          event_name: string
           id: string
-          link: string | null
-          read_at: string | null
-          severity: string
-          title: string
-          user_id: string
+          is_active: boolean
+          module_name: string
+          notification_type: string
+          priority: string
+          recipient_roles: string[] | null
+          recipient_users: string[] | null
+          rule_name: string
+          trigger_condition: Json | null
+          updated_at: string
         }
         Insert: {
-          body?: string | null
+          company_id: string
           created_at?: string
+          created_by?: string | null
+          delay_minutes?: number
+          event_name: string
           id?: string
-          link?: string | null
-          read_at?: string | null
-          severity?: string
-          title: string
-          user_id: string
+          is_active?: boolean
+          module_name: string
+          notification_type?: string
+          priority?: string
+          recipient_roles?: string[] | null
+          recipient_users?: string[] | null
+          rule_name: string
+          trigger_condition?: Json | null
+          updated_at?: string
         }
         Update: {
-          body?: string | null
+          company_id?: string
           created_at?: string
+          created_by?: string | null
+          delay_minutes?: number
+          event_name?: string
           id?: string
+          is_active?: boolean
+          module_name?: string
+          notification_type?: string
+          priority?: string
+          recipient_roles?: string[] | null
+          recipient_users?: string[] | null
+          rule_name?: string
+          trigger_condition?: Json | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_rules_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notification_templates: {
+        Row: {
+          action_label: string | null
+          company_id: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          is_system_template: boolean
+          message_template: string
+          module_name: string | null
+          notification_type: string
+          priority: string
+          template_name: string
+          title_template: string
+          updated_at: string
+        }
+        Insert: {
+          action_label?: string | null
+          company_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          is_system_template?: boolean
+          message_template: string
+          module_name?: string | null
+          notification_type?: string
+          priority?: string
+          template_name: string
+          title_template: string
+          updated_at?: string
+        }
+        Update: {
+          action_label?: string | null
+          company_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          is_system_template?: boolean
+          message_template?: string
+          module_name?: string | null
+          notification_type?: string
+          priority?: string
+          template_name?: string
+          title_template?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_templates_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notifications: {
+        Row: {
+          action_label: string | null
+          action_url: string | null
+          archived_at: string | null
+          body: string | null
+          company_id: string | null
+          created_at: string
+          delivery_channel: string
+          delivery_status: string
+          email_sent: boolean
+          expires_at: string | null
+          id: string
+          is_archived: boolean
+          link: string | null
+          message: string
+          metadata: Json | null
+          module_name: string | null
+          notification_type: string
+          priority: string
+          project_id: string | null
+          push_sent: boolean
+          read_at: string | null
+          record_id: string | null
+          record_number: string | null
+          scheduled_for: string | null
+          sender_id: string | null
+          severity: string
+          title: string
+          updated_at: string
+          user_id: string
+          whatsapp_sent: boolean
+        }
+        Insert: {
+          action_label?: string | null
+          action_url?: string | null
+          archived_at?: string | null
+          body?: string | null
+          company_id?: string | null
+          created_at?: string
+          delivery_channel?: string
+          delivery_status?: string
+          email_sent?: boolean
+          expires_at?: string | null
+          id?: string
+          is_archived?: boolean
           link?: string | null
+          message: string
+          metadata?: Json | null
+          module_name?: string | null
+          notification_type?: string
+          priority?: string
+          project_id?: string | null
+          push_sent?: boolean
           read_at?: string | null
+          record_id?: string | null
+          record_number?: string | null
+          scheduled_for?: string | null
+          sender_id?: string | null
+          severity?: string
+          title: string
+          updated_at?: string
+          user_id: string
+          whatsapp_sent?: boolean
+        }
+        Update: {
+          action_label?: string | null
+          action_url?: string | null
+          archived_at?: string | null
+          body?: string | null
+          company_id?: string | null
+          created_at?: string
+          delivery_channel?: string
+          delivery_status?: string
+          email_sent?: boolean
+          expires_at?: string | null
+          id?: string
+          is_archived?: boolean
+          link?: string | null
+          message?: string
+          metadata?: Json | null
+          module_name?: string | null
+          notification_type?: string
+          priority?: string
+          project_id?: string | null
+          push_sent?: boolean
+          read_at?: string | null
+          record_id?: string | null
+          record_number?: string | null
+          scheduled_for?: string | null
+          sender_id?: string | null
           severity?: string
           title?: string
+          updated_at?: string
           user_id?: string
+          whatsapp_sent?: boolean
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "notifications_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       payment_claim_attachments: {
         Row: {
