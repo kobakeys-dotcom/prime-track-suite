@@ -27,6 +27,7 @@ async function run() {
     user_id: t.assignee_id as string,
     title: "Task overdue",
     body: `${t.title} was due ${t.due_date}`,
+    message: `${t.title} was due ${t.due_date}`,
     severity: "warning",
     link: `/tasks`,
   }));
@@ -51,6 +52,7 @@ async function run() {
       user_id: p.created_by as string,
       title: "Missing daily report",
       body: `No daily report submitted today for ${p.name}`,
+    message: `No daily report submitted today for ${p.name}`,
       severity: "warning",
       link: `/daily-reports`,
     }));
@@ -70,6 +72,7 @@ async function run() {
     user_id: d.uploaded_by as string,
     title: "Document expiring soon",
     body: `${d.name} expires on ${d.expires_at}`,
+    message: `${d.name} expires on ${d.expires_at}`,
     severity: "warning",
     link: `/documents`,
   }));
