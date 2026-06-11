@@ -99,6 +99,361 @@ export type Database = {
           },
         ]
       }
+      ai_conversations: {
+        Row: {
+          company_id: string
+          context_module: string | null
+          context_record_id: string | null
+          conversation_title: string | null
+          conversation_type: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_archived: boolean
+          last_message_at: string | null
+          project_id: string | null
+          status: string
+          updated_at: string
+          user_id: string
+          visibility: string
+        }
+        Insert: {
+          company_id: string
+          context_module?: string | null
+          context_record_id?: string | null
+          conversation_title?: string | null
+          conversation_type?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_archived?: boolean
+          last_message_at?: string | null
+          project_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+          visibility?: string
+        }
+        Update: {
+          company_id?: string
+          context_module?: string | null
+          context_record_id?: string | null
+          conversation_title?: string | null
+          conversation_type?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_archived?: boolean
+          last_message_at?: string | null
+          project_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_conversations_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_conversations_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_feedback: {
+        Row: {
+          company_id: string
+          conversation_id: string | null
+          created_at: string
+          feedback_text: string | null
+          id: string
+          message_id: string | null
+          project_id: string | null
+          rating: string | null
+          user_id: string | null
+        }
+        Insert: {
+          company_id: string
+          conversation_id?: string | null
+          created_at?: string
+          feedback_text?: string | null
+          id?: string
+          message_id?: string | null
+          project_id?: string | null
+          rating?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          company_id?: string
+          conversation_id?: string | null
+          created_at?: string
+          feedback_text?: string | null
+          id?: string
+          message_id?: string | null
+          project_id?: string | null
+          rating?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_feedback_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_feedback_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "ai_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_feedback_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "ai_messages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_feedback_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_messages: {
+        Row: {
+          ai_model: string | null
+          company_id: string
+          completion_tokens: number | null
+          context_module: string | null
+          context_record_id: string | null
+          conversation_id: string
+          created_at: string
+          error_message: string | null
+          id: string
+          message_text: string
+          message_type: string
+          project_id: string | null
+          prompt_tokens: number | null
+          role: string
+          status: string
+          token_count: number | null
+          user_id: string | null
+        }
+        Insert: {
+          ai_model?: string | null
+          company_id: string
+          completion_tokens?: number | null
+          context_module?: string | null
+          context_record_id?: string | null
+          conversation_id: string
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          message_text: string
+          message_type?: string
+          project_id?: string | null
+          prompt_tokens?: number | null
+          role: string
+          status?: string
+          token_count?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          ai_model?: string | null
+          company_id?: string
+          completion_tokens?: number | null
+          context_module?: string | null
+          context_record_id?: string | null
+          conversation_id?: string
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          message_text?: string
+          message_type?: string
+          project_id?: string | null
+          prompt_tokens?: number | null
+          role?: string
+          status?: string
+          token_count?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_messages_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "ai_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_messages_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_prompt_templates: {
+        Row: {
+          company_id: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          is_system_template: boolean
+          output_type: string
+          prompt_text: string
+          required_context: string[] | null
+          template_category: string
+          template_description: string | null
+          template_name: string
+          updated_at: string
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          is_system_template?: boolean
+          output_type?: string
+          prompt_text: string
+          required_context?: string[] | null
+          template_category?: string
+          template_description?: string | null
+          template_name: string
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          is_system_template?: boolean
+          output_type?: string
+          prompt_text?: string
+          required_context?: string[] | null
+          template_category?: string
+          template_description?: string | null
+          template_name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_prompt_templates_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_saved_outputs: {
+        Row: {
+          company_id: string
+          context_module: string | null
+          context_record_id: string | null
+          conversation_id: string | null
+          created_at: string
+          id: string
+          is_client_visible: boolean
+          message_id: string | null
+          output_text: string
+          output_title: string
+          output_type: string
+          project_id: string | null
+          saved_by: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          company_id: string
+          context_module?: string | null
+          context_record_id?: string | null
+          conversation_id?: string | null
+          created_at?: string
+          id?: string
+          is_client_visible?: boolean
+          message_id?: string | null
+          output_text: string
+          output_title: string
+          output_type?: string
+          project_id?: string | null
+          saved_by?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string
+          context_module?: string | null
+          context_record_id?: string | null
+          conversation_id?: string | null
+          created_at?: string
+          id?: string
+          is_client_visible?: boolean
+          message_id?: string | null
+          output_text?: string
+          output_title?: string
+          output_type?: string
+          project_id?: string | null
+          saved_by?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_saved_outputs_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_saved_outputs_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "ai_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_saved_outputs_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "ai_messages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_saved_outputs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       approvals: {
         Row: {
           approver_id: string | null
