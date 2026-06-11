@@ -48,7 +48,7 @@ function SettingsPage() {
   const allFn = useServerFn(getAllSettings);
   const { data, isLoading, error } = useQuery({ queryKey: ["settings:all"], queryFn: () => allFn() });
 
-  if (!isAdmin && !perms.loading) {
+  if (!isAdmin && !perms.isLoading) {
     return (
       <div className="p-8 max-w-2xl">
         <div className="border border-border rounded-sm p-8 text-center bg-card">
@@ -59,7 +59,7 @@ function SettingsPage() {
       </div>
     );
   }
-  if (isLoading || perms.loading) return <div className="p-8 text-sm text-muted-foreground">Loading settings…</div>;
+  if (isLoading || perms.isLoading) return <div className="p-8 text-sm text-muted-foreground">Loading settings…</div>;
   if (error) return <div className="p-8 text-sm text-red-600">Failed to load settings.</div>;
   if (!data) return null;
 
