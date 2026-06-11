@@ -50,22 +50,22 @@ export function NotificationsBell() {
 
   // Realtime
   useEffect(() => {
-    let uid: string | null = null;
+    let cancelled = false;
+    let channel: ReturnType<typeof supabase.channel> | null = null;
     supabase.auth.getUser().then(({ data }) => {
-      uid = data.user?.id ?? null;
-      if (!uid) return;
-      const channel = supabase
-        .channel("notif-bell")
-        .on("postgres_changes", { event: "INSERT", schema: "public", table: "notifications", filter: `user_id=eq.${uid}` }, (payload: any) => {
+      const uid = data.user?.id ?? null;
+      if (!uid || cancelled) return;
+      channel = supabase.channel(`notif-bell-${uid}-${Date.now()}`);
+      channel
+        .on("postgres_changes" as any, { event: "INSERT", schema: "public", table: "notifications", filter: `user_id=eq.${uid}` }, (payload: any) => {
           qc.invalidateQueries({ queryKey: ["notifications"] });
           qc.invalidateQueries({ queryKey: ["notification-summary"] });
           const p = payload.new;
           toast(p?.title ?? "New notification", { description: p?.message ?? p?.body ?? undefined });
         })
         .subscribe();
-      return () => { supabase.removeChannel(channel); };
     });
-    return () => { /* cleanup handled inside */ };
+    return () => { cancelled = true; if (channel) supabase.removeChannel(channel); };
   }, [qc]);
 
   const items = (data?.items ?? []) as any[];
