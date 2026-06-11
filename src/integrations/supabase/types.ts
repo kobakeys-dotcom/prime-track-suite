@@ -3925,6 +3925,316 @@ export type Database = {
           },
         ]
       }
+      functional_audit_items: {
+        Row: {
+          actual_result: string | null
+          assigned_to: string | null
+          audit_category: string
+          audit_module_id: string
+          checklist_item: string
+          company_id: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          evidence_url: string | null
+          expected_result: string | null
+          id: string
+          is_automated: boolean | null
+          module_key: string
+          priority: string | null
+          resolution_notes: string | null
+          resolved_at: string | null
+          resolved_by: string | null
+          severity: string | null
+          status: string | null
+          target_completion_date: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          actual_result?: string | null
+          assigned_to?: string | null
+          audit_category: string
+          audit_module_id: string
+          checklist_item: string
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          evidence_url?: string | null
+          expected_result?: string | null
+          id?: string
+          is_automated?: boolean | null
+          module_key: string
+          priority?: string | null
+          resolution_notes?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          severity?: string | null
+          status?: string | null
+          target_completion_date?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          actual_result?: string | null
+          assigned_to?: string | null
+          audit_category?: string
+          audit_module_id?: string
+          checklist_item?: string
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          evidence_url?: string | null
+          expected_result?: string | null
+          id?: string
+          is_automated?: boolean | null
+          module_key?: string
+          priority?: string | null
+          resolution_notes?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          severity?: string | null
+          status?: string | null
+          target_completion_date?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "functional_audit_items_audit_module_id_fkey"
+            columns: ["audit_module_id"]
+            isOneToOne: false
+            referencedRelation: "functional_audit_modules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "functional_audit_items_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      functional_audit_modules: {
+        Row: {
+          company_id: string
+          completion_percentage: number | null
+          created_at: string
+          created_by: string | null
+          id: string
+          is_archived: boolean | null
+          is_client_visible_module: boolean | null
+          is_core_module: boolean | null
+          last_checked_at: string | null
+          last_checked_by: string | null
+          module_category: string | null
+          module_key: string
+          module_name: string
+          notes: string | null
+          owner_user_id: string | null
+          primary_table: string | null
+          priority: string | null
+          related_tables: string[] | null
+          route_path: string | null
+          sidebar_path: string | null
+          status: string | null
+          target_completion_date: string | null
+          updated_at: string
+        }
+        Insert: {
+          company_id: string
+          completion_percentage?: number | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_archived?: boolean | null
+          is_client_visible_module?: boolean | null
+          is_core_module?: boolean | null
+          last_checked_at?: string | null
+          last_checked_by?: string | null
+          module_category?: string | null
+          module_key: string
+          module_name: string
+          notes?: string | null
+          owner_user_id?: string | null
+          primary_table?: string | null
+          priority?: string | null
+          related_tables?: string[] | null
+          route_path?: string | null
+          sidebar_path?: string | null
+          status?: string | null
+          target_completion_date?: string | null
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string
+          completion_percentage?: number | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_archived?: boolean | null
+          is_client_visible_module?: boolean | null
+          is_core_module?: boolean | null
+          last_checked_at?: string | null
+          last_checked_by?: string | null
+          module_category?: string | null
+          module_key?: string
+          module_name?: string
+          notes?: string | null
+          owner_user_id?: string | null
+          primary_table?: string | null
+          priority?: string | null
+          related_tables?: string[] | null
+          route_path?: string | null
+          sidebar_path?: string | null
+          status?: string | null
+          target_completion_date?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "functional_audit_modules_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      functional_audit_runs: {
+        Row: {
+          audit_run_name: string
+          audit_run_type: string | null
+          company_id: string
+          completed_at: string | null
+          completed_modules: number | null
+          created_at: string
+          failed_items: number | null
+          failed_modules: number | null
+          id: string
+          not_checked_items: number | null
+          overall_completion_percentage: number | null
+          passed_items: number | null
+          readiness_status: string | null
+          started_at: string
+          started_by: string | null
+          status: string | null
+          summary_notes: string | null
+          total_items: number | null
+          total_modules: number | null
+          updated_at: string
+          warning_items: number | null
+        }
+        Insert: {
+          audit_run_name: string
+          audit_run_type?: string | null
+          company_id: string
+          completed_at?: string | null
+          completed_modules?: number | null
+          created_at?: string
+          failed_items?: number | null
+          failed_modules?: number | null
+          id?: string
+          not_checked_items?: number | null
+          overall_completion_percentage?: number | null
+          passed_items?: number | null
+          readiness_status?: string | null
+          started_at?: string
+          started_by?: string | null
+          status?: string | null
+          summary_notes?: string | null
+          total_items?: number | null
+          total_modules?: number | null
+          updated_at?: string
+          warning_items?: number | null
+        }
+        Update: {
+          audit_run_name?: string
+          audit_run_type?: string | null
+          company_id?: string
+          completed_at?: string | null
+          completed_modules?: number | null
+          created_at?: string
+          failed_items?: number | null
+          failed_modules?: number | null
+          id?: string
+          not_checked_items?: number | null
+          overall_completion_percentage?: number | null
+          passed_items?: number | null
+          readiness_status?: string | null
+          started_at?: string
+          started_by?: string | null
+          status?: string | null
+          summary_notes?: string | null
+          total_items?: number | null
+          total_modules?: number | null
+          updated_at?: string
+          warning_items?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "functional_audit_runs_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      functional_audit_snapshots: {
+        Row: {
+          audit_run_id: string | null
+          company_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          overall_completion_percentage: number | null
+          readiness_status: string | null
+          snapshot_data: Json
+          snapshot_name: string
+        }
+        Insert: {
+          audit_run_id?: string | null
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          overall_completion_percentage?: number | null
+          readiness_status?: string | null
+          snapshot_data: Json
+          snapshot_name: string
+        }
+        Update: {
+          audit_run_id?: string | null
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          overall_completion_percentage?: number | null
+          readiness_status?: string | null
+          snapshot_data?: Json
+          snapshot_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "functional_audit_snapshots_audit_run_id_fkey"
+            columns: ["audit_run_id"]
+            isOneToOne: false
+            referencedRelation: "functional_audit_runs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "functional_audit_snapshots_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       invitations: {
         Row: {
           accepted_at: string | null
