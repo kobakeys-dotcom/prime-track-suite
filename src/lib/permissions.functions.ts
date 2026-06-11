@@ -286,7 +286,7 @@ export const listCompanyProjects = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase.from("projects")
-      .select("id, name, project_code, status").order("name");
+      .select("id, name, code, status").order("name");
     if (error) throw error;
     return { items: data ?? [] };
   });
