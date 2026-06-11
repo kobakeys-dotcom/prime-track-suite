@@ -78,7 +78,7 @@ function Landing() {
               <span className="pc-display font-bold text-white">PC</span>
             </div>
             <span className="pc-display font-bold text-lg">ProjectCore</span>
-          __CLOSE_BUTTON__
+          </Link>
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium" style={{ color: "rgba(11,31,26,0.7)" }}>
             <a href="#features" className="hover:text-emerald-800">Features</a>
             <a href="#workflow" className="hover:text-emerald-800">Workflow</a>
@@ -90,7 +90,7 @@ function Landing() {
             <button onClick={() => openAuth("signin")} className="pc-btn-ghost px-4 h-9 rounded-md text-sm font-semibold inline-flex items-center">Sign in</button>
             <button onClick={() => openAuth("signup")} className="pc-btn-primary px-4 h-9 rounded-md text-sm font-semibold inline-flex items-center gap-1.5">
               Start free <ArrowRight className="size-3.5" />
-            __CLOSE_BUTTON__
+            </button>
           </div>
         </div>
       </header>
@@ -113,10 +113,10 @@ function Landing() {
             <div className="mt-8 flex flex-wrap gap-3">
               <button onClick={() => openAuth("signup")} className="pc-btn-primary px-6 h-12 rounded-md font-semibold inline-flex items-center gap-2 text-sm">
                 Start managing projects <ArrowRight className="size-4" />
-              __CLOSE_BUTTON__
+              </button>
               <Link to="/dashboard" className="pc-btn-ghost px-6 h-12 rounded-md font-semibold inline-flex items-center gap-2 text-sm">
                 View live demo
-              __CLOSE_BUTTON__
+              </Link>
             </div>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm" style={{ color: "rgba(11,31,26,0.6)" }}>
               {["No credit card", "Role-based access", "Client portal included"].map((t) => (
@@ -387,7 +387,7 @@ function Landing() {
                 </ul>
                 <button onClick={() => openAuth("signup")} className="mt-6 w-full inline-flex items-center justify-center h-10 rounded-md text-sm font-semibold" style={tier.featured ? { background: C.forest, color: "#fff" } : { background: "transparent", color: C.ink, border: "1px solid rgba(11,31,26,0.15)" }}>
                   Get started
-                __CLOSE_BUTTON__
+                </button>
               </div>
             ))}
           </div>
@@ -405,10 +405,10 @@ function Landing() {
           <div className="mt-8 flex flex-wrap justify-center gap-3 relative">
             <button onClick={() => openAuth("signup")} className="px-6 h-12 rounded-md font-semibold inline-flex items-center gap-2 text-sm" style={{ background: C.gold, color: C.ink }}>
               Start free trial <ArrowRight className="size-4" />
-            __CLOSE_BUTTON__
+            </button>
             <Link to="/dashboard" className="px-6 h-12 rounded-md font-semibold inline-flex items-center gap-2 text-sm" style={{ background: "rgba(255,255,255,0.1)", color: "#fff", border: "1px solid rgba(255,255,255,0.2)" }}>
               Explore live demo
-            __CLOSE_BUTTON__
+            </Link>
           </div>
         </div>
       </section>
@@ -441,7 +441,7 @@ function Landing() {
             <div className="pc-display font-bold mb-3">Get started</div>
             <button onClick={() => openAuth("signup")} className="pc-btn-primary px-4 h-9 rounded-md text-sm font-semibold inline-flex items-center gap-1.5">
               Sign in <ArrowRight className="size-3.5" />
-            __CLOSE_BUTTON__
+            </button>
           </div>
         </div>
         <div className="border-t" style={{ borderColor: "rgba(11,31,26,0.08)" }}>
