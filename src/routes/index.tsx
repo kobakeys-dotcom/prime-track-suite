@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import "@fontsource/sora/600.css";
 import "@fontsource/sora/700.css";
 import "@fontsource/manrope/400.css";
@@ -9,6 +10,8 @@ import {
   Truck, HardHat, FolderKanban, Sparkles, Users, Building2, Wrench, ClipboardCheck,
   TrendingUp, Clock, AlertTriangle, FileText, Layers, Zap,
 } from "lucide-react";
+import { AuthDialog } from "@/components/auth-dialog";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -33,6 +36,10 @@ const C = {
 };
 
 function Landing() {
+  const [authOpen, setAuthOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<"signin" | "signup">("signin");
+  const openAuth = (m: "signin" | "signup") => { setAuthMode(m); setAuthOpen(true); };
+
   return (
     <div
       className="min-h-screen"
@@ -42,6 +49,8 @@ function Landing() {
         fontFamily: '"Manrope", system-ui, sans-serif',
       }}
     >
+      <AuthDialog open={authOpen} onClose={() => setAuthOpen(false)} initialMode={authMode} />
+
       <style>{`
         .pc-display { font-family: "Sora", system-ui, sans-serif; letter-spacing: -0.02em; }
         .pc-hero-bg {
