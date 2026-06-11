@@ -238,7 +238,7 @@ export const recordAuditExport = createServerFn({ method: "POST" })
     const { data: exp, error } = await context.supabase
       .from("audit_log_exports")
       .insert({
-        company_id: prof.company_id,
+        company_id: prof.company_id as string,
         project_id: data.project_id ?? null,
         exported_by: context.userId,
         export_name: data.export_name ?? "Audit Log Export",
