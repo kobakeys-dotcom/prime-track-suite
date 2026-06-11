@@ -76,7 +76,10 @@ export const createTask = createServerFn({ method: "POST" })
       await context.supabase.from("notifications").insert({
         user_id: data.assignee_id,
         title: "Task assigned",
+        message: `You were assigned: ${data.title}`,
         body: `You were assigned: ${data.title}`,
+        notification_type: "Assignment",
+        module_name: "tasks",
         link: `/tasks`,
       });
     }
