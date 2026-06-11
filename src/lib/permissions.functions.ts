@@ -29,7 +29,7 @@ export const getMyEffectivePermissions = createServerFn({ method: "GET" })
       const { data: ov } = await context.supabase.from("role_permissions")
         .select("role, permission_key, is_allowed")
         .eq("company_id", companyId)
-        .in("role", roles.length ? roles : ["__none__"]);
+        .in("role", (roles.length ? roles : ["__none__"]) as any);
       for (const o of ov ?? []) overrides[o.permission_key] = !!o.is_allowed;
     }
     return { roles, companyId, overrides };
@@ -123,14 +123,14 @@ export const copyRolePermissions = createServerFn({ method: "POST" })
     }
     for (const o of src ?? []) defaults[o.permission_key] = o.is_allowed;
     const rows = Object.entries(defaults).map(([k, v]) => ({
-      company_id: companyId, role: data.to_role, permission_key: k, is_allowed: v, created_by: context.userId,
+      company_id: companyId, role: data.to_role as any, permission_key: k, is_allowed: v, created_by: context.userId,
     }));
     if (rows.length) {
       const { error } = await context.supabase.from("role_permissions").upsert(rows, { onConflict: "company_id,role,permission_key" });
       if (error) throw error;
     }
     await context.supabase.from("permission_audit_logs").insert({
-      company_id: companyId, changed_by: context.userId, target_role: data.to_role,
+      company_id: companyId, changed_by: context.userId, target_role: data.to_role as any,
       action: "copy_permissions", remarks: `from ${data.from_role}`,
     });
     return { ok: true, count: rows.length };
@@ -233,7 +233,7 @@ export const upsertProjectMember = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => PMInput.parse(d))
   .handler(async ({ context, data }) => {
     await assertCompanyAdmin(context.supabase, context.userId);
-    const row = { ...data, added_by: context.userId };
+    const row = { ...data, added_by: context.userId } as any;
     const res = data.id
       ? await context.supabase.from("project_members").update(row).eq("id", data.id).select().single()
       : await context.supabase.from("project_members").upsert(row, { onConflict: "project_id,user_id" }).select().single();
