@@ -298,7 +298,7 @@ export const addDrawingComment = createServerFn({ method: "POST" })
     const p = await profile(context);
     const { data: drw } = await context.supabase.from("drawings").select("project_id").eq("id", data.drawing_id).maybeSingle();
     const { data: row, error } = await context.supabase.from("drawing_comments").insert({
-      company_id: p?.company_id, project_id: drw?.project_id, drawing_id: data.drawing_id,
+      company_id: p?.company_id ?? "", project_id: drw?.project_id ?? "", drawing_id: data.drawing_id,
       user_id: context.userId, comment: data.comment, visibility: data.visibility ?? "internal",
     }).select().single();
     if (error) throw error;
@@ -319,7 +319,7 @@ export const distributeDrawing = createServerFn({ method: "POST" })
     const p = await profile(context);
     const { data: drw } = await context.supabase.from("drawings").select("project_id").eq("id", data.drawing_id).maybeSingle();
     const { data: row, error } = await context.supabase.from("drawing_distribution_logs").insert({
-      company_id: p?.company_id, project_id: drw?.project_id, drawing_id: data.drawing_id,
+      company_id: p?.company_id ?? "", project_id: drw?.project_id ?? "", drawing_id: data.drawing_id,
       revision_id: data.revision_id ?? null,
       distributed_to_name: data.distributed_to_name ?? null,
       distributed_to_email: data.distributed_to_email ?? null,
