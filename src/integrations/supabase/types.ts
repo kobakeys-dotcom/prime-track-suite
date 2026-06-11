@@ -1165,6 +1165,65 @@ export type Database = {
           },
         ]
       }
+      custom_report_ai_prompts: {
+        Row: {
+          ai_response: string | null
+          company_id: string
+          created_at: string
+          error_message: string | null
+          generated_report_id: string | null
+          id: string
+          interpreted_chart_config: Json | null
+          interpreted_columns: Json | null
+          interpreted_filters: Json | null
+          interpreted_module: string | null
+          project_id: string | null
+          prompt_text: string
+          status: string
+          user_id: string | null
+        }
+        Insert: {
+          ai_response?: string | null
+          company_id: string
+          created_at?: string
+          error_message?: string | null
+          generated_report_id?: string | null
+          id?: string
+          interpreted_chart_config?: Json | null
+          interpreted_columns?: Json | null
+          interpreted_filters?: Json | null
+          interpreted_module?: string | null
+          project_id?: string | null
+          prompt_text: string
+          status?: string
+          user_id?: string | null
+        }
+        Update: {
+          ai_response?: string | null
+          company_id?: string
+          created_at?: string
+          error_message?: string | null
+          generated_report_id?: string | null
+          id?: string
+          interpreted_chart_config?: Json | null
+          interpreted_columns?: Json | null
+          interpreted_filters?: Json | null
+          interpreted_module?: string | null
+          project_id?: string | null
+          prompt_text?: string
+          status?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "custom_report_ai_prompts_generated_report_id_fkey"
+            columns: ["generated_report_id"]
+            isOneToOne: false
+            referencedRelation: "saved_reports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       daily_reports: {
         Row: {
           approved_at: string | null
@@ -7038,6 +7097,10 @@ export type Database = {
       }
       report_templates: {
         Row: {
+          ai_generated_config: Json | null
+          ai_insights_enabled: boolean
+          ai_prompt: string | null
+          ai_summary_enabled: boolean
           chart_config: Json | null
           company_id: string
           created_at: string
@@ -7061,6 +7124,10 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          ai_generated_config?: Json | null
+          ai_insights_enabled?: boolean
+          ai_prompt?: string | null
+          ai_summary_enabled?: boolean
           chart_config?: Json | null
           company_id: string
           created_at?: string
@@ -7084,6 +7151,10 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          ai_generated_config?: Json | null
+          ai_insights_enabled?: boolean
+          ai_prompt?: string | null
+          ai_summary_enabled?: boolean
           chart_config?: Json | null
           company_id?: string
           created_at?: string
@@ -8753,6 +8824,10 @@ export type Database = {
       }
       saved_reports: {
         Row: {
+          ai_insights: string | null
+          ai_narrative: string | null
+          ai_recommendations: string | null
+          ai_summary: string | null
           chart_data: Json | null
           company_id: string
           created_at: string
@@ -8764,6 +8839,7 @@ export type Database = {
           id: string
           is_archived: boolean
           is_client_visible: boolean
+          kpi_data: Json | null
           project_id: string | null
           report_category: string
           report_data: Json | null
@@ -8779,6 +8855,10 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          ai_insights?: string | null
+          ai_narrative?: string | null
+          ai_recommendations?: string | null
+          ai_summary?: string | null
           chart_data?: Json | null
           company_id: string
           created_at?: string
@@ -8790,6 +8870,7 @@ export type Database = {
           id?: string
           is_archived?: boolean
           is_client_visible?: boolean
+          kpi_data?: Json | null
           project_id?: string | null
           report_category?: string
           report_data?: Json | null
@@ -8805,6 +8886,10 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          ai_insights?: string | null
+          ai_narrative?: string | null
+          ai_recommendations?: string | null
+          ai_summary?: string | null
           chart_data?: Json | null
           company_id?: string
           created_at?: string
@@ -8816,6 +8901,7 @@ export type Database = {
           id?: string
           is_archived?: boolean
           is_client_visible?: boolean
+          kpi_data?: Json | null
           project_id?: string | null
           report_category?: string
           report_data?: Json | null
