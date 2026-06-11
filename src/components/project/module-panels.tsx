@@ -6,6 +6,7 @@ import { PaymentClaimRegister } from "@/components/payment-claim-register";
 import { BudgetVsActual } from "@/components/budget-vs-actual";
 import { MaterialRequestRegister } from "@/components/material-request-register";
 import { DocumentManager } from "@/components/document-manager";
+import { DrawingRegister } from "@/components/drawing-register";
 
 export function ProjectMaterialRequestsPanel({ projectId }: { projectId: string }) {
   return <MaterialRequestRegister projectId={projectId} variant="compact" />;
@@ -39,4 +40,9 @@ export function ProjectPaymentClaimsPanel({ projectId }: { projectId: string }) 
 export function ProjectDocumentsPanel({ projectId }: { projectId: string }) {
   return <DocumentManager projectId={projectId} />;
 }
+
+export function ProjectDrawingsPanel({ projectId }: { projectId: string }) {
+  return <DrawingRegister projectId={projectId} />;
+}
+
 
