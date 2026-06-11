@@ -127,28 +127,47 @@ function Sidebar({ companyName }: { companyName?: string | null }) {
   useEffect(() => { setOpenSection(activeSection); }, [activeSection]);
 
   return (
-    <aside className="w-64 bg-sidebar text-sidebar-foreground flex flex-col border-r border-sidebar-border shrink-0">
-      <div className="p-6 flex items-center gap-3">
-        <div className="size-8 bg-accent rounded flex items-center justify-center text-white font-display font-bold">PC</div>
+    <aside className="w-[260px] flex flex-col shrink-0 text-sidebar-foreground relative"
+      style={{
+        background: "linear-gradient(180deg, oklch(0.28 0.07 165) 0%, oklch(0.22 0.06 165) 100%)",
+        borderRight: "1px solid oklch(0.42 0.06 165 / 0.6)",
+      }}
+    >
+      {/* Brand */}
+      <div className="px-5 pt-6 pb-5 flex items-center gap-3 border-b border-white/5">
+        <div className="size-10 rounded-lg flex items-center justify-center font-display font-bold text-[15px] shadow-lg shrink-0"
+          style={{ background: "linear-gradient(135deg, #d4b65a, #c9a84c 60%, #a8862f)", color: "#1a2e26" }}>
+          PC
+        </div>
         <div className="min-w-0">
-          <div className="text-white font-display font-bold tracking-tight">ProjectCore</div>
-          {companyName && <div className="text-[10px] uppercase tracking-widest text-sidebar-foreground/60 truncate">{companyName}</div>}
+          <div className="text-white font-display font-semibold tracking-tight text-[15px] leading-tight">ProjectCore</div>
+          {companyName && <div className="text-[9px] uppercase tracking-[0.18em] text-white/45 truncate mt-0.5">{companyName}</div>}
         </div>
       </div>
-      <nav className="flex-1 px-3 py-2 space-y-1 overflow-y-auto text-sm">
+
+      <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto text-sm">
         {sections.map((section) => {
           const isOpen = openSection === section.label;
+          const sectionActive = section.items.some((i) => pathname === i.to || pathname.startsWith(i.to + "/"));
           return (
             <div key={section.label}>
               <button
                 onClick={() => setOpenSection(isOpen ? "" : section.label)}
-                className="w-full flex items-center justify-between px-3 py-2 rounded-md text-[11px] font-bold uppercase tracking-widest text-white/90 hover:text-white hover:bg-sidebar-accent/50"
+                className={cn(
+                  "w-full flex items-center justify-between px-3 py-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.14em] transition-all",
+                  sectionActive
+                    ? "text-[#e8d28a]"
+                    : "text-white/55 hover:text-white/90 hover:bg-white/5",
+                )}
               >
-                <span>{section.label}</span>
-                <ChevronDown className={cn("size-3 transition-transform", isOpen && "rotate-180")} />
+                <span className="flex items-center gap-2">
+                  {sectionActive && <span className="size-1.5 rounded-full bg-[#c9a84c] shadow-[0_0_8px_#c9a84c]" />}
+                  {section.label}
+                </span>
+                <ChevronDown className={cn("size-3 transition-transform opacity-60", isOpen && "rotate-180")} />
               </button>
               {isOpen && (
-                <div className="mt-0.5 space-y-0.5">
+                <div className="mt-1 mb-1 space-y-0.5 pl-1">
                   {section.items.map((item) => {
                     const active = pathname === item.to || pathname.startsWith(item.to + "/");
                     const Icon = item.icon;
@@ -157,11 +176,19 @@ function Sidebar({ companyName }: { companyName?: string | null }) {
                         key={item.to}
                         to={item.to}
                         className={cn(
-                          "flex items-center gap-3 px-3 py-1.5 rounded-md transition-colors text-[13px]",
-                          active ? "bg-sidebar-accent text-white" : "hover:text-white hover:bg-sidebar-accent/50",
+                          "group relative flex items-center gap-3 pl-4 pr-3 py-2 rounded-md transition-all text-[13px]",
+                          active
+                            ? "text-white font-medium"
+                            : "text-white/65 hover:text-white hover:bg-white/[0.04]",
                         )}
+                        style={active ? {
+                          background: "linear-gradient(90deg, oklch(0.4 0.09 165 / 0.7), oklch(0.4 0.09 165 / 0.2))",
+                        } : undefined}
                       >
-                        <Icon className="size-4 shrink-0" />
+                        {active && (
+                          <span className="absolute left-0 top-1.5 bottom-1.5 w-[3px] rounded-r bg-[#c9a84c] shadow-[0_0_8px_#c9a84c]" />
+                        )}
+                        <Icon className={cn("size-[15px] shrink-0", active ? "text-[#e8d28a]" : "text-white/55 group-hover:text-white/80")} />
                         <span className="truncate">{item.label}</span>
                       </Link>
                     );
@@ -172,15 +199,16 @@ function Sidebar({ companyName }: { companyName?: string | null }) {
           );
         })}
       </nav>
-      <div className="p-3 border-t border-sidebar-border space-y-0.5">
-        <Link to="/settings" className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover:text-white hover:bg-sidebar-accent/50">
-          <Settings className="size-4" /> Settings
+
+      <div className="px-3 py-3 border-t border-white/5 space-y-0.5">
+        <Link to="/settings" className="flex items-center gap-3 px-3 py-2 rounded-md text-[13px] text-white/65 hover:text-white hover:bg-white/[0.05] transition-colors">
+          <Settings className="size-[15px]" /> Settings
         </Link>
         <button
           onClick={async () => { await supabase.auth.signOut(); }}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm hover:text-white hover:bg-sidebar-accent/50"
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-[13px] text-white/65 hover:text-white hover:bg-white/[0.05] transition-colors"
         >
-          <LogOut className="size-4" /> Sign out
+          <LogOut className="size-[15px]" /> Sign out
         </button>
       </div>
     </aside>
