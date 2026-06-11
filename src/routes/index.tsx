@@ -78,7 +78,7 @@ function Landing() {
               <span className="pc-display font-bold text-white">PC</span>
             </div>
             <span className="pc-display font-bold text-lg">ProjectCore</span>
-          </Link>
+          __CLOSE_BUTTON__
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium" style={{ color: "rgba(11,31,26,0.7)" }}>
             <a href="#features" className="hover:text-emerald-800">Features</a>
             <a href="#workflow" className="hover:text-emerald-800">Workflow</a>
@@ -87,10 +87,10 @@ function Landing() {
             <a href="#pricing" className="hover:text-emerald-800">Pricing</a>
           </nav>
           <div className="flex items-center gap-2">
-            <Link to="/auth" className="pc-btn-ghost px-4 h-9 rounded-md text-sm font-semibold inline-flex items-center">Sign in</Link>
-            <Link to="/auth" className="pc-btn-primary px-4 h-9 rounded-md text-sm font-semibold inline-flex items-center gap-1.5">
+            <button onClick={() => openAuth("signin")} className="pc-btn-ghost px-4 h-9 rounded-md text-sm font-semibold inline-flex items-center">Sign in</button>
+            <button onClick={() => openAuth("signup")} className="pc-btn-primary px-4 h-9 rounded-md text-sm font-semibold inline-flex items-center gap-1.5">
               Start free <ArrowRight className="size-3.5" />
-            </Link>
+            __CLOSE_BUTTON__
           </div>
         </div>
       </header>
@@ -111,12 +111,12 @@ function Landing() {
               safety, documents and client communication — in one premium platform.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/auth" className="pc-btn-primary px-6 h-12 rounded-md font-semibold inline-flex items-center gap-2 text-sm">
+              <button onClick={() => openAuth("signup")} className="pc-btn-primary px-6 h-12 rounded-md font-semibold inline-flex items-center gap-2 text-sm">
                 Start managing projects <ArrowRight className="size-4" />
-              </Link>
+              __CLOSE_BUTTON__
               <Link to="/dashboard" className="pc-btn-ghost px-6 h-12 rounded-md font-semibold inline-flex items-center gap-2 text-sm">
                 View live demo
-              </Link>
+              __CLOSE_BUTTON__
             </div>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm" style={{ color: "rgba(11,31,26,0.6)" }}>
               {["No credit card", "Role-based access", "Client portal included"].map((t) => (
@@ -385,9 +385,9 @@ function Landing() {
                 <ul className="mt-5 space-y-2 text-sm">
                   {tier.f.map((x) => <li key={x} className="flex items-center gap-2"><CheckCircle2 className="size-4" style={{ color: C.emerald }} /> {x}</li>)}
                 </ul>
-                <Link to="/auth" className="mt-6 w-full inline-flex items-center justify-center h-10 rounded-md text-sm font-semibold" style={tier.featured ? { background: C.forest, color: "#fff" } : { background: "transparent", color: C.ink, border: "1px solid rgba(11,31,26,0.15)" }}>
+                <button onClick={() => openAuth("signup")} className="mt-6 w-full inline-flex items-center justify-center h-10 rounded-md text-sm font-semibold" style={tier.featured ? { background: C.forest, color: "#fff" } : { background: "transparent", color: C.ink, border: "1px solid rgba(11,31,26,0.15)" }}>
                   Get started
-                </Link>
+                __CLOSE_BUTTON__
               </div>
             ))}
           </div>
@@ -403,12 +403,12 @@ function Landing() {
             Teams, documents, approvals, cost and reporting — unified, automated, and always audit-ready.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3 relative">
-            <Link to="/auth" className="px-6 h-12 rounded-md font-semibold inline-flex items-center gap-2 text-sm" style={{ background: C.gold, color: C.ink }}>
+            <button onClick={() => openAuth("signup")} className="px-6 h-12 rounded-md font-semibold inline-flex items-center gap-2 text-sm" style={{ background: C.gold, color: C.ink }}>
               Start free trial <ArrowRight className="size-4" />
-            </Link>
+            __CLOSE_BUTTON__
             <Link to="/dashboard" className="px-6 h-12 rounded-md font-semibold inline-flex items-center gap-2 text-sm" style={{ background: "rgba(255,255,255,0.1)", color: "#fff", border: "1px solid rgba(255,255,255,0.2)" }}>
               Explore live demo
-            </Link>
+            __CLOSE_BUTTON__
           </div>
         </div>
       </section>
@@ -439,9 +439,9 @@ function Landing() {
           </div>
           <div>
             <div className="pc-display font-bold mb-3">Get started</div>
-            <Link to="/auth" className="pc-btn-primary px-4 h-9 rounded-md text-sm font-semibold inline-flex items-center gap-1.5">
+            <button onClick={() => openAuth("signup")} className="pc-btn-primary px-4 h-9 rounded-md text-sm font-semibold inline-flex items-center gap-1.5">
               Sign in <ArrowRight className="size-3.5" />
-            </Link>
+            __CLOSE_BUTTON__
           </div>
         </div>
         <div className="border-t" style={{ borderColor: "rgba(11,31,26,0.08)" }}>
