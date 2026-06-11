@@ -6914,6 +6914,200 @@ export type Database = {
           },
         ]
       }
+      report_exports: {
+        Row: {
+          company_id: string
+          created_at: string
+          export_status: string
+          export_type: string
+          exported_at: string
+          exported_by: string | null
+          file_name: string | null
+          file_url: string | null
+          id: string
+          project_id: string | null
+          remarks: string | null
+          report_template_id: string | null
+          saved_report_id: string | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          export_status?: string
+          export_type?: string
+          exported_at?: string
+          exported_by?: string | null
+          file_name?: string | null
+          file_url?: string | null
+          id?: string
+          project_id?: string | null
+          remarks?: string | null
+          report_template_id?: string | null
+          saved_report_id?: string | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          export_status?: string
+          export_type?: string
+          exported_at?: string
+          exported_by?: string | null
+          file_name?: string | null
+          file_url?: string | null
+          id?: string
+          project_id?: string | null
+          remarks?: string | null
+          report_template_id?: string | null
+          saved_report_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "report_exports_report_template_id_fkey"
+            columns: ["report_template_id"]
+            isOneToOne: false
+            referencedRelation: "report_templates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "report_exports_saved_report_id_fkey"
+            columns: ["saved_report_id"]
+            isOneToOne: false
+            referencedRelation: "saved_reports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      report_schedules: {
+        Row: {
+          company_id: string
+          created_at: string
+          created_by: string | null
+          frequency: string
+          id: string
+          is_archived: boolean
+          last_run_at: string | null
+          next_run_date: string | null
+          project_id: string | null
+          recipients: Json | null
+          report_template_id: string | null
+          schedule_name: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          frequency?: string
+          id?: string
+          is_archived?: boolean
+          last_run_at?: string | null
+          next_run_date?: string | null
+          project_id?: string | null
+          recipients?: Json | null
+          report_template_id?: string | null
+          schedule_name: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          frequency?: string
+          id?: string
+          is_archived?: boolean
+          last_run_at?: string | null
+          next_run_date?: string | null
+          project_id?: string | null
+          recipients?: Json | null
+          report_template_id?: string | null
+          schedule_name?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "report_schedules_report_template_id_fkey"
+            columns: ["report_template_id"]
+            isOneToOne: false
+            referencedRelation: "report_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      report_templates: {
+        Row: {
+          chart_config: Json | null
+          company_id: string
+          created_at: string
+          created_by: string | null
+          filters: Json | null
+          grouping: Json | null
+          id: string
+          is_archived: boolean
+          is_client_visible: boolean
+          is_shared: boolean
+          is_system_template: boolean
+          layout_config: Json | null
+          report_category: string
+          report_module: string
+          report_type: string
+          selected_columns: Json | null
+          sorting: Json | null
+          status: string
+          template_description: string | null
+          template_name: string
+          updated_at: string
+        }
+        Insert: {
+          chart_config?: Json | null
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          filters?: Json | null
+          grouping?: Json | null
+          id?: string
+          is_archived?: boolean
+          is_client_visible?: boolean
+          is_shared?: boolean
+          is_system_template?: boolean
+          layout_config?: Json | null
+          report_category?: string
+          report_module: string
+          report_type?: string
+          selected_columns?: Json | null
+          sorting?: Json | null
+          status?: string
+          template_description?: string | null
+          template_name: string
+          updated_at?: string
+        }
+        Update: {
+          chart_config?: Json | null
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          filters?: Json | null
+          grouping?: Json | null
+          id?: string
+          is_archived?: boolean
+          is_client_visible?: boolean
+          is_shared?: boolean
+          is_system_template?: boolean
+          layout_config?: Json | null
+          report_category?: string
+          report_module?: string
+          report_type?: string
+          selected_columns?: Json | null
+          sorting?: Json | null
+          status?: string
+          template_description?: string | null
+          template_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       resources: {
         Row: {
           assigned_date: string | null
@@ -8553,6 +8747,95 @@ export type Database = {
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      saved_reports: {
+        Row: {
+          chart_data: Json | null
+          company_id: string
+          created_at: string
+          created_by: string | null
+          date_from: string | null
+          date_to: string | null
+          generated_at: string
+          generated_by: string | null
+          id: string
+          is_archived: boolean
+          is_client_visible: boolean
+          project_id: string | null
+          report_category: string
+          report_data: Json | null
+          report_description: string | null
+          report_filters: Json | null
+          report_module: string
+          report_name: string
+          report_summary: Json | null
+          report_template_id: string | null
+          report_type: string
+          shared_with: Json | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          chart_data?: Json | null
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          date_from?: string | null
+          date_to?: string | null
+          generated_at?: string
+          generated_by?: string | null
+          id?: string
+          is_archived?: boolean
+          is_client_visible?: boolean
+          project_id?: string | null
+          report_category?: string
+          report_data?: Json | null
+          report_description?: string | null
+          report_filters?: Json | null
+          report_module: string
+          report_name: string
+          report_summary?: Json | null
+          report_template_id?: string | null
+          report_type?: string
+          shared_with?: Json | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          chart_data?: Json | null
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          date_from?: string | null
+          date_to?: string | null
+          generated_at?: string
+          generated_by?: string | null
+          id?: string
+          is_archived?: boolean
+          is_client_visible?: boolean
+          project_id?: string | null
+          report_category?: string
+          report_data?: Json | null
+          report_description?: string | null
+          report_filters?: Json | null
+          report_module?: string
+          report_name?: string
+          report_summary?: Json | null
+          report_template_id?: string | null
+          report_type?: string
+          shared_with?: Json | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_reports_report_template_id_fkey"
+            columns: ["report_template_id"]
+            isOneToOne: false
+            referencedRelation: "report_templates"
             referencedColumns: ["id"]
           },
         ]
