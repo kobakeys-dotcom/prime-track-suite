@@ -141,7 +141,7 @@ function Sidebar({ companyName }: { companyName?: string | null }) {
             <div key={section.label}>
               <button
                 onClick={() => setOpenSection(isOpen ? "" : section.label)}
-                className="w-full flex items-center justify-between px-3 py-2 rounded-md text-[10px] font-bold uppercase tracking-widest text-sidebar-foreground/60 hover:text-white hover:bg-sidebar-accent/50"
+                className="w-full flex items-center justify-between px-3 py-2 rounded-md text-[11px] font-bold uppercase tracking-widest text-white/90 hover:text-white hover:bg-sidebar-accent/50"
               >
                 <span>{section.label}</span>
                 <ChevronDown className={cn("size-3 transition-transform", isOpen && "rotate-180")} />
