@@ -7,6 +7,8 @@
       "dependencies": {
         "@ai-sdk/openai-compatible": "^2.0.48",
         "@fontsource/inter": "^5.2.8",
+        "@fontsource/manrope": "^5.2.8",
+        "@fontsource/sora": "^5.2.8",
         "@fontsource/space-grotesk": "^5.2.10",
         "@hookform/resolvers": "^5.2.2",
         "@radix-ui/react-accordion": "^1.2.12",
@@ -227,6 +229,10 @@
     "@floating-ui/utils": ["@floating-ui/utils@0.2.11", "", {}, "sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg=="],
 
     "@fontsource/inter": ["@fontsource/inter@5.2.8", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@fontsource/inter/-/inter-5.2.8.tgz", {}, "sha512-P6r5WnJoKiNVV+zvW2xM13gNdFhAEpQ9dQJHt3naLvfg+LkF2ldgSLiF4T41lf1SQCM9QmkqPTn4TH568IRagg=="],
+
+    "@fontsource/manrope": ["@fontsource/manrope@5.2.8", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@fontsource/manrope/-/manrope-5.2.8.tgz", {}, "sha512-gJHJmcuUk7qWcNCfcAri/DJQtXtBYqi9yKratr4jXhSo0I3xUtNNKI+igQIcw5c+m95g0vounk8ZnX/kb8o0TA=="],
+
+    "@fontsource/sora": ["@fontsource/sora@5.2.8", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@fontsource/sora/-/sora-5.2.8.tgz", {}, "sha512-1G6iTXUx8rcCKzi3mjaTQ1DE8PQz0OmW3Qnku+64S+bqRr1o/gGeiw8fxIQhhBU9ZP8ZofIqai7o00DNOPnlDw=="],
 
     "@fontsource/space-grotesk": ["@fontsource/space-grotesk@5.2.10", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@fontsource/space-grotesk/-/space-grotesk-5.2.10.tgz", {}, "sha512-XNXEbT74OIITPqw2H6HXwPDp85fy43uxfBwFR5PU+9sLnjuLj12KlhVM9nZVN6q6dlKjkuN8JisW/OBxwxgUew=="],
 
