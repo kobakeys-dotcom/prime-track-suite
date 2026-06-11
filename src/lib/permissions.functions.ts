@@ -207,7 +207,7 @@ export const listProjectMembers = createServerFn({ method: "GET" })
   .inputValidator((d: unknown) => z.object({ project_id: z.string().uuid().optional() }).parse(d ?? {}))
   .handler(async ({ context, data }) => {
     let q = context.supabase.from("project_members")
-      .select("id, project_id, user_id, role, access_level, can_edit, can_approve, can_export, can_view_cost, status, is_archived, created_at, projects(name, project_code), profiles:user_id(full_name, email, avatar_url)")
+      .select("id, project_id, user_id, role, access_level, can_edit, can_approve, can_export, can_view_cost, status, is_archived, created_at, projects(name, code), profiles:user_id(full_name, email, avatar_url)")
       .order("created_at", { ascending: false });
     if (data.project_id) q = q.eq("project_id", data.project_id);
     const { data: rows, error } = await q;
