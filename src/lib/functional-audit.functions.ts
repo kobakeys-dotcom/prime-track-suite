@@ -262,7 +262,7 @@ export const functionalAuditStats = createServerFn({ method: "GET" })
       totalApplicable += weight * 100;
       totalEarned += weight * c.completion;
       totalCriticalFails += c.criticalFails;
-      moduleStatuses.push({ id: m.id, completion: c.completion, status: c.status, criticalFails: c.criticalFails, module_category: m.module_category, module_name: m.module_name, is_core_module: !!m.is_core_module });
+      moduleStatuses.push({ id: m.id, completion: c.completion, status: c.status, criticalFails: c.criticalFails, module_category: m.module_category ?? "General", module_name: m.module_name, is_core_module: !!m.is_core_module });
     }
     const overall = totalApplicable > 0 ? Math.round((totalEarned / totalApplicable) * 1000) / 10 : 0;
     const readiness = readinessFromCompletion(overall, totalCriticalFails);
