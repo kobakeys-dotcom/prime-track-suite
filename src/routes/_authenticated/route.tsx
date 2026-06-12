@@ -130,8 +130,8 @@ function Sidebar({ companyName }: { companyName?: string | null }) {
     <aside
       className="w-[280px] flex flex-col shrink-0 text-sidebar-foreground relative"
       style={{
-        background: "linear-gradient(180deg, #072F2D 0%, #062624 100%)",
-        borderRight: "1px solid rgba(255,255,255,0.04)",
+        background: "linear-gradient(180deg, #0F172A 0%, #111827 100%)",
+        borderRight: "1px solid rgba(148,163,184,0.16)",
       }}
     >
       {/* Brand */}
@@ -140,25 +140,25 @@ function Sidebar({ companyName }: { companyName?: string | null }) {
           <div
             className="size-[42px] rounded-xl flex items-center justify-center font-display font-bold text-[14px] shrink-0"
             style={{
-              background: "linear-gradient(135deg, #e6c870 0%, #c9a84c 55%, #a8862f 100%)",
-              color: "#0a2420",
-              boxShadow: "0 4px 14px -2px rgba(201,168,76,0.35), inset 0 1px 0 rgba(255,255,255,0.25)",
+              background: "linear-gradient(135deg, #FBBF24 0%, #F59E0B 60%, #D97706 100%)",
+              color: "#1F2937",
+              boxShadow: "0 4px 14px -2px rgba(245,158,11,0.30), inset 0 1px 0 rgba(255,255,255,0.25)",
             }}
           >
             PC
           </div>
           <div className="min-w-0">
-            <div className="text-white font-display font-semibold tracking-tight text-[17px] leading-tight">
+            <div className="text-[#F8FAFC] font-display font-semibold tracking-tight text-[17px] leading-tight">
               ProjectCore
             </div>
             {companyName && (
-              <div className="text-[10px] uppercase tracking-[0.18em] text-[#7FB3AA] truncate mt-1 font-medium">
+              <div className="text-[10px] uppercase tracking-[0.18em] text-[#94A3B8] truncate mt-1 font-medium">
                 {companyName}
               </div>
             )}
           </div>
         </div>
-        <div className="mt-4 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="mt-4 h-px" style={{ background: "rgba(148,163,184,0.16)" }} />
       </div>
 
       <nav className="flex-1 px-3 pb-4 space-y-1 overflow-y-auto text-sm">
@@ -175,9 +175,14 @@ function Sidebar({ companyName }: { companyName?: string | null }) {
                 className={cn(
                   "w-full flex items-center justify-between px-3.5 h-10 rounded-[10px] text-[11px] font-semibold uppercase tracking-[0.12em] transition-all duration-150",
                   sectionActive
-                    ? "text-white bg-white/[0.035]"
-                    : "text-[#94A3B8] hover:text-white hover:bg-white/[0.025]",
+                    ? "text-[#F8FAFC]"
+                    : "text-[#94A3B8] hover:text-[#F8FAFC]",
                 )}
+                style={
+                  sectionActive
+                    ? { background: "rgba(59,130,246,0.10)" }
+                    : undefined
+                }
               >
                 <span className="truncate">{section.label}</span>
                 <ChevronDown
@@ -208,18 +213,24 @@ function Sidebar({ companyName }: { companyName?: string | null }) {
                             "group relative flex items-center gap-3 pl-[34px] pr-3 h-[38px] rounded-[10px] transition-all duration-150 text-[13.5px]",
                             active
                               ? "text-white font-semibold"
-                              : "text-[#94A3B8] hover:text-white hover:bg-white/[0.04] font-medium",
+                              : "text-[#CBD5E1] hover:text-[#F8FAFC] font-medium",
                           )}
                           style={
-                            active ? { background: "rgba(20,184,166,0.13)" } : undefined
+                            active ? { background: "rgba(59,130,246,0.16)" } : undefined
                           }
+                          onMouseEnter={(e) => {
+                            if (!active) e.currentTarget.style.background = "rgba(59,130,246,0.10)";
+                          }}
+                          onMouseLeave={(e) => {
+                            if (!active) e.currentTarget.style.background = "";
+                          }}
                         >
                           {active && (
                             <span
                               className="absolute left-1.5 top-2 bottom-2 w-[3px] rounded-full"
                               style={{
-                                background: "#14B8A6",
-                                boxShadow: "0 0 8px rgba(20,184,166,0.55)",
+                                background: "#3B82F6",
+                                boxShadow: "0 0 8px rgba(59,130,246,0.55)",
                               }}
                             />
                           )}
@@ -227,8 +238,8 @@ function Sidebar({ companyName }: { companyName?: string | null }) {
                             className={cn(
                               "size-[17px] shrink-0 transition-colors",
                               active
-                                ? "text-[#5EEAD4]"
-                                : "text-[#7FB3AA] group-hover:text-[#A7D8CF]",
+                                ? "text-[#60A5FA]"
+                                : "text-[#94A3B8] group-hover:text-[#60A5FA]",
                             )}
                           />
                           <span className="truncate">{item.label}</span>
@@ -243,21 +254,26 @@ function Sidebar({ companyName }: { companyName?: string | null }) {
         })}
       </nav>
 
-      <div className="px-3 py-3 border-t border-white/[0.05] space-y-0.5">
+      <div className="px-3 py-3 space-y-0.5" style={{ borderTop: "1px solid rgba(148,163,184,0.16)" }}>
         <Link
           to="/settings"
-          className="flex items-center gap-3 px-3.5 h-10 rounded-[10px] text-[13.5px] font-medium text-[#94A3B8] hover:text-white hover:bg-white/[0.04] transition-colors"
+          className="flex items-center gap-3 px-3.5 h-10 rounded-[10px] text-[13.5px] font-medium text-[#CBD5E1] hover:text-[#F8FAFC] transition-colors"
+          onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(59,130,246,0.10)"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = ""; }}
         >
-          <Settings className="size-[17px] text-[#7FB3AA]" /> Settings
+          <Settings className="size-[17px] text-[#94A3B8]" /> Settings
         </Link>
         <button
           onClick={async () => {
             await supabase.auth.signOut();
           }}
-          className="w-full flex items-center gap-3 px-3.5 h-10 rounded-[10px] text-[13.5px] font-medium text-[#94A3B8] hover:text-white hover:bg-white/[0.04] transition-colors"
+          className="w-full flex items-center gap-3 px-3.5 h-10 rounded-[10px] text-[13.5px] font-medium text-[#CBD5E1] hover:text-[#F8FAFC] transition-colors"
+          onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(59,130,246,0.10)"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = ""; }}
         >
-          <LogOut className="size-[17px] text-[#7FB3AA]" /> Sign out
+          <LogOut className="size-[17px] text-[#94A3B8]" /> Sign out
         </button>
+
       </div>
     </aside>
   );
