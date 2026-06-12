@@ -127,88 +127,136 @@ function Sidebar({ companyName }: { companyName?: string | null }) {
   useEffect(() => { setOpenSection(activeSection); }, [activeSection]);
 
   return (
-    <aside className="w-[260px] flex flex-col shrink-0 text-sidebar-foreground relative"
+    <aside
+      className="w-[280px] flex flex-col shrink-0 text-sidebar-foreground relative"
       style={{
-        background: "linear-gradient(180deg, oklch(0.28 0.07 165) 0%, oklch(0.22 0.06 165) 100%)",
-        borderRight: "1px solid oklch(0.42 0.06 165 / 0.6)",
+        background: "linear-gradient(180deg, #072F2D 0%, #062624 100%)",
+        borderRight: "1px solid rgba(255,255,255,0.04)",
       }}
     >
       {/* Brand */}
-      <div className="px-5 pt-6 pb-5 flex items-center gap-3 border-b border-white/5">
-        <div className="size-10 rounded-lg flex items-center justify-center font-display font-bold text-[15px] shadow-lg shrink-0"
-          style={{ background: "linear-gradient(135deg, #d4b65a, #c9a84c 60%, #a8862f)", color: "#1a2e26" }}>
-          PC
+      <div className="px-5 pt-5 pb-4">
+        <div className="flex items-center gap-3">
+          <div
+            className="size-[42px] rounded-xl flex items-center justify-center font-display font-bold text-[14px] shrink-0"
+            style={{
+              background: "linear-gradient(135deg, #e6c870 0%, #c9a84c 55%, #a8862f 100%)",
+              color: "#0a2420",
+              boxShadow: "0 4px 14px -2px rgba(201,168,76,0.35), inset 0 1px 0 rgba(255,255,255,0.25)",
+            }}
+          >
+            PC
+          </div>
+          <div className="min-w-0">
+            <div className="text-white font-display font-semibold tracking-tight text-[17px] leading-tight">
+              ProjectCore
+            </div>
+            {companyName && (
+              <div className="text-[10px] uppercase tracking-[0.18em] text-[#7FB3AA] truncate mt-1 font-medium">
+                {companyName}
+              </div>
+            )}
+          </div>
         </div>
-        <div className="min-w-0">
-          <div className="text-white font-display font-semibold tracking-tight text-[15px] leading-tight">ProjectCore</div>
-          {companyName && <div className="text-[9px] uppercase tracking-[0.18em] text-white/45 truncate mt-0.5">{companyName}</div>}
-        </div>
+        <div className="mt-4 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       </div>
 
-      <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto text-sm">
+      <nav className="flex-1 px-3 pb-4 space-y-1 overflow-y-auto text-sm">
         {sections.map((section) => {
           const isOpen = openSection === section.label;
-          const sectionActive = section.items.some((i) => pathname === i.to || pathname.startsWith(i.to + "/"));
+          const sectionActive = section.items.some(
+            (i) => pathname === i.to || pathname.startsWith(i.to + "/"),
+          );
           return (
-            <div key={section.label}>
+            <div key={section.label} className="select-none">
               <button
                 onClick={() => setOpenSection(isOpen ? "" : section.label)}
+                aria-expanded={isOpen}
                 className={cn(
-                  "w-full flex items-center justify-between px-3 py-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.14em] transition-all",
+                  "w-full flex items-center justify-between px-3.5 h-10 rounded-[10px] text-[11px] font-semibold uppercase tracking-[0.12em] transition-all duration-150",
                   sectionActive
-                    ? "text-[#e8d28a]"
-                    : "text-white/55 hover:text-white/90 hover:bg-white/5",
+                    ? "text-white bg-white/[0.035]"
+                    : "text-[#94A3B8] hover:text-white hover:bg-white/[0.025]",
                 )}
               >
-                <span className="flex items-center gap-2">
-                  {sectionActive && <span className="size-1.5 rounded-full bg-[#c9a84c] shadow-[0_0_8px_#c9a84c]" />}
-                  {section.label}
-                </span>
-                <ChevronDown className={cn("size-3 transition-transform opacity-60", isOpen && "rotate-180")} />
+                <span className="truncate">{section.label}</span>
+                <ChevronDown
+                  className={cn(
+                    "size-3.5 transition-transform duration-200 opacity-60",
+                    isOpen && "rotate-180 opacity-90",
+                  )}
+                />
               </button>
-              {isOpen && (
-                <div className="mt-1 mb-1 space-y-0.5 pl-1">
-                  {section.items.map((item) => {
-                    const active = pathname === item.to || pathname.startsWith(item.to + "/");
-                    const Icon = item.icon;
-                    return (
-                      <Link
-                        key={item.to}
-                        to={item.to}
-                        className={cn(
-                          "group relative flex items-center gap-3 pl-4 pr-3 py-2 rounded-md transition-all text-[13px]",
-                          active
-                            ? "text-white font-medium"
-                            : "text-white/65 hover:text-white hover:bg-white/[0.04]",
-                        )}
-                        style={active ? {
-                          background: "linear-gradient(90deg, oklch(0.4 0.09 165 / 0.7), oklch(0.4 0.09 165 / 0.2))",
-                        } : undefined}
-                      >
-                        {active && (
-                          <span className="absolute left-0 top-1.5 bottom-1.5 w-[3px] rounded-r bg-[#c9a84c] shadow-[0_0_8px_#c9a84c]" />
-                        )}
-                        <Icon className={cn("size-[15px] shrink-0", active ? "text-[#e8d28a]" : "text-white/55 group-hover:text-white/80")} />
-                        <span className="truncate">{item.label}</span>
-                      </Link>
-                    );
-                  })}
+              <div
+                className={cn(
+                  "grid transition-all duration-200 ease-out",
+                  isOpen ? "grid-rows-[1fr] opacity-100 mt-1" : "grid-rows-[0fr] opacity-0",
+                )}
+              >
+                <div className="overflow-hidden">
+                  <div className="space-y-0.5 pb-1">
+                    {section.items.map((item) => {
+                      const active =
+                        pathname === item.to || pathname.startsWith(item.to + "/");
+                      const Icon = item.icon;
+                      return (
+                        <Link
+                          key={item.to}
+                          to={item.to}
+                          aria-current={active ? "page" : undefined}
+                          className={cn(
+                            "group relative flex items-center gap-3 pl-[34px] pr-3 h-[38px] rounded-[10px] transition-all duration-150 text-[13.5px]",
+                            active
+                              ? "text-white font-semibold"
+                              : "text-[#94A3B8] hover:text-white hover:bg-white/[0.04] font-medium",
+                          )}
+                          style={
+                            active ? { background: "rgba(20,184,166,0.13)" } : undefined
+                          }
+                        >
+                          {active && (
+                            <span
+                              className="absolute left-1.5 top-2 bottom-2 w-[3px] rounded-full"
+                              style={{
+                                background: "#14B8A6",
+                                boxShadow: "0 0 8px rgba(20,184,166,0.55)",
+                              }}
+                            />
+                          )}
+                          <Icon
+                            className={cn(
+                              "size-[17px] shrink-0 transition-colors",
+                              active
+                                ? "text-[#5EEAD4]"
+                                : "text-[#7FB3AA] group-hover:text-[#A7D8CF]",
+                            )}
+                          />
+                          <span className="truncate">{item.label}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
           );
         })}
       </nav>
 
-      <div className="px-3 py-3 border-t border-white/5 space-y-0.5">
-        <Link to="/settings" className="flex items-center gap-3 px-3 py-2 rounded-md text-[13px] text-white/65 hover:text-white hover:bg-white/[0.05] transition-colors">
-          <Settings className="size-[15px]" /> Settings
+      <div className="px-3 py-3 border-t border-white/[0.05] space-y-0.5">
+        <Link
+          to="/settings"
+          className="flex items-center gap-3 px-3.5 h-10 rounded-[10px] text-[13.5px] font-medium text-[#94A3B8] hover:text-white hover:bg-white/[0.04] transition-colors"
+        >
+          <Settings className="size-[17px] text-[#7FB3AA]" /> Settings
         </Link>
         <button
-          onClick={async () => { await supabase.auth.signOut(); }}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-[13px] text-white/65 hover:text-white hover:bg-white/[0.05] transition-colors"
+          onClick={async () => {
+            await supabase.auth.signOut();
+          }}
+          className="w-full flex items-center gap-3 px-3.5 h-10 rounded-[10px] text-[13.5px] font-medium text-[#94A3B8] hover:text-white hover:bg-white/[0.04] transition-colors"
         >
-          <LogOut className="size-[15px]" /> Sign out
+          <LogOut className="size-[17px] text-[#7FB3AA]" /> Sign out
         </button>
       </div>
     </aside>
