@@ -822,6 +822,11 @@ function Landing() {
         </div>
       </section>
 
+      {/* INTERACTIVE PRICING CALCULATOR */}
+      <PricingCalculator openAuth={openAuth} />
+
+
+
       {/* FAQ */}
       <section id="faq" className="max-w-4xl mx-auto px-6 py-24">
         <div className="text-center">
@@ -915,3 +920,153 @@ function Landing() {
     </div>
   );
 }
+
+function PricingCalculator({ openAuth }: { openAuth: (m: "signin" | "signup") => void }) {
+  const [seats, setSeats] = useState(15);
+  const [projects, setProjects] = useState(8);
+  const [reports, setReports] = useState(40);
+  const [billing, setBilling] = useState<"monthly" | "annual">("annual");
+
+  // Pricing model
+  const seatPrice = 29;
+  const projectAddon = projects > 10 ? (projects - 10) * 6 : 0;
+  const reportsAddon = reports > 50 ? Math.ceil((reports - 50) / 10) * 8 : 0;
+  const monthly = seats * seatPrice + projectAddon + reportsAddon;
+  const annualDiscount = 0.2;
+  const effective = billing === "annual" ? monthly * (1 - annualDiscount) : monthly;
+  const yearly = effective * 12;
+
+  const tier = seats <= 5 ? "Starter" : seats <= 50 ? "Professional" : "Enterprise";
+
+  return (
+    <section className="py-24" style={{ background: C.paper }}>
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="text-center">
+          <div className="text-xs font-bold uppercase tracking-widest" style={{ color: C.emerald }}>Estimate your plan</div>
+          <h2 className="pc-display text-4xl md:text-5xl font-bold mt-2">Build your price in seconds.</h2>
+          <p className="mt-3 max-w-xl mx-auto text-lg" style={{ color: "rgba(11,31,26,0.65)" }}>
+            Move the sliders to match your team, portfolio, and field reporting volume.
+          </p>
+        </div>
+
+        <div className="mt-12 grid lg:grid-cols-5 gap-6">
+          {/* Controls */}
+          <div className="lg:col-span-3 pc-card p-8 space-y-8">
+            <CalcSlider
+              icon={<Users className="size-4" />}
+              label="Team seats"
+              value={seats}
+              min={1} max={250} step={1}
+              onChange={setSeats}
+              suffix={seats === 1 ? "user" : "users"}
+              hint={`$${seatPrice}/user · ${tier} tier`}
+            />
+            <CalcSlider
+              icon={<FolderKanban className="size-4" />}
+              label="Active projects"
+              value={projects}
+              min={1} max={100} step={1}
+              onChange={setProjects}
+              suffix={projects === 1 ? "project" : "projects"}
+              hint={projects > 10 ? `+$6 / project above 10` : `Up to 10 included`}
+            />
+            <CalcSlider
+              icon={<FileCheck2 className="size-4" />}
+              label="Daily reports / week"
+              value={reports}
+              min={0} max={500} step={5}
+              onChange={setReports}
+              suffix="reports"
+              hint={reports > 50 ? `+$8 per extra 10 reports` : `Up to 50 included`}
+            />
+
+            <div className="flex items-center gap-3 pt-2">
+              <div className="text-xs font-semibold uppercase tracking-wider" style={{ color: "rgba(11,31,26,0.55)" }}>Billing</div>
+              <div className="inline-flex rounded-md p-0.5" style={{ background: "rgba(11,31,26,0.06)" }}>
+                {(["monthly", "annual"] as const).map((b) => (
+                  <button
+                    key={b}
+                    onClick={() => setBilling(b)}
+                    className="px-3 py-1.5 text-xs font-semibold rounded capitalize transition-all"
+                    style={billing === b ? { background: "#fff", color: C.ink, boxShadow: "0 1px 2px rgba(0,0,0,0.08)" } : { color: "rgba(11,31,26,0.6)" }}
+                  >
+                    {b}{b === "annual" && " · save 20%"}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Summary */}
+          <div className="lg:col-span-2 pc-card p-8 flex flex-col" style={{ background: C.forest, color: "#fff", borderColor: C.forest }}>
+            <div className="text-xs font-bold uppercase tracking-widest" style={{ color: C.gold }}>Your estimate</div>
+            <div className="mt-2 text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>{tier} plan · {billing}</div>
+            <div className="mt-6 flex items-baseline gap-2">
+              <span className="pc-display text-5xl font-extrabold">${Math.round(effective).toLocaleString()}</span>
+              <span className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>/ month</span>
+            </div>
+            {billing === "annual" && (
+              <div className="mt-1 text-xs" style={{ color: C.gold }}>
+                ${Math.round(yearly).toLocaleString()} billed annually
+              </div>
+            )}
+
+            <div className="mt-6 space-y-2 text-sm border-t pt-5" style={{ borderColor: "rgba(255,255,255,0.12)" }}>
+              <Row label={`${seats} seats × $${seatPrice}`} value={`$${(seats * seatPrice).toLocaleString()}`} />
+              <Row label="Project add-ons" value={projectAddon ? `$${projectAddon.toLocaleString()}` : "Included"} />
+              <Row label="Daily reports" value={reportsAddon ? `$${reportsAddon.toLocaleString()}` : "Included"} />
+              {billing === "annual" && <Row label="Annual discount" value={`−$${Math.round(monthly * annualDiscount).toLocaleString()}`} accent />}
+            </div>
+
+            <button
+              onClick={() => openAuth("signup")}
+              className="mt-7 w-full inline-flex items-center justify-center gap-2 h-11 rounded-md text-sm font-semibold"
+              style={{ background: C.gold, color: C.ink }}
+            >
+              Start 14-day trial <ArrowRight className="size-4" />
+            </button>
+            <div className="mt-3 text-[11px] text-center" style={{ color: "rgba(255,255,255,0.55)" }}>
+              No credit card required · cancel anytime
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CalcSlider({ icon, label, value, min, max, step, onChange, suffix, hint }: {
+  icon: React.ReactNode; label: string; value: number; min: number; max: number; step: number;
+  onChange: (n: number) => void; suffix: string; hint: string;
+}) {
+  const pct = ((value - min) / (max - min)) * 100;
+  return (
+    <div>
+      <div className="flex items-end justify-between gap-4">
+        <div className="flex items-center gap-2 text-sm font-semibold" style={{ color: C.ink }}>
+          <span style={{ color: C.emerald }}>{icon}</span>{label}
+        </div>
+        <div className="pc-display text-2xl font-bold" style={{ color: C.forest }}>
+          {value.toLocaleString()} <span className="text-xs font-medium" style={{ color: "rgba(11,31,26,0.5)" }}>{suffix}</span>
+        </div>
+      </div>
+      <input
+        type="range" min={min} max={max} step={step} value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className="mt-3 w-full h-1.5 rounded-full appearance-none cursor-pointer pc-range"
+        style={{ background: `linear-gradient(to right, ${C.forest} 0%, ${C.emerald} ${pct}%, rgba(11,31,26,0.1) ${pct}%, rgba(11,31,26,0.1) 100%)` }}
+      />
+      <div className="mt-1.5 text-xs" style={{ color: "rgba(11,31,26,0.55)" }}>{hint}</div>
+    </div>
+  );
+}
+
+function Row({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
+  return (
+    <div className="flex justify-between">
+      <span style={{ color: "rgba(255,255,255,0.7)" }}>{label}</span>
+      <span className="font-semibold" style={{ color: accent ? C.gold : "#fff" }}>{value}</span>
+    </div>
+  );
+}
+
