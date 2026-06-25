@@ -822,6 +822,11 @@ function Landing() {
         </div>
       </section>
 
+      {/* INTERACTIVE PRICING CALCULATOR */}
+      <PricingCalculator openAuth={openAuth} />
+
+
+
       {/* FAQ */}
       <section id="faq" className="max-w-4xl mx-auto px-6 py-24">
         <div className="text-center">
