@@ -927,16 +927,21 @@ function PricingCalculator({ openAuth }: { openAuth: (m: "signin" | "signup") =>
   const [reports, setReports] = useState(40);
   const [billing, setBilling] = useState<"monthly" | "annual">("annual");
 
-  // Pricing model
-  const seatPrice = 29;
-  const projectAddon = projects > 10 ? (projects - 10) * 6 : 0;
-  const reportsAddon = reports > 50 ? Math.ceil((reports - 50) / 10) * 8 : 0;
+  // Pricing model — aligned with subscription tiers above
+  // Starter: ≤5 users, ≤3 projects → free
+  // Professional: 6–50 users → $29/user, project & report add-ons
+  // Enterprise: >50 users → custom quote
+  const tier = seats <= 5 ? "Starter" : seats <= 50 ? "Professional" : "Enterprise";
+  const isEnterprise = tier === "Enterprise";
+  const isStarter = tier === "Starter";
+
+  const seatPrice = isStarter ? 0 : 29;
+  const projectAddon = isStarter || isEnterprise ? 0 : projects > 10 ? (projects - 10) * 6 : 0;
+  const reportsAddon = isStarter || isEnterprise ? 0 : reports > 50 ? Math.ceil((reports - 50) / 10) * 8 : 0;
   const monthly = seats * seatPrice + projectAddon + reportsAddon;
   const annualDiscount = 0.2;
   const effective = billing === "annual" ? monthly * (1 - annualDiscount) : monthly;
   const yearly = effective * 12;
-
-  const tier = seats <= 5 ? "Starter" : seats <= 50 ? "Professional" : "Enterprise";
 
   return (
     <section className="py-24" style={{ background: C.paper }}>
@@ -1002,20 +1007,47 @@ function PricingCalculator({ openAuth }: { openAuth: (m: "signin" | "signup") =>
             <div className="text-xs font-bold uppercase tracking-widest" style={{ color: C.gold }}>Your estimate</div>
             <div className="mt-2 text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>{tier} plan · {billing}</div>
             <div className="mt-6 flex items-baseline gap-2">
-              <span className="pc-display text-5xl font-extrabold">${Math.round(effective).toLocaleString()}</span>
-              <span className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>/ month</span>
+              {isEnterprise ? (
+                <span className="pc-display text-5xl font-extrabold">Custom</span>
+              ) : isStarter ? (
+                <>
+                  <span className="pc-display text-5xl font-extrabold">Free</span>
+                  <span className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>forever</span>
+                </>
+              ) : (
+                <>
+                  <span className="pc-display text-5xl font-extrabold">${Math.round(effective).toLocaleString()}</span>
+                  <span className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>/ month</span>
+                </>
+              )}
             </div>
-            {billing === "annual" && (
+            {!isEnterprise && !isStarter && billing === "annual" && (
               <div className="mt-1 text-xs" style={{ color: C.gold }}>
                 ${Math.round(yearly).toLocaleString()} billed annually
               </div>
             )}
+            {isStarter && (
+              <div className="mt-1 text-xs" style={{ color: C.gold }}>
+                Up to 5 users & 3 active projects
+              </div>
+            )}
+            {isEnterprise && (
+              <div className="mt-1 text-xs" style={{ color: C.gold }}>
+                Volume pricing for 50+ seats — talk to sales
+              </div>
+            )}
 
             <div className="mt-6 space-y-2 text-sm border-t pt-5" style={{ borderColor: "rgba(255,255,255,0.12)" }}>
-              <Row label={`${seats} seats × $${seatPrice}`} value={`$${(seats * seatPrice).toLocaleString()}`} />
-              <Row label="Project add-ons" value={projectAddon ? `$${projectAddon.toLocaleString()}` : "Included"} />
-              <Row label="Daily reports" value={reportsAddon ? `$${reportsAddon.toLocaleString()}` : "Included"} />
-              {billing === "annual" && <Row label="Annual discount" value={`−$${Math.round(monthly * annualDiscount).toLocaleString()}`} accent />}
+              {isEnterprise ? (
+                <Row label="Pricing" value="Tailored quote" />
+              ) : (
+                <>
+                  <Row label={`${seats} seats × $${seatPrice}`} value={`$${(seats * seatPrice).toLocaleString()}`} />
+                  <Row label="Project add-ons" value={projectAddon ? `$${projectAddon.toLocaleString()}` : "Included"} />
+                  <Row label="Daily reports" value={reportsAddon ? `$${reportsAddon.toLocaleString()}` : "Included"} />
+                  {billing === "annual" && monthly > 0 && <Row label="Annual discount" value={`−$${Math.round(monthly * annualDiscount).toLocaleString()}`} accent />}
+                </>
+              )}
             </div>
 
             <button
@@ -1023,7 +1055,7 @@ function PricingCalculator({ openAuth }: { openAuth: (m: "signin" | "signup") =>
               className="mt-7 w-full inline-flex items-center justify-center gap-2 h-11 rounded-md text-sm font-semibold"
               style={{ background: C.gold, color: C.ink }}
             >
-              Start 14-day trial <ArrowRight className="size-4" />
+              {isEnterprise ? "Contact sales" : isStarter ? "Get started free" : "Start 14-day trial"} <ArrowRight className="size-4" />
             </button>
             <div className="mt-3 text-[11px] text-center" style={{ color: "rgba(255,255,255,0.55)" }}>
               No credit card required · cancel anytime
