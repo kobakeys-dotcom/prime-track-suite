@@ -136,9 +136,10 @@ export const getAuditLogById = createServerFn({ method: "GET" })
 export const listEntityActivity = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: unknown) => z.object({
-    entity_type: z.string().min(1).max(80),
+    entity_type: z.string().min(1).max(80).regex(/^[a-z][a-z0-9_]*$/, "invalid entity_type"),
     entity_id: z.string().uuid(),
   }).parse(d))
+
   .handler(async ({ context, data }) => {
     const { data: rows, error } = await context.supabase
       .from("audit_logs")

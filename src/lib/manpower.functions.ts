@@ -64,7 +64,8 @@ async function nextRecNumber(supabase: any, projectId: string) {
 // ============ LIST / GET ============
 export const listManpower = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d: { projectId?: string | null }) => d)
+  .inputValidator((d: unknown) => z.object({ projectId: z.string().uuid().nullable().optional() }).parse(d))
+
   .handler(async ({ data, context }) => {
     let q = context.supabase.from("manpower_records").select(REC_COLS).eq("is_archived", false).order("record_date", { ascending: false });
     if (data.projectId) q = q.eq("project_id", data.projectId);
