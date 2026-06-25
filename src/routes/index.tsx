@@ -927,16 +927,21 @@ function PricingCalculator({ openAuth }: { openAuth: (m: "signin" | "signup") =>
   const [reports, setReports] = useState(40);
   const [billing, setBilling] = useState<"monthly" | "annual">("annual");
 
-  // Pricing model
-  const seatPrice = 29;
-  const projectAddon = projects > 10 ? (projects - 10) * 6 : 0;
-  const reportsAddon = reports > 50 ? Math.ceil((reports - 50) / 10) * 8 : 0;
+  // Pricing model — aligned with subscription tiers above
+  // Starter: ≤5 users, ≤3 projects → free
+  // Professional: 6–50 users → $29/user, project & report add-ons
+  // Enterprise: >50 users → custom quote
+  const tier = seats <= 5 ? "Starter" : seats <= 50 ? "Professional" : "Enterprise";
+  const isEnterprise = tier === "Enterprise";
+  const isStarter = tier === "Starter";
+
+  const seatPrice = isStarter ? 0 : 29;
+  const projectAddon = isStarter || isEnterprise ? 0 : projects > 10 ? (projects - 10) * 6 : 0;
+  const reportsAddon = isStarter || isEnterprise ? 0 : reports > 50 ? Math.ceil((reports - 50) / 10) * 8 : 0;
   const monthly = seats * seatPrice + projectAddon + reportsAddon;
   const annualDiscount = 0.2;
   const effective = billing === "annual" ? monthly * (1 - annualDiscount) : monthly;
   const yearly = effective * 12;
-
-  const tier = seats <= 5 ? "Starter" : seats <= 50 ? "Professional" : "Enterprise";
 
   return (
     <section className="py-24" style={{ background: C.paper }}>
