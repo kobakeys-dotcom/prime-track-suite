@@ -6,9 +6,12 @@ function unauthorized() {
 }
 
 function authorized(request: Request) {
+  const expected = process.env.CRON_SECRET;
+  if (!expected) return false;
   const key = request.headers.get("apikey") ?? request.headers.get("authorization")?.replace(/^Bearer\s+/i, "");
-  return !!key && key === process.env.SUPABASE_PUBLISHABLE_KEY;
+  return !!key && key === expected;
 }
+
 
 async function run() {
   const today = new Date().toISOString().slice(0, 10);
