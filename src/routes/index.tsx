@@ -928,20 +928,16 @@ function PricingCalculator({ openAuth }: { openAuth: (m: "signin" | "signup") =>
   const [billing, setBilling] = useState<"monthly" | "annual">("annual");
 
   // Pricing model — aligned with subscription tiers above
-  // Starter: ≤5 users, ≤3 projects → free
-  // Professional: 6–50 users → $29/user, project & report add-ons
+  // Starter: ≤5 users and ≤3 active projects → free
+  // Professional: up to 50 users → $29/user/month, unlimited projects
   // Enterprise: >50 users → custom quote
-  const tier = seats <= 5 ? "Starter" : seats <= 50 ? "Professional" : "Enterprise";
+  const tier = seats > 50 ? "Enterprise" : seats <= 5 && projects <= 3 ? "Starter" : "Professional";
   const isEnterprise = tier === "Enterprise";
   const isStarter = tier === "Starter";
 
-  const seatPrice = isStarter ? 0 : 29;
-  const projectAddon = isStarter || isEnterprise ? 0 : projects > 10 ? (projects - 10) * 6 : 0;
-  const reportsAddon = isStarter || isEnterprise ? 0 : reports > 50 ? Math.ceil((reports - 50) / 10) * 8 : 0;
-  const monthly = seats * seatPrice + projectAddon + reportsAddon;
-  const annualDiscount = 0.2;
-  const effective = billing === "annual" ? monthly * (1 - annualDiscount) : monthly;
-  const yearly = effective * 12;
+  const seatPrice = isStarter || isEnterprise ? 0 : 29;
+  const monthly = isStarter || isEnterprise ? 0 : seats * seatPrice;
+  const yearly = monthly * 12;
 
   return (
     <section className="py-24" style={{ background: C.paper }}>
@@ -964,7 +960,7 @@ function PricingCalculator({ openAuth }: { openAuth: (m: "signin" | "signup") =>
               min={1} max={250} step={1}
               onChange={setSeats}
               suffix={seats === 1 ? "user" : "users"}
-              hint={`$${seatPrice}/user · ${tier} tier`}
+                hint={isEnterprise ? "Custom pricing · Enterprise tier" : isStarter ? "Included · Starter tier" : "$29/user/month · Professional tier"}
             />
             <CalcSlider
               icon={<FolderKanban className="size-4" />}
@@ -973,7 +969,7 @@ function PricingCalculator({ openAuth }: { openAuth: (m: "signin" | "signup") =>
               min={1} max={100} step={1}
               onChange={setProjects}
               suffix={projects === 1 ? "project" : "projects"}
-              hint={projects > 10 ? `+$6 / project above 10` : `Up to 10 included`}
+                hint={isStarter ? "Up to 3 active projects included" : isEnterprise ? "Custom project volume" : "Unlimited projects included"}
             />
             <CalcSlider
               icon={<FileCheck2 className="size-4" />}
@@ -982,7 +978,7 @@ function PricingCalculator({ openAuth }: { openAuth: (m: "signin" | "signup") =>
               min={0} max={500} step={5}
               onChange={setReports}
               suffix="reports"
-              hint={reports > 50 ? `+$8 per extra 10 reports` : `Up to 50 included`}
+                hint={isEnterprise ? "Custom reporting volume" : "Included in your plan"}
             />
 
             <div className="flex items-center gap-3 pt-2">
@@ -995,7 +991,7 @@ function PricingCalculator({ openAuth }: { openAuth: (m: "signin" | "signup") =>
                     className="px-3 py-1.5 text-xs font-semibold rounded capitalize transition-all"
                     style={billing === b ? { background: "#fff", color: C.ink, boxShadow: "0 1px 2px rgba(0,0,0,0.08)" } : { color: "rgba(11,31,26,0.6)" }}
                   >
-                    {b}{b === "annual" && " · save 20%"}
+                    {b}
                   </button>
                 ))}
               </div>
@@ -1016,14 +1012,14 @@ function PricingCalculator({ openAuth }: { openAuth: (m: "signin" | "signup") =>
                 </>
               ) : (
                 <>
-                  <span className="pc-display text-5xl font-extrabold">${Math.round(effective).toLocaleString()}</span>
+                  <span className="pc-display text-5xl font-extrabold">${monthly.toLocaleString()}</span>
                   <span className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>/ month</span>
                 </>
               )}
             </div>
             {!isEnterprise && !isStarter && billing === "annual" && (
               <div className="mt-1 text-xs" style={{ color: C.gold }}>
-                ${Math.round(yearly).toLocaleString()} billed annually
+                ${yearly.toLocaleString()} billed annually
               </div>
             )}
             {isStarter && (
@@ -1042,10 +1038,10 @@ function PricingCalculator({ openAuth }: { openAuth: (m: "signin" | "signup") =>
                 <Row label="Pricing" value="Tailored quote" />
               ) : (
                 <>
-                  <Row label={`${seats} seats × $${seatPrice}`} value={`$${(seats * seatPrice).toLocaleString()}`} />
-                  <Row label="Project add-ons" value={projectAddon ? `$${projectAddon.toLocaleString()}` : "Included"} />
-                  <Row label="Daily reports" value={reportsAddon ? `$${reportsAddon.toLocaleString()}` : "Included"} />
-                  {billing === "annual" && monthly > 0 && <Row label="Annual discount" value={`−$${Math.round(monthly * annualDiscount).toLocaleString()}`} accent />}
+                  <Row label={`${seats} seats × $${seatPrice}`} value={`$${monthly.toLocaleString()}`} />
+                  <Row label="Active projects" value={isStarter ? "3 included" : "Included"} />
+                  <Row label="Daily reports" value="Included" />
+                  {billing === "annual" && monthly > 0 && <Row label="Annual billing" value={`$${yearly.toLocaleString()}/year`} accent />}
                 </>
               )}
             </div>
