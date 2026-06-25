@@ -56,7 +56,8 @@ async function nextNumber(supabase: any, table: string, field: string, companyId
 // =================== EQUIPMENT MASTER ===================
 export const listEquipment = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d: { projectId?: string | null }) => d)
+  .inputValidator((d: unknown) => z.object({ projectId: z.string().uuid().nullable().optional() }).parse(d))
+
   .handler(async ({ data, context }) => {
     let q = context.supabase.from("equipment").select("*").eq("is_archived", false).order("created_at", { ascending: false });
     if (data.projectId) q = q.or(`project_id.eq.${data.projectId},assigned_to_project_id.eq.${data.projectId}`);
