@@ -55,6 +55,7 @@ import { Route as AuthenticatedAuditRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedApprovalsRouteImport } from './routes/_authenticated/approvals'
 import { Route as AuthenticatedAiRouteImport } from './routes/_authenticated/ai'
 import { Route as AuthenticatedActionItemsRouteImport } from './routes/_authenticated/action-items'
+import { Route as AuthenticatedSettingsEmailRouteImport } from './routes/_authenticated/settings.email'
 import { Route as AuthenticatedProjectsProjectIdRouteImport } from './routes/_authenticated/projects.$projectId'
 import { Route as ApiPublicCronDailyRouteImport } from './routes/api/public/cron/daily'
 
@@ -296,6 +297,12 @@ const AuthenticatedActionItemsRoute =
     path: '/action-items',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedSettingsEmailRoute =
+  AuthenticatedSettingsEmailRouteImport.update({
+    id: '/email',
+    path: '/email',
+    getParentRoute: () => AuthenticatedSettingsRoute,
+  } as any)
 const AuthenticatedProjectsProjectIdRoute =
   AuthenticatedProjectsProjectIdRouteImport.update({
     id: '/$projectId',
@@ -346,7 +353,7 @@ export interface FileRoutesByFullPath {
   '/rfqs': typeof AuthenticatedRfqsRoute
   '/risks': typeof AuthenticatedRisksRoute
   '/safety': typeof AuthenticatedSafetyRoute
-  '/settings': typeof AuthenticatedSettingsRoute
+  '/settings': typeof AuthenticatedSettingsRouteWithChildren
   '/snags': typeof AuthenticatedSnagsRoute
   '/submittals': typeof AuthenticatedSubmittalsRoute
   '/suppliers': typeof AuthenticatedSuppliersRoute
@@ -355,6 +362,7 @@ export interface FileRoutesByFullPath {
   '/variations': typeof AuthenticatedVariationsRoute
   '/wbs': typeof AuthenticatedWbsRoute
   '/projects/$projectId': typeof AuthenticatedProjectsProjectIdRoute
+  '/settings/email': typeof AuthenticatedSettingsEmailRoute
   '/api/public/cron/daily': typeof ApiPublicCronDailyRoute
 }
 export interface FileRoutesByTo {
@@ -395,7 +403,7 @@ export interface FileRoutesByTo {
   '/rfqs': typeof AuthenticatedRfqsRoute
   '/risks': typeof AuthenticatedRisksRoute
   '/safety': typeof AuthenticatedSafetyRoute
-  '/settings': typeof AuthenticatedSettingsRoute
+  '/settings': typeof AuthenticatedSettingsRouteWithChildren
   '/snags': typeof AuthenticatedSnagsRoute
   '/submittals': typeof AuthenticatedSubmittalsRoute
   '/suppliers': typeof AuthenticatedSuppliersRoute
@@ -404,6 +412,7 @@ export interface FileRoutesByTo {
   '/variations': typeof AuthenticatedVariationsRoute
   '/wbs': typeof AuthenticatedWbsRoute
   '/projects/$projectId': typeof AuthenticatedProjectsProjectIdRoute
+  '/settings/email': typeof AuthenticatedSettingsEmailRoute
   '/api/public/cron/daily': typeof ApiPublicCronDailyRoute
 }
 export interface FileRoutesById {
@@ -446,7 +455,7 @@ export interface FileRoutesById {
   '/_authenticated/rfqs': typeof AuthenticatedRfqsRoute
   '/_authenticated/risks': typeof AuthenticatedRisksRoute
   '/_authenticated/safety': typeof AuthenticatedSafetyRoute
-  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRouteWithChildren
   '/_authenticated/snags': typeof AuthenticatedSnagsRoute
   '/_authenticated/submittals': typeof AuthenticatedSubmittalsRoute
   '/_authenticated/suppliers': typeof AuthenticatedSuppliersRoute
@@ -455,6 +464,7 @@ export interface FileRoutesById {
   '/_authenticated/variations': typeof AuthenticatedVariationsRoute
   '/_authenticated/wbs': typeof AuthenticatedWbsRoute
   '/_authenticated/projects/$projectId': typeof AuthenticatedProjectsProjectIdRoute
+  '/_authenticated/settings/email': typeof AuthenticatedSettingsEmailRoute
   '/api/public/cron/daily': typeof ApiPublicCronDailyRoute
 }
 export interface FileRouteTypes {
@@ -506,6 +516,7 @@ export interface FileRouteTypes {
     | '/variations'
     | '/wbs'
     | '/projects/$projectId'
+    | '/settings/email'
     | '/api/public/cron/daily'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -555,6 +566,7 @@ export interface FileRouteTypes {
     | '/variations'
     | '/wbs'
     | '/projects/$projectId'
+    | '/settings/email'
     | '/api/public/cron/daily'
   id:
     | '__root__'
@@ -605,6 +617,7 @@ export interface FileRouteTypes {
     | '/_authenticated/variations'
     | '/_authenticated/wbs'
     | '/_authenticated/projects/$projectId'
+    | '/_authenticated/settings/email'
     | '/api/public/cron/daily'
   fileRoutesById: FileRoutesById
 }
@@ -939,6 +952,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedActionItemsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/settings/email': {
+      id: '/_authenticated/settings/email'
+      path: '/email'
+      fullPath: '/settings/email'
+      preLoaderRoute: typeof AuthenticatedSettingsEmailRouteImport
+      parentRoute: typeof AuthenticatedSettingsRoute
+    }
     '/_authenticated/projects/$projectId': {
       id: '/_authenticated/projects/$projectId'
       path: '/$projectId'
@@ -967,6 +987,19 @@ const AuthenticatedProjectsRouteChildren: AuthenticatedProjectsRouteChildren = {
 const AuthenticatedProjectsRouteWithChildren =
   AuthenticatedProjectsRoute._addFileChildren(
     AuthenticatedProjectsRouteChildren,
+  )
+
+interface AuthenticatedSettingsRouteChildren {
+  AuthenticatedSettingsEmailRoute: typeof AuthenticatedSettingsEmailRoute
+}
+
+const AuthenticatedSettingsRouteChildren: AuthenticatedSettingsRouteChildren = {
+  AuthenticatedSettingsEmailRoute: AuthenticatedSettingsEmailRoute,
+}
+
+const AuthenticatedSettingsRouteWithChildren =
+  AuthenticatedSettingsRoute._addFileChildren(
+    AuthenticatedSettingsRouteChildren,
   )
 
 interface AuthenticatedRouteRouteChildren {
@@ -1005,7 +1038,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedRfqsRoute: typeof AuthenticatedRfqsRoute
   AuthenticatedRisksRoute: typeof AuthenticatedRisksRoute
   AuthenticatedSafetyRoute: typeof AuthenticatedSafetyRoute
-  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRouteWithChildren
   AuthenticatedSnagsRoute: typeof AuthenticatedSnagsRoute
   AuthenticatedSubmittalsRoute: typeof AuthenticatedSubmittalsRoute
   AuthenticatedSuppliersRoute: typeof AuthenticatedSuppliersRoute
@@ -1051,7 +1084,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedRfqsRoute: AuthenticatedRfqsRoute,
   AuthenticatedRisksRoute: AuthenticatedRisksRoute,
   AuthenticatedSafetyRoute: AuthenticatedSafetyRoute,
-  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRouteWithChildren,
   AuthenticatedSnagsRoute: AuthenticatedSnagsRoute,
   AuthenticatedSubmittalsRoute: AuthenticatedSubmittalsRoute,
   AuthenticatedSuppliersRoute: AuthenticatedSuppliersRoute,
