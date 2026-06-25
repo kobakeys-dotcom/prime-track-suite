@@ -592,7 +592,7 @@ export const addComment = createServerFn({ method: "POST" })
 // =================== STATS ===================
 export const equipmentStats = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d: { projectId?: string | null }) => d)
+  .inputValidator((d: unknown) => z.object({ projectId: z.string().uuid().nullable().optional() }).parse(d))
   .handler(async ({ data, context }) => {
     let eqQ = context.supabase.from("equipment").select("*").eq("is_archived", false);
     if (data.projectId) eqQ = eqQ.or(`project_id.eq.${data.projectId},assigned_to_project_id.eq.${data.projectId}`);
