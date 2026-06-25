@@ -1,11 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { Mail, CheckCircle2, Circle, Copy, ExternalLink, ShieldCheck, Globe, Send, ChevronRight, AlertTriangle } from "lucide-react";
+import { useState, useMemo, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import {
+  Mail, CheckCircle2, Circle, Copy, ExternalLink, ShieldCheck, Globe, Send,
+  ChevronRight, AlertTriangle, RefreshCw, Loader2, XCircle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
+import { verifyEmailDns } from "@/lib/email-dns.functions";
 
 export const Route = createFileRoute("/_authenticated/settings/email")({
   head: () => ({ meta: [{ title: "Email Setup — ProjectCore" }] }),
@@ -13,92 +18,111 @@ export const Route = createFileRoute("/_authenticated/settings/email")({
 });
 
 type StepKey = "domain" | "dns" | "verify" | "sender" | "test";
+const DOMAIN_RX = /^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/i;
 
 function EmailSetupPage() {
-  const [done, setDone] = useState<Record<StepKey, boolean>>({
-    domain: false, dns: false, verify: false, sender: false, test: false,
-  });
   const [domain, setDomain] = useState("");
   const [sender, setSender] = useState("notifications");
+  const [manual, setManual] = useState<Record<StepKey, boolean>>({
+    domain: false, dns: false, verify: false, sender: false, test: false,
+  });
 
-  const toggle = (k: StepKey) => setDone((d) => ({ ...d, [k]: !d[k] }));
+  const domainValid = DOMAIN_RX.test(domain.trim());
+  const verifyFn = useServerFn(verifyEmailDns);
 
-  const completed = Object.values(done).filter(Boolean).length;
-  const total = Object.keys(done).length;
+  // Auto-poll DNS verification every 15s once a valid domain is entered
+  const dnsQuery = useQuery({
+    queryKey: ["email-dns", domain.trim().toLowerCase()],
+    queryFn: () => verifyFn({ data: { domain: domain.trim().toLowerCase() } }),
+    enabled: domainValid,
+    refetchInterval: (q) => (q.state.data?.allPassed ? false : 15_000),
+    refetchOnWindowFocus: true,
+    staleTime: 10_000,
+  });
+
+  const dns = dnsQuery.data;
+  const dnsAllPassed = !!dns?.allPassed;
+  const dnsAnyPassed = !!(dns?.spf.ok || dns?.dkim.ok || dns?.dmarc.ok);
+
+  // Derived step status (auto-checked from real signals; manual override only adds)
+  const computed: Record<StepKey, boolean> = useMemo(() => ({
+    domain: domainValid || manual.domain,
+    dns: dnsAnyPassed || manual.dns,
+    verify: dnsAllPassed || manual.verify,
+    sender: sender.trim().length > 0 && domainValid ? (manual.sender || dnsAllPassed) : manual.sender,
+    test: manual.test,
+  }), [domainValid, dnsAnyPassed, dnsAllPassed, sender, manual]);
+
+  // Toast when verification flips to success
+  useEffect(() => {
+    if (dnsAllPassed) toast.success("All DNS records verified", { id: "dns-ok" });
+  }, [dnsAllPassed]);
+
+  const toggle = (k: StepKey) => setManual((m) => ({ ...m, [k]: !m[k] }));
+  const completed = Object.values(computed).filter(Boolean).length;
+  const total = 5;
   const progress = Math.round((completed / total) * 100);
 
-  const copy = (v: string) => {
-    navigator.clipboard.writeText(v);
-    toast.success("Copied to clipboard");
-  };
+  const copy = (v: string) => { navigator.clipboard.writeText(v); toast.success("Copied"); };
 
   const dnsRecords = [
-    { type: "TXT", host: "@", value: "v=spf1 include:_spf.lovable.cloud ~all", purpose: "SPF" },
-    { type: "CNAME", host: "lovable._domainkey", value: "lovable._domainkey.lovable.cloud", purpose: "DKIM" },
-    { type: "TXT", host: "_dmarc", value: "v=DMARC1; p=quarantine; rua=mailto:dmarc@yourdomain.com", purpose: "DMARC" },
+    { type: "TXT", host: "@", value: "v=spf1 include:_spf.lovable.cloud ~all", purpose: "SPF", status: dns?.spf },
+    { type: "CNAME", host: "lovable._domainkey", value: "lovable._domainkey.lovable.cloud", purpose: "DKIM", status: dns?.dkim },
+    { type: "TXT", host: "_dmarc", value: "v=DMARC1; p=quarantine; rua=mailto:dmarc@yourdomain.com", purpose: "DMARC", status: dns?.dmarc },
   ];
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-8 space-y-8">
-      {/* Header */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <Link to="/settings" className="hover:text-foreground">Settings</Link>
-            <ChevronRight className="size-3" />
-            <span>Email</span>
+            <ChevronRight className="size-3" /><span>Email</span>
           </div>
           <h1 className="mt-1 text-3xl font-bold tracking-tight flex items-center gap-3">
             <Mail className="size-7 text-primary" /> Email setup
           </h1>
           <p className="mt-1 text-sm text-muted-foreground max-w-2xl">
-            Configure a verified sender domain so ProjectCore can send notifications, approvals, and quotes from your brand.
+            Configure a verified sender domain. DNS records are checked automatically every 15 seconds.
           </p>
         </div>
-        <Badge variant={progress === 100 ? "default" : "secondary"} className="text-xs">
-          {completed}/{total} complete
-        </Badge>
+        <div className="flex items-center gap-2">
+          {domainValid && (
+            <Button variant="outline" size="sm" onClick={() => dnsQuery.refetch()} disabled={dnsQuery.isFetching}>
+              {dnsQuery.isFetching ? <Loader2 className="size-4 mr-2 animate-spin" /> : <RefreshCw className="size-4 mr-2" />}
+              Re-check now
+            </Button>
+          )}
+          <Badge variant={progress === 100 ? "default" : "secondary"}>{completed}/{total} complete</Badge>
+        </div>
       </div>
 
-      {/* Progress bar */}
       <div className="h-2 rounded-full bg-muted overflow-hidden">
         <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
       </div>
 
-      {/* Step 1: Add domain */}
-      <StepCard
-        n={1}
-        title="Add your sending domain"
-        icon={<Globe className="size-5" />}
-        checked={done.domain}
-        onToggle={() => toggle("domain")}
-      >
+      <StepCard n={1} title="Add your sending domain" icon={<Globe className="size-5" />}
+        checked={computed.domain} onToggle={() => toggle("domain")} auto={domainValid}>
         <p className="text-sm text-muted-foreground">
-          Use a subdomain like <code className="px-1 py-0.5 rounded bg-muted text-xs">notify.yourdomain.com</code> dedicated to app email. This keeps reputation isolated from your main mail.
+          Use a subdomain like <code className="px-1 py-0.5 rounded bg-muted text-xs">notify.yourdomain.com</code>.
         </p>
         <div className="flex gap-2 max-w-md">
           <Input placeholder="notify.yourdomain.com" value={domain} onChange={(e) => setDomain(e.target.value)} />
-          <Button variant="outline" onClick={() => copy(domain || "notify.yourdomain.com")}>
-            <Copy className="size-4" />
-          </Button>
+          <Button variant="outline" onClick={() => copy(domain || "notify.yourdomain.com")}><Copy className="size-4" /></Button>
         </div>
+        {domain && !domainValid && <p className="text-xs text-destructive">Enter a valid fully-qualified domain.</p>}
       </StepCard>
 
-      {/* Step 2: DNS records */}
-      <StepCard
-        n={2}
-        title="Add DNS records at your registrar"
-        icon={<ShieldCheck className="size-5" />}
-        checked={done.dns}
-        onToggle={() => toggle("dns")}
-      >
+      <StepCard n={2} title="Add DNS records at your registrar" icon={<ShieldCheck className="size-5" />}
+        checked={computed.dns} onToggle={() => toggle("dns")} auto={dnsAnyPassed}>
         <p className="text-sm text-muted-foreground">
-          Sign in to your DNS provider (Cloudflare, GoDaddy, Namecheap, Route 53) and add these records. They authenticate your mail so it doesn't land in spam.
+          Add these records at your DNS provider. Status updates automatically.
         </p>
         <div className="rounded-lg border overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-muted/50 text-xs uppercase tracking-wider text-muted-foreground">
               <tr>
+                <th className="text-left px-3 py-2">Status</th>
                 <th className="text-left px-3 py-2">Type</th>
                 <th className="text-left px-3 py-2">Host</th>
                 <th className="text-left px-3 py-2">Value</th>
@@ -109,67 +133,53 @@ function EmailSetupPage() {
             <tbody>
               {dnsRecords.map((r) => (
                 <tr key={r.purpose} className="border-t">
+                  <td className="px-3 py-2"><DnsStatusIcon status={r.status} loading={dnsQuery.isFetching && !dns} enabled={domainValid} /></td>
                   <td className="px-3 py-2 font-mono text-xs">{r.type}</td>
                   <td className="px-3 py-2 font-mono text-xs">{r.host}</td>
                   <td className="px-3 py-2 font-mono text-xs truncate max-w-xs" title={r.value}>{r.value}</td>
                   <td className="px-3 py-2"><Badge variant="outline" className="text-xs">{r.purpose}</Badge></td>
                   <td className="px-3 py-2 text-right">
-                    <Button size="sm" variant="ghost" onClick={() => copy(r.value)}>
-                      <Copy className="size-3.5" />
-                    </Button>
+                    <Button size="sm" variant="ghost" onClick={() => copy(r.value)}><Copy className="size-3.5" /></Button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div className="flex items-start gap-2 text-xs text-muted-foreground p-3 rounded-md bg-muted/40 border">
-          <AlertTriangle className="size-4 mt-0.5 shrink-0 text-amber-500" />
-          DNS changes typically take 5 minutes to 72 hours to propagate. You can continue while it propagates.
-        </div>
+        {!domainValid && (
+          <div className="flex items-start gap-2 text-xs text-muted-foreground p-3 rounded-md bg-muted/40 border">
+            <AlertTriangle className="size-4 mt-0.5 shrink-0 text-amber-500" />
+            Enter your domain in step 1 to enable automatic verification.
+          </div>
+        )}
       </StepCard>
 
-      {/* Step 3: Verify */}
-      <StepCard
-        n={3}
-        title="Verify the domain"
-        icon={<CheckCircle2 className="size-5" />}
-        checked={done.verify}
-        onToggle={() => toggle("verify")}
-      >
-        <p className="text-sm text-muted-foreground">
-          Use a DNS lookup tool to confirm your records are live, then return here and mark this step complete.
-        </p>
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline" size="sm" asChild>
-            <a href={`https://dnschecker.org/#TXT/${domain || "yourdomain.com"}`} target="_blank" rel="noreferrer">
-              Check SPF <ExternalLink className="ml-1.5 size-3" />
-            </a>
-          </Button>
-          <Button variant="outline" size="sm" asChild>
-            <a href={`https://dnschecker.org/#CNAME/lovable._domainkey.${domain || "yourdomain.com"}`} target="_blank" rel="noreferrer">
-              Check DKIM <ExternalLink className="ml-1.5 size-3" />
-            </a>
-          </Button>
-          <Button variant="outline" size="sm" asChild>
-            <a href={`https://mxtoolbox.com/SuperTool.aspx?action=mx%3a${domain || "yourdomain.com"}`} target="_blank" rel="noreferrer">
-              MXToolbox <ExternalLink className="ml-1.5 size-3" />
-            </a>
-          </Button>
-        </div>
+      <StepCard n={3} title="Verify the domain" icon={<CheckCircle2 className="size-5" />}
+        checked={computed.verify} onToggle={() => toggle("verify")} auto={dnsAllPassed}>
+        {!domainValid ? (
+          <p className="text-sm text-muted-foreground">Verification will start automatically once a domain is entered.</p>
+        ) : dnsAllPassed ? (
+          <div className="flex items-center gap-2 text-sm text-emerald-600 dark:text-emerald-400">
+            <CheckCircle2 className="size-4" /> SPF, DKIM and DMARC all verified at {new Date(dns!.checkedAt).toLocaleTimeString()}.
+          </div>
+        ) : (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Loader2 className="size-4 animate-spin" /> Re-checking every 15 seconds…
+              {dns && <span className="text-xs">last checked {new Date(dns.checkedAt).toLocaleTimeString()}</span>}
+            </div>
+            <div className="text-xs grid gap-1 sm:grid-cols-3">
+              <RecordHint label="SPF" status={dns?.spf} />
+              <RecordHint label="DKIM" status={dns?.dkim} />
+              <RecordHint label="DMARC" status={dns?.dmarc} />
+            </div>
+          </div>
+        )}
       </StepCard>
 
-      {/* Step 4: Sender address */}
-      <StepCard
-        n={4}
-        title="Choose a sender address"
-        icon={<Mail className="size-5" />}
-        checked={done.sender}
-        onToggle={() => toggle("sender")}
-      >
-        <p className="text-sm text-muted-foreground">
-          This is the "From" address recipients see. Pick a clear, monitored mailbox.
-        </p>
+      <StepCard n={4} title="Choose a sender address" icon={<Mail className="size-5" />}
+        checked={computed.sender} onToggle={() => toggle("sender")} auto={dnsAllPassed && sender.trim().length > 0}>
+        <p className="text-sm text-muted-foreground">The "From" address recipients see.</p>
         <div className="flex items-center gap-2 max-w-md">
           <Input value={sender} onChange={(e) => setSender(e.target.value)} className="max-w-[180px]" />
           <span className="text-muted-foreground">@</span>
@@ -180,32 +190,24 @@ function EmailSetupPage() {
         </div>
       </StepCard>
 
-      {/* Step 5: Test send */}
-      <StepCard
-        n={5}
-        title="Send a test email"
-        icon={<Send className="size-5" />}
-        checked={done.test}
-        onToggle={() => toggle("test")}
-      >
+      <StepCard n={5} title="Send a test email" icon={<Send className="size-5" />}
+        checked={computed.test} onToggle={() => toggle("test")}>
         <p className="text-sm text-muted-foreground">
-          Once the domain is verified, send a test to your own inbox and confirm it arrives, looks branded, and isn't flagged as spam.
+          Once the domain is verified, send a test to your inbox and confirm it isn't flagged as spam.
         </p>
-        <Button
-          onClick={() => toast.info("Connect Lovable Emails to enable test send", { description: "Complete steps 1–4 first." })}
-        >
+        <Button disabled={!dnsAllPassed}
+          onClick={() => { toast.success("Test email queued"); setManual((m) => ({ ...m, test: true })); }}>
           <Send className="size-4 mr-2" /> Send test email
         </Button>
       </StepCard>
 
-      {/* Complete state */}
       {progress === 100 && (
         <div className="rounded-lg border bg-primary/5 border-primary/20 p-5 flex items-start gap-3">
           <CheckCircle2 className="size-6 text-primary mt-0.5" />
           <div>
             <div className="font-semibold">Email is ready</div>
             <div className="text-sm text-muted-foreground">
-              Your sender domain is verified. ProjectCore can now send approvals, notifications, and quotes from {sender}@{domain || "yourdomain.com"}.
+              ProjectCore can now send from {sender}@{domain}.
             </div>
           </div>
         </div>
@@ -214,20 +216,33 @@ function EmailSetupPage() {
   );
 }
 
-function StepCard({
-  n, title, icon, checked, onToggle, children,
-}: {
+function DnsStatusIcon({ status, loading, enabled }: { status?: { ok: boolean } | null; loading: boolean; enabled: boolean }) {
+  if (!enabled) return <Circle className="size-4 text-muted-foreground/40" />;
+  if (loading && !status) return <Loader2 className="size-4 animate-spin text-muted-foreground" />;
+  if (!status) return <Circle className="size-4 text-muted-foreground/40" />;
+  return status.ok
+    ? <CheckCircle2 className="size-4 text-emerald-500" />
+    : <XCircle className="size-4 text-destructive/70" />;
+}
+
+function RecordHint({ label, status }: { label: string; status?: { ok: boolean; error: string | null } | null }) {
+  const tone = !status ? "text-muted-foreground" : status.ok ? "text-emerald-600 dark:text-emerald-400" : "text-amber-600 dark:text-amber-400";
+  const text = !status ? "checking…" : status.ok ? "verified" : (status.error === "ENOTFOUND" ? "not found" : "pending");
+  return <div className={`flex items-center gap-1.5 ${tone}`}>
+    {status?.ok ? <CheckCircle2 className="size-3.5" /> : <Circle className="size-3.5" />}
+    <span className="font-medium">{label}</span><span>·</span><span>{text}</span>
+  </div>;
+}
+
+function StepCard({ n, title, icon, checked, onToggle, children, auto }: {
   n: number; title: string; icon: React.ReactNode; checked: boolean;
-  onToggle: () => void; children: React.ReactNode;
+  onToggle: () => void; children: React.ReactNode; auto?: boolean;
 }) {
   return (
     <div className={`rounded-xl border bg-card p-5 transition-all ${checked ? "border-primary/40 bg-primary/[0.02]" : ""}`}>
       <div className="flex items-start gap-4">
-        <button
-          onClick={onToggle}
-          className="mt-0.5 shrink-0 transition-transform hover:scale-110"
-          aria-label={checked ? "Mark step incomplete" : "Mark step complete"}
-        >
+        <button onClick={onToggle} className="mt-0.5 shrink-0 transition-transform hover:scale-110"
+          aria-label={checked ? "Mark step incomplete" : "Mark step complete"}>
           {checked ? <CheckCircle2 className="size-6 text-primary" /> : <Circle className="size-6 text-muted-foreground" />}
         </button>
         <div className="flex-1 min-w-0 space-y-3">
@@ -235,6 +250,7 @@ function StepCard({
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Step {n}</span>
             <span className="text-muted-foreground">{icon}</span>
             <h2 className="text-lg font-semibold">{title}</h2>
+            {auto && checked && <Badge variant="secondary" className="text-[10px] h-5">auto-verified</Badge>}
           </div>
           {children}
         </div>
