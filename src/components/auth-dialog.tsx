@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
@@ -29,6 +29,8 @@ export function AuthDialog({
   const [fullName, setFullName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => { if (open) setMode(initialMode); }, [open, initialMode]);
 
   if (!open) return null;
 
